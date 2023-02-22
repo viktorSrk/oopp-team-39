@@ -10,7 +10,7 @@ Add your own name (do not add the names for others!) to the section below.
 
 | Profile Picture                                                                                                                                      | Name              | Email                               |
 |------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|-------------------------------------|
-| ![](https://secure.gravatar.com/avatar/5f6203974c4a00b91a96b8742f4a8125?s=800&d=identicon&length=4&size=50&color=DDD&background=777&font-size=0.325) | Senne Drent       | s.drent@student.tudelft.nl          |
+| ![](https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/5638/avatar.png?width=48&length=4&size=50&color=DDD&background=777&font-size=0.325)   | Senne Drent       | s.drent@student.tudelft.nl          |
 | ![](https://secure.gravatar.com/avatar/81c4ef2654307bf9d0113ec64be7ddc0?s=800&d=identicon&length=4&size=50&color=DDD&background=777&font-size=0.325) | Gido Vitner       | G.Vitner@student.tudelft.nl         |
 | ![](https://secure.gravatar.com/avatar/bf427380847339d068695eb2804a19db?s=800&d=identicon&length=4&size=50&color=DDD&background=777&font-size=0.325) | Leon Braszczyński | L.M.Braszczynski@student.tudelft.nl |
 
