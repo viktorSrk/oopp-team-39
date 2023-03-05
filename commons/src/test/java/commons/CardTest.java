@@ -6,17 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
 
-    @Test
-    void getTitle() {
-        var a = new Card("t");
-        assertEquals("t", a.getTitle());
-    }
 
     @Test
     void setTitle() {
         var a = new Card("a");
         a.setTitle("b");
-        assertEquals("b", a.getTitle());
+        assertEquals("b", a.title);
     }
 
     @Test

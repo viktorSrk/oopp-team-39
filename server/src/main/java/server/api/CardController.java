@@ -39,7 +39,7 @@ public class CardController {
     }
     @DeleteMapping("/")
     public ResponseEntity<Card> removeCard(@RequestBody Card card){
-        if (card == null || isNullOrEmpty(card.title) || !repo.existsById(card.getId())) return ResponseEntity.badRequest().build();
+        if (card == null || isNullOrEmpty(card.title) || !repo.existsById(card.id)) return ResponseEntity.badRequest().build();
 
         repo.delete(card);
         return ResponseEntity.ok(card);

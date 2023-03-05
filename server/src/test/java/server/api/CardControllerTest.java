@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import commons.Card;
 
+import java.util.ArrayList;
+
 
 class CardControllerTest {
 
@@ -34,8 +36,9 @@ class CardControllerTest {
     @Test
     void getAllCards() {
         var actual = sut.getAllCards();
-        repo.calledMethods.contains("findAll");
-        assertEquals(actual, repo.cards);
+        assertTrue(repo.calledMethods.contains("findAll"));
+        var emptyList = new ArrayList<Card>();
+        assertEquals(actual, emptyList);
     }
 
 
@@ -64,7 +67,7 @@ class CardControllerTest {
         var card = new Card("a");
         var card2 = new Card("b");
         sut.addCard(card);
-        sut.replaceCard(card2, card.getId());
+        sut.replaceCard(card2, card.id);
 
         assertFalse(repo.cards.contains(card));
         assertTrue(repo.cards.contains(card2));
