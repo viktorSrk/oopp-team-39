@@ -49,6 +49,6 @@ public class BoardTest {
         Board b1 = new Board();
         List l1 = new List();
         b1.getTaskLists().add(l1);
-        assertEquals("commons.Board@4593ff34[Id=0,TaskLists=[commons.List@82c57b3]]",b1.toString());
+        assertEquals("commons.Board@"+ Integer.toHexString(System.identityHashCode(b1)) +"[Id=0,TaskLists=[commons.List@"+ Integer.toHexString(System.identityHashCode(l1)) +"]]",b1.toString());
     }
 }
