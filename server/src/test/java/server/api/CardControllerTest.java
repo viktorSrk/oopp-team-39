@@ -9,7 +9,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.junit.jupiter.api.Assertions.*;
 
 import commons.Card;
-import org.springframework.http.ResponseEntity;
+
 
 class CardControllerTest {
 

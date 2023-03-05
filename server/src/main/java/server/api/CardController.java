@@ -1,14 +1,13 @@
 package server.api;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import commons.Card;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/cards")
