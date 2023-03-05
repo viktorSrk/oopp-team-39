@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 //IMPORTANT! TaskList uses Integer class right now because the list backend is not visible/made yet
