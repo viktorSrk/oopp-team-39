@@ -27,7 +27,8 @@ public class List {
      * @param title the title of the new List
      */
     public List(String title) {
-        this.id = (long) number_of_lists++;
+        this.id = (long) number_of_lists;
+        number_of_lists++;
         this.title = title;
         this.cards = new ArrayList<>();
         this.number_of_cards = 0;
@@ -39,7 +40,8 @@ public class List {
      * No argument constructor of a List. Sets title to "New List".
      */
     public List() {
-        this.id = (long) number_of_lists++;
+        this.id = (long) number_of_lists;
+        number_of_lists++;
         this.title = "New List";
         this.cards = new ArrayList<>();
         this.number_of_cards = 0;
