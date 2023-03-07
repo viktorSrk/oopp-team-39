@@ -23,7 +23,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 
-import commons.CardList;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
@@ -59,13 +58,5 @@ public class ServerUtils {
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
-    }
-
-    public CardList addList(CardList cardList) {
-        return  ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("path/to/addList")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .post(Entity.entity(cardList, APPLICATION_JSON), CardList.class);
     }
 }
