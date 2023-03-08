@@ -30,16 +30,32 @@ public class MainCtrl {
     private AddQuoteCtrl addCtrl;
     private Scene add;
 
+    private ServerConnectCtrl serverConnectCtrl;
+    private Scene serverConnect;
+
+    private BoardListCtrl boardListCtrl;
+    private Scene boardList;
+
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-            Pair<AddQuoteCtrl, Parent> add) {
+                           Pair<AddQuoteCtrl, Parent> add,
+                           Pair<ServerConnectCtrl, Parent> serverConnect,
+                           Pair<BoardListCtrl, Parent> boardList) {
         this.primaryStage = primaryStage;
+        this.serverConnectCtrl = serverConnect.getKey();
+        this.serverConnect = new Scene(serverConnect.getValue());
+
+        this.boardListCtrl = boardList.getKey();
+        this.boardList = new Scene(boardList.getValue());
+
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
 
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
+//
+//        showOverview();
 
-        showOverview();
+        showServerConnect();
         primaryStage.show();
     }
 
@@ -53,5 +69,10 @@ public class MainCtrl {
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+    public void showServerConnect() {
+        primaryStage.setTitle("Talio: Connect to a Server");
+        primaryStage.setScene(serverConnect);
     }
 }
