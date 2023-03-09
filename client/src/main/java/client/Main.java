@@ -20,6 +20,7 @@ import static com.google.inject.Guice.createInjector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import client.utils.ServerUtils;
 import com.google.inject.Injector;
 
 import client.scenes.AddQuoteCtrl;
@@ -34,6 +35,7 @@ public class Main extends Application {
     private static final MyFXML FXML = new MyFXML(INJECTOR);
 
     public static void main(String[] args) throws URISyntaxException, IOException {
+        ServerUtils.setSERVER("http://localhost:3000/");
         launch();
     }
 
