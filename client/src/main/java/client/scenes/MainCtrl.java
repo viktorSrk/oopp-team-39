@@ -59,10 +59,6 @@ public class MainCtrl {
         primaryStage.show();
     }
 
-    public void showTest() {
-        primaryStage.setTitle("Quotes: connect");
-        primaryStage.setScene(overview);
-    }
     public void showOverview() {
         primaryStage.setTitle("Quotes: Overview");
         primaryStage.setScene(overview);

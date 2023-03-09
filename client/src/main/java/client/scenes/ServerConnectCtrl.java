@@ -1,10 +1,11 @@
 package client.scenes;
 
+import client.utils.FrontEndUtils;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +33,13 @@ public class ServerConnectCtrl implements Initializable{
     }
 
     public void connect() {
-
+        try {
+            ServerUtils.setSERVER(serverip.getText());
+            ServerUtils.testURL();                         //test if given URL is actually working
+            mainCtrl.showOverview();
+        }
+        catch (Exception e) {
+            FrontEndUtils.ErrorPopUp("Couldn't connect to the URL:", e.getCause().getMessage());
+        }
     }
 }
