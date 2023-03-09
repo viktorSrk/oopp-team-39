@@ -20,12 +20,9 @@ import static com.google.inject.Guice.createInjector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import client.scenes.BoardCtrl;
+import client.scenes.*;
 import com.google.inject.Injector;
 
-import client.scenes.AddQuoteCtrl;
-import client.scenes.MainCtrl;
-import client.scenes.QuoteOverviewCtrl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -45,8 +42,10 @@ public class Main extends Application {
         var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
         var board = FXML.load(BoardCtrl.class, "client", "scenes", "Board.fxml");
 
+        var serverConnect = FXML.load(ServerConnectCtrl.class, "client", "scenes", "ServerConnect.fxml");
+        var boardList = FXML.load(BoardListCtrl.class, "client", "scenes", "BoardList.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, overview, add, board);
+        mainCtrl.initialize(primaryStage, overview, add, serverConnect, boardList, board);
     }
 }
