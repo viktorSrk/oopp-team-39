@@ -36,7 +36,7 @@ public class ServerConnectCtrl implements Initializable{
         try {
             ServerUtils.setSERVER(serverip.getText());
             ServerUtils.testURL();                         //test if given URL is actually working
-            mainCtrl.showOverview();
+            mainCtrl.showBoardList();
         }
         catch (Exception e) {
             FrontEndUtils.ErrorPopUp("Couldn't connect to the URL:", e.getCause().getMessage());

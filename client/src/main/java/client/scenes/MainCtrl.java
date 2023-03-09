@@ -75,4 +75,9 @@ public class MainCtrl {
         primaryStage.setTitle("Talio: Connect to a Server");
         primaryStage.setScene(serverConnect);
     }
+
+    public void showBoardList() {
+        primaryStage.setTitle("Talio: Boards");
+        primaryStage.setScene(boardList);
+    }
 }

@@ -20,7 +20,6 @@ public class BoardListCtrl {
     private TableView<Board> boardTable;
     @FXML
     private TableColumn<Board, String> colBoard;
-
     @FXML
     private MenuBar menu;
     @FXML
