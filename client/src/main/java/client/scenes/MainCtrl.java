@@ -65,5 +65,6 @@ public class MainCtrl {
     public void showBoard() {
         primaryStage.setTitle("Board");
         primaryStage.setScene(board);
+        boardCtrl.refresh();
     }
 }

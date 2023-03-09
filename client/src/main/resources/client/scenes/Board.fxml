@@ -32,9 +32,10 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Text>
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" text="Temp Refresh" />
                </children>
             </VBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+            <HBox fx:id="listsHBox" prefHeight="100.0" prefWidth="200.0" spacing="30.0" HBox.hgrow="ALWAYS">
                <children>
                   <VBox alignment="TOP_CENTER" minWidth="200.0" prefWidth="200.0" spacing="30.0">
                      <children>
@@ -42,7 +43,7 @@
                         <Button mnemonicParsing="false" text="Add Card" />
                      </children>
                   </VBox>
-                  <Button minWidth="59.0" mnemonicParsing="false" text="Add List">
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Add List">
                      <HBox.margin>
                         <Insets bottom="70.0" left="50.0" right="50.0" top="70.0" />
                      </HBox.margin>
