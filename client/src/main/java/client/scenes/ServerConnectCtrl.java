@@ -10,10 +10,6 @@ import java.util.ResourceBundle;
 
 import com.google.inject.Inject;
 
-import client.utils.ServerUtils;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 public class ServerConnectCtrl implements Initializable{
 
     private final ServerUtils server;
@@ -33,5 +29,9 @@ public class ServerConnectCtrl implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         /*TO DO*/
+    }
+
+    public void connect() {
+
     }
 }
