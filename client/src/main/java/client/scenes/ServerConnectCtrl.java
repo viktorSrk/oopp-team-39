@@ -32,6 +32,6 @@ public class ServerConnectCtrl implements Initializable{
     }
 
     public void connect() {
-
+        /*TO DO*/
     }
 }
