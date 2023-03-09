@@ -21,11 +21,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import client.utils.ServerUtils;
+import client.scenes.*;
 import com.google.inject.Injector;
 
-import client.scenes.AddQuoteCtrl;
-import client.scenes.MainCtrl;
-import client.scenes.QuoteOverviewCtrl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -45,7 +43,11 @@ public class Main extends Application {
         var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
         var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
 
+        var serverConnect = FXML.load(ServerConnectCtrl.class, "client", "scenes", "ServerConnect.fxml");
+        var boardList = FXML.load(BoardListCtrl.class, "client", "scenes", "BoardList.fxml");
+
+
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, overview, add);
+        mainCtrl.initialize(primaryStage, overview, add, serverConnect, boardList);
     }
 }
