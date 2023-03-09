@@ -20,20 +20,28 @@ public class List {
     private ArrayList<Card> cards;
     private int number_of_cards;
 
+    private static int number_of_lists = 0;
+
     /**
      * Creates a new List. List for cards is initialized and number_of_cards set to 0
      * @param title the title of the new List
      */
     public List(String title) {
+        this.id = (long) number_of_lists;
+        number_of_lists++;
         this.title = title;
         this.cards = new ArrayList<>();
         this.number_of_cards = 0;
+
+        number_of_lists++;
     }
 
     /**
      * No argument constructor of a List. Sets title to "New List".
      */
     public List() {
+        this.id = (long) number_of_lists;
+        number_of_lists++;
         this.title = "New List";
         this.cards = new ArrayList<>();
         this.number_of_cards = 0;
