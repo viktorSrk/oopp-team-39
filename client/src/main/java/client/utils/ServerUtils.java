@@ -32,7 +32,23 @@ import jakarta.ws.rs.core.GenericType;
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080/";
+    private static String SERVER = "";
+
+    public static String getSERVER() {
+        return SERVER;
+    }
+
+    public static void setSERVER(String SERVER) {
+        ServerUtils.SERVER = SERVER;
+    }
+
+    public static void testURL() {
+        ClientBuilder.newClient(new ClientConfig()) //
+            .target(SERVER).path("api/test") //
+            .request(APPLICATION_JSON) //
+            .accept(APPLICATION_JSON) //
+            .get();
+    }
 
     public void getQuotesTheHardWay() throws IOException {
         var url = new URL("http://localhost:8080/api/quotes");

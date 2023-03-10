@@ -1,5 +1,3 @@
-// SKELETON CLASS
-
 package server.database;
 
 import commons.List;

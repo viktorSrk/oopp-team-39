@@ -24,6 +24,10 @@ Add your own name (do not add the names for others!) to the section below.
 
 ## How to run it
 
+### running a Server
+you are able to specify a port for your server by changing
+server.port variable in the application.property file
+
 ## How to contribute to it
 
 ## Copyright / License (opt.)

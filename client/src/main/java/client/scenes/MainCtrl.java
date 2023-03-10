@@ -83,6 +83,11 @@ public class MainCtrl {
         primaryStage.setScene(serverConnect);
     }
 
+    public void showBoardList() {
+        primaryStage.setTitle("Talio: Boards");
+        primaryStage.setScene(boardList);
+    }
+
     public void showBoard() {
         primaryStage.setTitle("Board");
         primaryStage.setScene(board);
