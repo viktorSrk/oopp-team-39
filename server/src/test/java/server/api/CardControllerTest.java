@@ -30,6 +30,7 @@ class CardControllerTest {
         Card card = null;
         var actual = sut.addCard(card);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertTrue(repo.cards.size() == 0);
     }
 
 
@@ -39,13 +40,17 @@ class CardControllerTest {
         assertTrue(repo.calledMethods.contains("findAll"));
         var emptyList = new ArrayList<Card>();
         assertEquals(actual, emptyList);
+
+        Card card = new Card("a");
+        sut.addCard(card);
+        actual = sut.getAllCards();
+        assertTrue(actual.contains(card));
     }
 
 
     @Test
     void addCard() {
         var card = new Card("a");
-        card.setId(1);
         sut.addCard(card);
         assertTrue(repo.cards.contains(card));
 
@@ -67,7 +72,7 @@ class CardControllerTest {
         var card = new Card("a");
         var card2 = new Card("b");
         sut.addCard(card);
-        sut.replaceCard(card2, card.id);
+        sut.replaceCard(card2, card.getId());
 
         assertFalse(repo.cards.contains(card));
         assertTrue(repo.cards.contains(card2));

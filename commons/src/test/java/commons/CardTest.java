@@ -11,7 +11,7 @@ class CardTest {
     void setTitle() {
         var a = new Card("a");
         a.setTitle("b");
-        assertEquals("b", a.title);
+        assertEquals("b", a.getTitle());
     }
 
     @Test
