@@ -30,6 +30,8 @@ public class MainCtrl {
     private AddQuoteCtrl addCtrl;
     private Scene add;
 
+    private CardCtrl cardCtrl;
+    private Scene card;
     private ServerConnectCtrl serverConnectCtrl;
     private Scene serverConnect;
 
@@ -39,7 +41,8 @@ public class MainCtrl {
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add,
                            Pair<ServerConnectCtrl, Parent> serverConnect,
-                           Pair<BoardListCtrl, Parent> boardList) {
+                           Pair<BoardListCtrl, Parent> boardList,
+                                   Pair<CardCtrl, Parent> card) {
         this.primaryStage = primaryStage;
         this.serverConnectCtrl = serverConnect.getKey();
         this.serverConnect = new Scene(serverConnect.getValue());
@@ -52,10 +55,13 @@ public class MainCtrl {
 
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
+
+        this.cardCtrl = card.getKey();
+        this.card = new Scene(card.getValue());
 //
 //        showOverview();
-
-        showServerConnect();
+        showCard();
+       //showServerConnect();
         primaryStage.show();
     }
 
@@ -79,5 +85,10 @@ public class MainCtrl {
     public void showBoardList() {
         primaryStage.setTitle("Talio: Boards");
         primaryStage.setScene(boardList);
+    }
+
+    public void showCard() {
+        primaryStage.setTitle("Talio: Cards");
+        primaryStage.setScene(card);
     }
 }
