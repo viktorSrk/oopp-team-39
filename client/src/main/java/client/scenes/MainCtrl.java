@@ -60,8 +60,8 @@ public class MainCtrl {
         this.card = new Scene(card.getValue());
 //
 //        showOverview();
-        showCard();
-       //showServerConnect();
+        //showCard();
+       showServerConnect();
         primaryStage.show();
     }
 
