@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package client;
+package server.api;
 
-import client.scenes.BoardListCtrl;
-import client.scenes.ServerConnectCtrl;
-import com.google.inject.Binder;
-import com.google.inject.Module;
-import com.google.inject.Scopes;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import client.scenes.MainCtrl;
 
-public class MyModule implements Module {
+@RestController
+@RequestMapping("/api/test")
+public class ServerConnectController {
 
-    @Override
-    public void configure(Binder binder) {
-        binder.bind(MainCtrl.class).in(Scopes.SINGLETON);
-        binder.bind(BoardListCtrl.class).in(Scopes.SINGLETON);
-        binder.bind(ServerConnectCtrl.class).in(Scopes.SINGLETON);
+    public ServerConnectController() {
+    }
 
+    @GetMapping(path = {"", "/"})
+    public void testURL() {
+        ResponseEntity.ok();
     }
 }
