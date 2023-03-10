@@ -2,15 +2,9 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Modality;
 
 
 import java.awt.*;
