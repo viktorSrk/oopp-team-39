@@ -15,7 +15,7 @@ public class ListController {
         this.repo = repo;
     }
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public List<commons.List> getAll() {
         return repo.findAll();
     }
@@ -27,7 +27,7 @@ public class ListController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/")
+    @PostMapping({"", "/"})
     public ResponseEntity<commons.List> addList(@RequestBody commons.List list) {
         if (list == null || isNullOrEmpty(list.getTitle())) return ResponseEntity.badRequest().build();
 
@@ -35,7 +35,7 @@ public class ListController {
         return ResponseEntity.ok(saved);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping({"", "/"})
     public ResponseEntity<commons.List> removeList(@RequestBody commons.List list){
         if (list == null || isNullOrEmpty(list.getTitle()) || !repo.existsById(list.getId())) return ResponseEntity.badRequest().build();
 

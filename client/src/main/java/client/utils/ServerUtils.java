@@ -81,7 +81,6 @@ public class ServerUtils {
                 .target(SERVER).path("api/lists") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {
-                });
+                .get(new GenericType<>() {});
     }
 }
