@@ -30,19 +30,24 @@ public class MainCtrl {
     private AddQuoteCtrl addCtrl;
     private Scene add;
 
-    private CardCtrl cardCtrl;
-    private Scene card;
     private ServerConnectCtrl serverConnectCtrl;
     private Scene serverConnect;
 
     private BoardListCtrl boardListCtrl;
     private Scene boardList;
 
+    private BoardCtrl boardCtrl;
+    private Scene board;
+
+    private CardCtrl cardCtrl;
+    private Scene card;
+
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add,
                            Pair<ServerConnectCtrl, Parent> serverConnect,
                            Pair<BoardListCtrl, Parent> boardList,
-                                   Pair<CardCtrl, Parent> card) {
+                           Pair<BoardCtrl, Parent> board,
+                           Pair<CardCtrl, Parent> card) {
         this.primaryStage = primaryStage;
         this.serverConnectCtrl = serverConnect.getKey();
         this.serverConnect = new Scene(serverConnect.getValue());
@@ -56,12 +61,16 @@ public class MainCtrl {
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
 
+        this.boardCtrl = board.getKey();
+        this.board = new Scene(board.getValue());
+
         this.cardCtrl = card.getKey();
         this.card = new Scene(card.getValue());
-//
+
 //        showOverview();
-        //showCard();
-       showServerConnect();
+//        showBoard();
+//        showCard();
+        showServerConnect();
         primaryStage.show();
     }
 
@@ -85,6 +94,12 @@ public class MainCtrl {
     public void showBoardList() {
         primaryStage.setTitle("Talio: Boards");
         primaryStage.setScene(boardList);
+    }
+
+    public void showBoard() {
+        primaryStage.setTitle("Talio: Board");
+        primaryStage.setScene(board);
+        boardCtrl.refresh();
     }
 
     public void showCard() {
