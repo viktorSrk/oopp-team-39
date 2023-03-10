@@ -17,7 +17,7 @@ public class List {
     private Long id;
     private String title;
     @OneToMany(cascade = CascadeType.PERSIST)
-    private ArrayList<Card> cards;
+    private java.util.List<Card> cards;
     private int number_of_cards;
 
     /**
@@ -26,7 +26,7 @@ public class List {
      */
     public List(String title) {
         this.title = title;
-        this.cards = new ArrayList<>();
+        this.cards = new ArrayList<Card>();
         this.number_of_cards = 0;
     }
 
@@ -35,7 +35,7 @@ public class List {
      */
     public List() {
         this.title = "New List";
-        this.cards = new ArrayList<>();
+        this.cards = new ArrayList<Card>();
         this.number_of_cards = 0;
     }
 
@@ -75,7 +75,7 @@ public class List {
      * Gets the ArrayList of cards of this List
      * @return the ArrayList of cards of this list
      */
-    public ArrayList<Card> getCards() {
+    public java.util.List<Card> getCards() {
         return cards;
     }
 
