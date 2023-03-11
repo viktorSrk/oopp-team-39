@@ -16,9 +16,9 @@ public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long id;
+    private long id;
 
-    public String title;
+    private String title;
 
     @SuppressWarnings("unused")
     protected Card(){
@@ -29,6 +29,13 @@ public class Card {
         this.title = title;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 
     public void setId(long id) {
         this.id = id;
