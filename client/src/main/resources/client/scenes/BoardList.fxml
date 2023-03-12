@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardListCtrl">
    <children>
       <TableView fx:id="boardTable" layoutX="9.0" layoutY="33.0" prefHeight="314.0" prefWidth="583.0">
         <columns>
@@ -21,19 +21,19 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id = "refresh" mnemonicParsing="false" text="Refresh" />
-                  <MenuItem fx:id = "backToServerConnect" mnemonicParsing="false" text="Connect to a different server..." />
+                  <MenuItem fx:id = "refresh" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                  <MenuItem fx:id = "backToServerConnect" mnemonicParsing="false" onAction="#cancel" text="Connect to a different server..." />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id = "new" mnemonicParsing="false" text="New" />
-              <MenuItem fx:id = "del" mnemonicParsing="false" text="Delete" />
+              <MenuItem fx:id = "add" mnemonicParsing="false" onAction="#addBoard" text="New Board" />
+              <MenuItem fx:id = "del" mnemonicParsing="false" onAction="#deleteBoard" text="Delete Board" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id = "info" mnemonicParsing="false" text="About" />
+              <MenuItem fx:id = "info" mnemonicParsing="false" onAction="#showInfo" text="About" />
             </items>
           </Menu>
         </menus>

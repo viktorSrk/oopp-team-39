@@ -23,7 +23,7 @@ public class TestCardRepository implements CardRepository {
     }
 
     private Optional<Card> find(Long id){
-        return cards.stream().filter(q -> q.id == id).findFirst();
+        return cards.stream().filter(q -> q.getId() == id).findFirst();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class TestCardRepository implements CardRepository {
     @Override
     public <S extends Card> S save(S entity) {
         call("save");
-        entity.id = (long) cards.size();
+        entity.setId((long) cards.size());
         cards.add(entity);
         return entity;
     }
@@ -93,7 +93,13 @@ public class TestCardRepository implements CardRepository {
     @Override
     public Optional<Card> findById(Long id) {
         call("findById");
-        var res = cards.get(0);
+        Card res = null;
+        for(Card c : cards){
+            if(c.getId() == id){
+                res = c;
+                break;
+            }
+        }
         return Optional.ofNullable(res);
     }
 

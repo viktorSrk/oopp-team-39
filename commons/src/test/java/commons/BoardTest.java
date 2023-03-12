@@ -13,7 +13,7 @@ public class BoardTest {
         List l1 = new List();
         b1.getTaskLists().add(l1);
         b2.getTaskLists().add(l1);
-        assertTrue(b1.equals(b2));
+        assertEquals(b1, b2);
     }
 
     @Test
@@ -22,7 +22,7 @@ public class BoardTest {
         Board b2 = new Board();
         List l1 = new List();
         b1.getTaskLists().add(l1);
-        assertFalse(b1.equals(b2));
+        assertNotEquals(b1, b2);
     }
 
     @Test
@@ -49,6 +49,7 @@ public class BoardTest {
         Board b1 = new Board();
         List l1 = new List();
         b1.getTaskLists().add(l1);
-        assertEquals("commons.Board@"+ Integer.toHexString(System.identityHashCode(b1)) +"[Id=0,TaskLists=[commons.List@"+ Integer.toHexString(System.identityHashCode(l1)) +"]]",b1.toString());
+        assertEquals("commons.Board@"+ Integer.toHexString(System.identityHashCode(b1)) +"[Id=0,TaskLists=[" + l1 +"]]",
+                b1.toString());
     }
 }
