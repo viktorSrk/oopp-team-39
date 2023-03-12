@@ -10,6 +10,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.util.List;
+
 public class BoardListCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
@@ -40,11 +42,23 @@ public class BoardListCtrl {
 
     }
 
+    //small start for when we implement multiBoards
     public void refresh() {
-        //TO DO
+        try {
+            var boards = server.getBoards();
+        }
+        catch (Exception e) {
+        }
     }
 
+    // since we first do the single-board approach this will do for now
+    public void open() {
+        mainCtrl.showBoard();
+    }
+
+    //goes back to the Server Connect menu
     public void cancel() {
+        mainCtrl.showServerConnect();
         //TO DO
     }
 

@@ -16,7 +16,7 @@
           <TableColumn fx:id = "colBoard" prefWidth="582.0" text="Boards" />
         </columns>
       </TableView>
-      <Button layoutX="487.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" text="Open" />
+      <Button layoutX="487.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" onAction="#open" text="Open" />
       <MenuBar fx:id = "menu" prefHeight="26.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
