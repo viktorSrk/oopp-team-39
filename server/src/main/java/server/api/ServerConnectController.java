@@ -15,6 +15,7 @@
  */
 package server.api;
 
+import commons.Board;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class ServerConnectController {
     }
 
     @GetMapping(path = {"", "/"})
-    public void testURL() {
-        ResponseEntity.ok();
+    public ResponseEntity<String> testURL() {
+        return ResponseEntity.ok("helloWorld");
     }
 }

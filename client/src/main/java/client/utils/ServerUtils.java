@@ -47,7 +47,7 @@ public class ServerUtils {
             .target(SERVER).path("api/test") //
             .request(APPLICATION_JSON) //
             .accept(APPLICATION_JSON) //
-            .get();
+            .get(String.class);
     }
 
     public void getQuotesTheHardWay() throws IOException {

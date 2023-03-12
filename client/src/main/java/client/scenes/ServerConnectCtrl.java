@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.rmi.ConnectException;
 import java.util.ResourceBundle;
 
 import com.google.inject.Inject;
@@ -35,11 +36,11 @@ public class ServerConnectCtrl implements Initializable{
     public void connect() {
         try {
             ServerUtils.setSERVER(serverip.getText());
-            ServerUtils.testURL();                         //test if given URL is actually working
+            ServerUtils.testURL();//test if given URL is actually working
             mainCtrl.showOverview();
         }
         catch (Exception e) {
-            FrontEndUtils.ErrorPopUp("Couldn't connect to the URL:", e.getCause().getMessage());
+            FrontEndUtils.ErrorPopUp("Couldn't connect to the URL:", e.getMessage());
         }
     }
 }
