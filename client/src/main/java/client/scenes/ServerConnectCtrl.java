@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.rmi.ConnectException;
 import java.util.ResourceBundle;
 
 import com.google.inject.Inject;

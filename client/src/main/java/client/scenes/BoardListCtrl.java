@@ -10,8 +10,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.util.List;
-
 public class BoardListCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
