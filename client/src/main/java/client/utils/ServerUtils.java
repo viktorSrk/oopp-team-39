@@ -90,7 +90,9 @@ public class ServerUtils {
                 .target(SERVER).path("api/boards") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {});
+                .get(new GenericType<>() {
+                });
+    }
 
     public commons.List addList(commons.List list) {
         return ClientBuilder.newClient(new ClientConfig()) //
