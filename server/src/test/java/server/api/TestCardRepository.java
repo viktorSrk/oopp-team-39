@@ -53,8 +53,7 @@ public class TestCardRepository implements CardRepository {
     }
 
     @Override
-    @SuppressWarnings("checkstyle:parametername")
-    public void deleteById(Long Long) {
+    public void deleteById(Long id) {
     }
 
     @Override
