@@ -40,11 +40,23 @@ public class BoardListCtrl {
 
     }
 
+    //small start for when we implement multiBoards
     public void refresh() {
-        //TO DO
+        try {
+            var boards = server.getBoards();
+        }
+        catch (Exception e) {
+        }
     }
 
+    // since we first do the single-board approach this will do for now
+    public void open() {
+        mainCtrl.showBoard();
+    }
+
+    //goes back to the Server Connect menu
     public void cancel() {
+        mainCtrl.showServerConnect();
         //TO DO
     }
 

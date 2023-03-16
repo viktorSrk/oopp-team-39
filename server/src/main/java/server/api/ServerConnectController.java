@@ -29,7 +29,7 @@ public class ServerConnectController {
     }
 
     @GetMapping(path = {"", "/"})
-    public void testURL() {
-        ResponseEntity.ok();
+    public ResponseEntity<String> testURL() {
+        return ResponseEntity.ok("helloWorld");
     }
 }

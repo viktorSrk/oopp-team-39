@@ -39,7 +39,7 @@ public class ServerConnectCtrl implements Initializable{
             mainCtrl.showBoardList();
         }
         catch (Exception e) {
-            FrontEndUtils.ErrorPopUp("Couldn't connect to the URL:", e.getCause().getMessage());
+            FrontEndUtils.ErrorPopUp("Couldn't connect to the URL:", e.getMessage());
         }
     }
 }
