@@ -15,14 +15,10 @@
  */
 package client;
 
-import client.scenes.BoardListCtrl;
-import client.scenes.ServerConnectCtrl;
-import client.scenes.BoardCtrl;
+import client.scenes.*;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
-
-import client.scenes.MainCtrl;
 
 public class MyModule implements Module {
 
@@ -32,5 +28,6 @@ public class MyModule implements Module {
         binder.bind(BoardListCtrl.class).in(Scopes.SINGLETON);
         binder.bind(ServerConnectCtrl.class).in(Scopes.SINGLETON);
         binder.bind(BoardCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(AddListCtrl.class).in(Scopes.SINGLETON);
     }
 }
