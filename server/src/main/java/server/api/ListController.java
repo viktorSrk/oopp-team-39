@@ -22,14 +22,16 @@ public class ListController {
 
     @GetMapping("/{id}")
     public ResponseEntity<commons.List> getListById(@PathVariable("id") long id) {
-        if (id < 0 || !repo.existsById(id)) return ResponseEntity.badRequest().build();
+        if (id < 0 || !repo.existsById(id))
+            return ResponseEntity.badRequest().build();
         commons.List res = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
         return ResponseEntity.ok(res);
     }
 
     @PostMapping({"", "/"})
     public ResponseEntity<commons.List> addList(@RequestBody commons.List list) {
-        if (list == null || isNullOrEmpty(list.getTitle())) return ResponseEntity.badRequest().build();
+        if (list == null || isNullOrEmpty(list.getTitle()))
+            return ResponseEntity.badRequest().build();
 
         commons.List saved = repo.save(list);
         return ResponseEntity.ok(saved);
@@ -37,15 +39,18 @@ public class ListController {
 
     @DeleteMapping({"", "/"})
     public ResponseEntity<commons.List> removeList(@RequestBody commons.List list){
-        if (list == null || isNullOrEmpty(list.getTitle()) || !repo.existsById(list.getId())) return ResponseEntity.badRequest().build();
+        if (list == null || isNullOrEmpty(list.getTitle()) || !repo.existsById(list.getId()))
+            return ResponseEntity.badRequest().build();
 
         repo.delete(list);
         return ResponseEntity.ok(list);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<commons.List> replaceList(@RequestBody commons.List list, @PathVariable("id") long id){
-        if (list == null || isNullOrEmpty(list.getTitle()) || !repo.existsById(id)) return ResponseEntity.badRequest().build();
+    public ResponseEntity<commons.List> replaceList(@RequestBody commons.List list,
+                                                    @PathVariable("id") long id){
+        if (list == null || isNullOrEmpty(list.getTitle()) || !repo.existsById(id))
+            return ResponseEntity.badRequest().build();
 
         commons.List toDelete = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
 
