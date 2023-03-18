@@ -42,12 +42,16 @@ public class Main extends Application {
         var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
         var board = FXML.load(BoardCtrl.class, "client", "scenes", "Board.fxml");
 
-        var serverConnect = FXML.load(ServerConnectCtrl.class, "client", "scenes", "ServerConnect.fxml");
+        var serverConnect = FXML.load(ServerConnectCtrl.class,
+                "client", "scenes", "ServerConnect.fxml");
         var boardList = FXML.load(BoardListCtrl.class, "client", "scenes", "BoardList.fxml");
         var card = FXML.load(CardCtrl.class,"client", "scenes", "Card.fxml" );
         var addList = FXML.load(AddListCtrl.class,"client", "scenes", "AddList.fxml" );
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, overview, add, serverConnect, boardList, board, card, addList);
+        mainCtrl.initialize(primaryStage,
+                overview,
+                add,
+                serverConnect, boardList, board, card, addList);
     }
 }

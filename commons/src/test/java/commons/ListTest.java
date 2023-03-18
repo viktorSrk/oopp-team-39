@@ -37,15 +37,15 @@ class ListTest {
         List test = new List();
         test.setCards(cards);
         assertEquals(cards, test.getCards());
-        assertEquals(0, test.getNumber_of_cards());
+        assertEquals(0, test.getNumberOfCards());
     }
 
     @Test
     void getNumber_of_cards() {
         List test = new List();
-        assertEquals(0, test.getNumber_of_cards());
+        assertEquals(0, test.getNumberOfCards());
         test.addCard(new Card(""));
-        assertEquals(1, test.getNumber_of_cards());
+        assertEquals(1, test.getNumberOfCards());
     }
 
     @Test
@@ -53,7 +53,7 @@ class ListTest {
         List test = new List();
         Card card = new Card("0");
         test.addCard(card);
-        assertEquals(1, test.getNumber_of_cards());
+        assertEquals(1, test.getNumberOfCards());
         assertEquals(card, test.getCards().get(0));
     }
 
@@ -65,7 +65,7 @@ class ListTest {
         Card card = new Card("1");
         test.addCard(card, 1);
         assertEquals(card, test.getCards().get(1));
-        assertEquals(3, test.getNumber_of_cards());
+        assertEquals(3, test.getNumberOfCards());
     }
 
     @Test
@@ -74,7 +74,7 @@ class ListTest {
         Card card = new Card("");
         test.addCard(card);
         test.removeCard(card);
-        assertEquals(0, test.getNumber_of_cards());
+        assertEquals(0, test.getNumberOfCards());
         assertEquals(0, test.getCards().size());
     }
 
@@ -87,6 +87,6 @@ class ListTest {
         test.addCard(card);
         test.addCard(new Card(""));
         assertEquals(card, test.removeCard(2));
-        assertEquals(3, test.getNumber_of_cards());
+        assertEquals(3, test.getNumberOfCards());
     }
 }

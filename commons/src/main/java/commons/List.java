@@ -18,7 +18,7 @@ public class List {
     private String title;
     @OneToMany(cascade = CascadeType.PERSIST)
     private java.util.List<Card> cards;
-    private int number_of_cards;
+    private int numberOfCards;
 
     /**
      * Creates a new List. List for cards is initialized and number_of_cards set to 0
@@ -27,7 +27,7 @@ public class List {
     public List(String title) {
         this.title = title;
         this.cards = new ArrayList<Card>();
-        this.number_of_cards = 0;
+        this.numberOfCards = 0;
     }
 
     /**
@@ -36,7 +36,7 @@ public class List {
     public List() {
         this.title = "New List";
         this.cards = new ArrayList<Card>();
-        this.number_of_cards = 0;
+        this.numberOfCards = 0;
     }
 
     /**
@@ -85,15 +85,15 @@ public class List {
      */
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
-        this.number_of_cards = cards.size();
+        this.numberOfCards = cards.size();
     }
 
     /**
      * Gets the amount of cards of this List
      * @return the amount of cards of this list
      */
-    public int getNumber_of_cards() {
-        return number_of_cards;
+    public int getNumberOfCards() {
+        return numberOfCards;
     }
 
     /**
@@ -102,7 +102,7 @@ public class List {
      */
     public void addCard(Card card) {
         this.cards.add(card);
-        this.number_of_cards++;
+        this.numberOfCards++;
     }
 
     /**
@@ -113,7 +113,7 @@ public class List {
      */
     public void addCard(Card card, int index) throws IndexOutOfBoundsException {
         this.cards.add(index, card);
-        this.number_of_cards++;
+        this.numberOfCards++;
     }
 
     /**
@@ -122,7 +122,7 @@ public class List {
      */
     public void removeCard(Card card) {
         this.cards.remove(card);
-        this.number_of_cards--;
+        this.numberOfCards--;
     }
 
     /**
@@ -135,7 +135,7 @@ public class List {
         if (index >= this.cards.size()) {
             throw new IndexOutOfBoundsException();
         } else {
-            this.number_of_cards--;
+            this.numberOfCards--;
             return this.cards.remove(index);
         }
     }
@@ -148,12 +148,20 @@ public class List {
 
         List list = (List) o;
 
-        return new EqualsBuilder().append(number_of_cards, list.number_of_cards).append(id, list.id).append(title, list.title).append(cards, list.cards).isEquals();
+        return new EqualsBuilder().append(numberOfCards, list.numberOfCards)
+                .append(id, list.id)
+                .append(title, list.title)
+                .append(cards, list.cards)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(title).append(cards).append(number_of_cards).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id).append(title)
+                .append(cards)
+                .append(numberOfCards)
+                .toHashCode();
     }
 
     @Override
@@ -162,7 +170,7 @@ public class List {
                 .append("id", id)
                 .append("title", title)
                 .append("cards", cards)
-                .append("number_of_cards", number_of_cards)
+                .append("number_of_cards", numberOfCards)
                 .toString();
     }
 }

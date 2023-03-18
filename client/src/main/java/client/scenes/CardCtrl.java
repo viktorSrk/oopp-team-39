@@ -7,8 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 
 
-import java.awt.*;
-
 public class CardCtrl {
 
     private ServerUtils serverCard;
@@ -31,7 +29,8 @@ public class CardCtrl {
     public void back() {
         clearFields();
         mainCtrlCard.showOverview();
-        //TODO: implement lists (and method showLists()) and switch from showOverview() to showLists()
+        //TODO: implement lists (and method showLists())
+        // and switch from showOverview() to showLists()
     }
 
     private void clearFields() {

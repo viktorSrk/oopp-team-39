@@ -15,24 +15,24 @@ import java.util.Set;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Id;
+    private long id;
     @OneToMany(cascade = CascadeType.PERSIST)
-    private final Set<List> TaskLists;
+    private final Set<List> taskLists;
 
     public Board() {
-        TaskLists = new HashSet<>();
+        taskLists = new HashSet<>();
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(long id) {
-        Id = id;
+        this.id = id;
     }
 
     public Set<List> getTaskLists() {
-        return TaskLists;
+        return taskLists;
     }
 
     @Override
@@ -43,19 +43,24 @@ public class Board {
 
         Board board = (Board) o;
 
-        return new EqualsBuilder().append(Id, board.Id).append(TaskLists, board.TaskLists).isEquals();
+        return new EqualsBuilder().append(id, board.id)
+                .append(taskLists, board.taskLists)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(Id).append(TaskLists).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(taskLists)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("Id", Id)
-                .append("TaskLists", TaskLists)
+                .append("Id", id)
+                .append("TaskLists", taskLists)
                 .toString();
     }
 }

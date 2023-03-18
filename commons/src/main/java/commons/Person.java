@@ -31,14 +31,26 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public long id;
+    private long id;
 
-    public String firstName;
-    public String lastName;
+    private String firstName;
+    private String lastName;
 
-    @SuppressWarnings("unused")
-    private Person() {
-        // for object mapper
+
+    public Person() {
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public Person(String firstName, String lastName) {

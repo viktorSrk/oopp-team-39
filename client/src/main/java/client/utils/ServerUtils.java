@@ -33,19 +33,19 @@ import jakarta.ws.rs.core.GenericType;
 
 public class ServerUtils {
 
-    private static String SERVER = "";
+    private static String server = "";
 
-    public static String getSERVER() {
-        return SERVER;
+    public static String getServer() {
+        return server;
     }
 
-    public static void setSERVER(String SERVER) {
-        ServerUtils.SERVER = SERVER;
+    public static void setSERVER(String server) {
+        ServerUtils.server = server;
     }
 
     public static void testURL() {
         ClientBuilder.newClient(new ClientConfig()) //
-            .target(SERVER).path("api/test") //
+            .target(server).path("api/test") //
             .request(APPLICATION_JSON) //
             .accept(APPLICATION_JSON) //
             .get(String.class);
@@ -63,7 +63,7 @@ public class ServerUtils {
 
     public List<Quote> getQuotes() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/quotes") //
+                .target(server).path("api/quotes") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<Quote>>() {});
@@ -71,7 +71,7 @@ public class ServerUtils {
 
     public Quote addQuote(Quote quote) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/quotes") //
+                .target(server).path("api/quotes") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
@@ -79,7 +79,7 @@ public class ServerUtils {
 
     public List<commons.List> getLists() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/lists") //
+                .target(server).path("api/lists") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<>() {});
@@ -87,7 +87,7 @@ public class ServerUtils {
 
     public List<Board> getBoards() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/boards") //
+                .target(server).path("api/boards") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<>() {
@@ -96,7 +96,7 @@ public class ServerUtils {
 
     public commons.List addList(commons.List list) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/lists/") //
+                .target(server).path("api/lists/") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(list, APPLICATION_JSON), commons.List.class);
