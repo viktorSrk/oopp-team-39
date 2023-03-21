@@ -1,0 +1,37 @@
+Minutes Week 5
+
+
+16:45 - Meeting begins
+16:50 - Review of agenda
+Discussion concerning the HUE.
+Meeting times for 22-03-2023/23-03-2023
+Wednesday (13:45?)
+Thursday (12:30)
+16:52 - showed Mike our project’s first draft
+16:55 - Front-end Testing
+Marco/Gido/George
+17:00 - UI unification:
+George/(?)
+17:05 - Issue redistribution:
+Someone needs to take some of Georges Issues
+17:10 - Last Basic Requirements: Drag-and-Drop
+/Edit Lists
+/Remove Cards
+/Swapping cards
+17:25 - Last checkstyle changes
+17:25 - Viktor is next week’s chairman (Gido is minute taker)
+17:30 - Meeting closes
+
+
+
+Leon: Hook up the Board controller to add a List
+Take an issue from George(?)
+Implement the ability to swap Cards in a List
+Viktor: make an add-card popup
+Marco: Board Overview unit testing/ make an Add-Board popup + tests
+Gido: help George(?)
+George: adding Lists/Cards to the Board
+Senne: Auto Refresh functionality for the Overview and Update
+Implement the deleting Cards and Lists
+
+For the meeting tomorrow: prepare the prototype
