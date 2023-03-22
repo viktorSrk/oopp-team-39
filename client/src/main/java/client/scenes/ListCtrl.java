@@ -5,9 +5,9 @@ import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
-public class CardCtrl {
-
+public class ListCtrl {
 
     private final ServerUtils server;
 
@@ -17,19 +17,18 @@ public class CardCtrl {
     private TextField titleTextField;
 
     @FXML
-    private Button openButton;
+    private Button addCardButton;
 
     @FXML
-    private Button deleteButton;
+    private Button deleteCardButton;
+
+    @FXML
+    private VBox cardsVBox;
+
 
     @Inject
-    public CardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public ListCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
-    }
-//TODO: I need to initialise the title with onw form the database (probably in the contstructor)
-
-    public void open(){
-        //open the related card
     }
 }

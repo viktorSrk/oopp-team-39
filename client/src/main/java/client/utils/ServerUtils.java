@@ -35,6 +35,7 @@ public class ServerUtils {
 
     private static String server = "";
 
+
     public static String getServer() {
         return server;
     }
@@ -102,7 +103,6 @@ public class ServerUtils {
                 .post(Entity.entity(list, APPLICATION_JSON), commons.List.class);
     }
 
-
     public commons.List changeList(commons.List list) {
         var id = list.getId();
         return ClientBuilder.newClient(new ClientConfig()) //
@@ -112,5 +112,20 @@ public class ServerUtils {
                 .put(Entity.entity(list, APPLICATION_JSON), commons.List.class);
     }
 
+    public commons.Card addCard(commons.Card card) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(server).path("api/cards/") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
+    }
+
+    public List<commons.Card> getCards() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(server).path("api/cards") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {});
+    }
 
 }
