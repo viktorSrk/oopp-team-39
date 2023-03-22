@@ -15,7 +15,6 @@
  */
 package client.scenes;
 
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,6 +23,8 @@ import javafx.util.Pair;
 public class MainCtrl {
 
     private Stage primaryStage;
+
+    private Stage secondStage;
 
     private QuoteOverviewCtrl overviewCtrl;
     private Scene overview;
@@ -90,6 +91,7 @@ public class MainCtrl {
         this.listCtrl = list.getKey();
         this.list = new Scene(list.getValue());
 
+        this.secondStage = new Stage();
 
 //        showOverview();
 //        showBoard();
@@ -139,8 +141,14 @@ public class MainCtrl {
     }
 
     public void showAddList() {
-        primaryStage.setTitle("Talio: AddList");
-        primaryStage.setScene(addList);
+        secondStage.setTitle("Talio: AddList");
+        secondStage.setScene(addList);
+        secondStage.show();
+    }
+
+    public void closeAddList(){
+        secondStage.close();
+        showBoard();
     }
 
     public void showList() {
