@@ -33,7 +33,8 @@ import jakarta.ws.rs.core.GenericType;
 
 public class ServerUtils {
 
-    private static String server = "";
+    private static String server = "http://localhost:8080";
+    //TODO: change server string back to "" (empty space) after finishing my work
 
     public static String getServer() {
         return server;
@@ -100,5 +101,21 @@ public class ServerUtils {
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(list, APPLICATION_JSON), commons.List.class);
+    }
+
+    public commons.Card addCard(commons.Card card) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(server).path("api/cards/") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .post(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
+    }
+
+    public List<commons.Card> getCards() {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(server).path("api/cards") //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {});
     }
 }

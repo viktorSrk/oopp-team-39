@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -39,18 +40,28 @@ public class MainCtrl {
     private BoardCtrl boardCtrl;
     private Scene board;
 
+    private AddCardCtrl addCardCtrl;
+    private Scene addCard;
+
     private CardCtrl cardCtrl;
     private Scene card;
 
     private AddListCtrl addListCtrl;
     private Scene addList;
 
+    private ListCtrl listCtrl;
+    private Scene list;
+
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add,
                            Pair<ServerConnectCtrl, Parent> serverConnect,
                            Pair<BoardListCtrl, Parent> boardList,
                            Pair<BoardCtrl, Parent> board,
-                           Pair<CardCtrl, Parent> card, Pair<AddListCtrl, Parent> addList) {
+                           Pair<AddCardCtrl, Parent> addCard,
+                           Pair<AddListCtrl, Parent> addList,
+                           Pair<CardCtrl, Parent> card,
+                           Pair<ListCtrl, Parent> list
+    ) {
         this.primaryStage = primaryStage;
         this.serverConnectCtrl = serverConnect.getKey();
         this.serverConnect = new Scene(serverConnect.getValue());
@@ -67,18 +78,25 @@ public class MainCtrl {
         this.boardCtrl = board.getKey();
         this.board = new Scene(board.getValue());
 
+        this.addCardCtrl = addCard.getKey();
+        this.addCard = new Scene(addCard.getValue());
+
         this.cardCtrl = card.getKey();
         this.card = new Scene(card.getValue());
 
         this.addListCtrl = addList.getKey();
         this.addList = new Scene(addList.getValue());
 
+        this.listCtrl = list.getKey();
+        this.list = new Scene(list.getValue());
 
 
 //        showOverview();
 //        showBoard();
+//        showAddCard();
 //        showCard();
-        showServerConnect();
+//        showList();
+//        showServerConnect();
         primaryStage.show();
     }
 
@@ -110,13 +128,23 @@ public class MainCtrl {
         boardCtrl.refresh();
     }
 
+    public void showAddCard() {
+        primaryStage.setTitle("Talio: addCard");
+        primaryStage.setScene(addCard);
+    }
+
     public void showCard() {
-        primaryStage.setTitle("Talio: Cards");
+        primaryStage.setTitle("Talio: Card");
         primaryStage.setScene(card);
     }
 
     public void showAddList() {
         primaryStage.setTitle("Talio: AddList");
         primaryStage.setScene(addList);
+    }
+
+    public void showList() {
+        primaryStage.setTitle("Talio: List");
+        primaryStage.setScene(list);
     }
 }
