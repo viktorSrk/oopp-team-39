@@ -15,14 +15,17 @@ public class BoardCtrl {
 
     private final ServerUtils server;
 
+    private final MainCtrl mainCtrl;
+
     private ObservableList<commons.List> data;
 
     @FXML
     private HBox listsHBox;
 
     @Inject
-    public BoardCtrl(ServerUtils server) {
+    public BoardCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
+        this.mainCtrl = mainCtrl;
     }
 
     public HBox getListsHBox() {
@@ -53,5 +56,9 @@ public class BoardCtrl {
 
             listsHBoxChildren.add(0, vbox);
         }
+    }
+
+    public void addListButton(){
+        mainCtrl.showAddList();
     }
 }

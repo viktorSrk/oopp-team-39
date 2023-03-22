@@ -24,7 +24,7 @@ public class AddListCtrl {
 
     public void cancel() {
         title.clear();
-        mainCtrl.showBoard();
+        mainCtrl.closeAddList();
     }
 
     public void ok() {
@@ -40,7 +40,7 @@ public class AddListCtrl {
         }
 
         title.clear();
-        mainCtrl.showBoard();
+        mainCtrl.closeAddList();
     }
 
     public List getList(){
