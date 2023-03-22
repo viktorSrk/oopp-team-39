@@ -98,7 +98,7 @@ public class MainCtrl {
 //        showAddCard();
 //        showCard();
 //        showList();
-//        showServerConnect();
+        showServerConnect();
         primaryStage.show();
     }
 
