@@ -70,11 +70,10 @@ class CardControllerTest {
     @Test
     void replaceCard() {
         var card = new Card("a");
-        var card2 = new Card("b");
         sut.addCard(card);
-        sut.replaceCard(card2, card.getId());
+        card.setTitle("b");
+        sut.replaceCard(card, card.getId());
 
-        assertFalse(repo.cards.contains(card));
-        assertTrue(repo.cards.contains(card2));
+        assertTrue(repo.getById(card.getId()).getTitle().equals("b"));
     }
 }
