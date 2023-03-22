@@ -83,7 +83,7 @@ public class List {
      * Sets the ArrayList of Cards to a new List. number_of_cards gets updated too
      * @param cards the new ArrayList of cards
      */
-    public void setCards(ArrayList<Card> cards) {
+    public void setCards(java.util.List<Card> cards) {
         this.cards = cards;
         this.numberOfCards = cards.size();
     }
