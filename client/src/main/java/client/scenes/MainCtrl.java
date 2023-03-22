@@ -24,6 +24,8 @@ public class MainCtrl {
 
     private Stage primaryStage;
 
+    private Stage secondStage;
+
     private QuoteOverviewCtrl overviewCtrl;
     private Scene overview;
 
@@ -73,6 +75,8 @@ public class MainCtrl {
         this.addListCtrl = addList.getKey();
         this.addList = new Scene(addList.getValue());
 
+        this.secondStage = new Stage();
+
 
 
 //        showOverview();
@@ -116,7 +120,13 @@ public class MainCtrl {
     }
 
     public void showAddList() {
-        primaryStage.setTitle("Talio: AddList");
-        primaryStage.setScene(addList);
+        secondStage.setTitle("Talio: AddList");
+        secondStage.setScene(addList);
+        secondStage.show();
+    }
+
+    public void closeAddList(){
+        secondStage.close();
+        showBoard();
     }
 }
