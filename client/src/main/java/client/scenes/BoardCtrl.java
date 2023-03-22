@@ -32,6 +32,7 @@ public class BoardCtrl {
         return listsHBox;
     }
 
+
     public void refresh() {
         var lists = server.getLists();
         data = FXCollections.observableList(lists);
