@@ -33,8 +33,8 @@ import jakarta.ws.rs.core.GenericType;
 
 public class ServerUtils {
 
-    private static String server = "http://localhost:8080";
-    //TODO: change server string back to "" (empty space) after finishing my work
+    private static String server = "";
+
 
     public static String getServer() {
         return server;
