@@ -53,11 +53,12 @@ public class CardController {
         if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(id))
             return ResponseEntity.badRequest().build();
 
-        Card toDelete = repo.findById(id).get();
+        commons.Card cardToChange = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
 
-        repo.delete(toDelete);
+        cardToChange.setTitle(card.getTitle());
 
-        repo.save(card);
+        repo.save(cardToChange);
+
         return ResponseEntity.ok(card);
     }
 

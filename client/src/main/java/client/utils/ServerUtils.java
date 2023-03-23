@@ -103,6 +103,15 @@ public class ServerUtils {
                 .post(Entity.entity(list, APPLICATION_JSON), commons.List.class);
     }
 
+    public commons.List changeList(commons.List list) {
+        var id = list.getId();
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(server).path("api/lists/" + id) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .put(Entity.entity(list, APPLICATION_JSON), commons.List.class);
+    }
+
     public commons.Card addCard(commons.Card card) {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(server).path("api/cards/") //
@@ -118,4 +127,5 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<>() {});
     }
+
 }
