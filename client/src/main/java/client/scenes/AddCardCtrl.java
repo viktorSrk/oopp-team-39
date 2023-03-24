@@ -50,9 +50,8 @@ public class AddCardCtrl {
 
     public void back() {
         clearFields();
-        mainCtrl.showOverview();
+        mainCtrl.showBoard();
     }
-    //TODO: change to other show (board or list)
 
     private void clearFields() {
         descriptionTextField.clear();
