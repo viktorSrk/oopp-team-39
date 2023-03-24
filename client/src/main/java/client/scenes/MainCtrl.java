@@ -98,7 +98,7 @@ public class MainCtrl {
 //        showAddCard();
 //        showCard();
 //        showList();
-//        showServerConnect();
+        showServerConnect();
         primaryStage.show();
     }
 
@@ -148,7 +148,6 @@ public class MainCtrl {
 
     public void closeAddList(){
         secondStage.close();
-        showBoard();
     }
 
     public void showList() {

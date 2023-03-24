@@ -2,6 +2,8 @@ package server.api;
 
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.database.ListRepository;
 
@@ -28,6 +30,12 @@ public class ListController {
         return ResponseEntity.ok(res);
     }
 
+    @MessageMapping("/list")
+    @SendTo("/topic/list")
+    public commons.List addMessage(commons.List list) {
+        addList(list);
+        return list;
+    }
     @PostMapping({"", "/"})
     public ResponseEntity<commons.List> addList(@RequestBody commons.List list) {
         if (list == null || isNullOrEmpty(list.getTitle()))
