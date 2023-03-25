@@ -29,7 +29,7 @@ public class AddListCtrl {
 
     public void ok() {
         try {
-            server.send("/app/list", getList());
+            server.send("/app/list/add", getList());
         } catch (WebApplicationException e) {
 
             var alert = new Alert(Alert.AlertType.ERROR);

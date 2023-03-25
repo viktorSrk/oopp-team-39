@@ -127,6 +127,7 @@ public class MainCtrl {
     public void showBoard() {
         primaryStage.setTitle("Talio: Board");
         primaryStage.setScene(board);
+        primaryStage.centerOnScreen();
         boardCtrl.refresh();
     }
 
@@ -153,5 +154,9 @@ public class MainCtrl {
     public void showList() {
         primaryStage.setTitle("Talio: List");
         primaryStage.setScene(list);
+    }
+
+    public void setWebsocketSessions() {
+        boardCtrl.setWebsocketSessions();
     }
 }
