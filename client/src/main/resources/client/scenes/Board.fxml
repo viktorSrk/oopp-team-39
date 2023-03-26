@@ -33,6 +33,7 @@
                      </cursor>
                   </Text>
                   <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" text="Temp Refresh" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" text="Back" />
                </children>
             </VBox>
             <HBox fx:id="listsHBox" prefHeight="100.0" prefWidth="200.0" spacing="30.0" HBox.hgrow="ALWAYS">
