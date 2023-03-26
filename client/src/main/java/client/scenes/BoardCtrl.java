@@ -22,6 +22,9 @@ public class BoardCtrl{
     private ObservableList<commons.List> data;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     private HBox listsHBox;
 
     @Inject
@@ -89,5 +92,9 @@ public class BoardCtrl{
 
     public void addListButton(){
         mainCtrl.showAddList();
+    }
+
+    public void back(){
+        mainCtrl.showBoardList();
     }
 }
