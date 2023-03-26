@@ -40,7 +40,7 @@
                   <VBox alignment="TOP_CENTER" minWidth="200.0" prefWidth="200.0" spacing="30.0">
                      <children>
                         <Pane minHeight="400.0" prefHeight="400.0" style="-fx-background-color: gray;" />
-                        <Button mnemonicParsing="false" text="Add Card" />
+                        <Button mnemonicParsing="false" onAction="#addCardButton" text="Add Card" />
                      </children>
                   </VBox>
                   <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addListButton" text="Add List">

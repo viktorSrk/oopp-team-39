@@ -50,7 +50,8 @@ public class AddCardCtrl {
 
     public void back() {
         clearFields();
-        mainCtrl.showOverview();
+        //mainCtrl.showBoard();
+        mainCtrl.closeAddCard();
     }
     //TODO: change to other show (board or list)
 
@@ -75,6 +76,7 @@ public class AddCardCtrl {
         System.out.println("Button Add has been clicked!");
         String name = titleTextField.getText();
         this.server.addCard(new Card(name));
+        mainCtrl.closeAddCard();
     }
 }
 
