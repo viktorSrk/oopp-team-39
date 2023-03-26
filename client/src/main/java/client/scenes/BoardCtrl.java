@@ -50,6 +50,8 @@ public class BoardCtrl {
             Button button = new Button();
             button.setMnemonicParsing(false);
             button.setText("Add Card");
+
+            //makes the controls work for the new buttons
             button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -71,6 +73,9 @@ public class BoardCtrl {
         mainCtrl.showAddList();
     }
 
+    /**
+     * Shows the Add Card Pop-Up
+     */
     public void addCardButton() {
         mainCtrl.showAddCard();
     }

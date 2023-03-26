@@ -53,7 +53,6 @@ public class AddCardCtrl {
         //mainCtrl.showBoard();
         mainCtrl.closeAddCard();
     }
-    //TODO: change to other show (board or list)
 
     private void clearFields() {
         descriptionTextField.clear();
