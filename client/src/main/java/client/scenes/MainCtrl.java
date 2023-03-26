@@ -44,6 +44,9 @@ public class MainCtrl {
     private AddCardCtrl addCardCtrl;
     private Scene addCard;
 
+    private EditCardCtrl editCardCtrl;
+    private Scene editCard;
+
     private CardCtrl cardCtrl;
     private Scene card;
 
@@ -59,6 +62,7 @@ public class MainCtrl {
                            Pair<BoardListCtrl, Parent> boardList,
                            Pair<BoardCtrl, Parent> board,
                            Pair<AddCardCtrl, Parent> addCard,
+                           Pair<EditCardCtrl, Parent> editCard,
                            Pair<AddListCtrl, Parent> addList,
                            Pair<CardCtrl, Parent> card,
                            Pair<ListCtrl, Parent> list
@@ -81,6 +85,9 @@ public class MainCtrl {
 
         this.addCardCtrl = addCard.getKey();
         this.addCard = new Scene(addCard.getValue());
+
+        this.editCardCtrl = editCard.getKey();
+        this.editCard = new Scene(editCard.getValue());
 
         this.cardCtrl = card.getKey();
         this.card = new Scene(card.getValue());
@@ -138,6 +145,17 @@ public class MainCtrl {
     public void showCard() {
         primaryStage.setTitle("Talio: Card");
         primaryStage.setScene(card);
+    }
+
+    public void showEditCard() {
+        secondStage.setTitle("Talio: Edit Card");
+        secondStage.setScene(editCard);
+        editCardCtrl.refresh();
+        secondStage.show();
+    }
+
+    public void closeEditCard() {
+        secondStage.close();
     }
 
     public void showAddList() {
