@@ -48,8 +48,12 @@ public class EditCardCtrl {
     public EditCardCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+        selectedCard = new Card("");
     }
 
+    /**
+     * Sets the values in the scene corresponding to the selected card, that is edited
+     */
     public void refresh() {
         titleTextField.setText(selectedCard.getTitle());
 //        descriptionTextField.setText(selectedCard.getDescription()); //TODO: implement description for cards, uncomment once implemented
@@ -59,16 +63,25 @@ public class EditCardCtrl {
 //        tasksListView.setItems(FXCollections.observableList(tasks));
     }
 
+    /**
+     * goes back to board
+     */
     public void back() {
         clearFields();
         mainCtrl.showBoard();
     }
 
+    /**
+     * clears all the fields in the scene
+     */
     private void clearFields() {
         descriptionTextField.clear();
         titleTextField.clear();
     }
 
+    /**
+     * adds a task to the list of tasks in the card
+     */
     @FXML
     public void addTask() {
         String task = taskTextField.getText();
@@ -79,6 +92,9 @@ public class EditCardCtrl {
         }
     }
 
+    /**
+     * confirms the changes that are made to the card
+     */
     @FXML
     public void edit() {
         Card editedCard = selectedCard;
