@@ -56,11 +56,10 @@ class ListControllerTest {
     @Test
     void replaceList() {
         var list = new List("a");
-        var list2 = new List("b");
         sut.addList(list);
-        sut.replaceList(list2, list.getId());
+        list.setTitle("b");
+        sut.replaceList(list, list.getId());
 
-        assertFalse(repo.lists.contains(list));
-        assertTrue(repo.lists.contains(list2));
+        assertTrue(repo.getById(list.getId()).getTitle().equals("b"));
     }
 }

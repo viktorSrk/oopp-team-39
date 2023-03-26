@@ -66,13 +66,13 @@ public class ListController {
         if (list == null || isNullOrEmpty(list.getTitle()) || !repo.existsById(id))
             return ResponseEntity.badRequest().build();
 
-        commons.List toDelete = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
+        commons.List listToChange = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
 
-        if (toDelete != null)
-            repo.delete(toDelete);
+        listToChange.setTitle(list.getTitle());
+        listToChange.setCards(list.getCards());
+        repo.save(listToChange);
 
-        repo.save(list);
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(listToChange);
     }
 
     private static boolean isNullOrEmpty(String s) {
