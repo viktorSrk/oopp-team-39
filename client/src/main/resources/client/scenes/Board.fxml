@@ -32,7 +32,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Text>
-                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#refresh" text="Temp Refresh" />
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadLists" text="Temp Refresh" />
                   <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" text="Back" />
                </children>
             </VBox>

@@ -127,7 +127,7 @@ public class MainCtrl {
     public void showBoard() {
         primaryStage.setTitle("Talio: Board");
         primaryStage.setScene(board);
-        boardCtrl.refresh();
+        boardCtrl.loadLists();
     }
 
     public void showAddCard() {

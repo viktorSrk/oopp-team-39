@@ -43,7 +43,6 @@ public class ListCtrl {
 
     public void loadCards() {
         var cards = server.getCards();
-//        data = FXCollections.observableList(cards);
         var cardsVBoxChildren = cardsVBox.getChildren();
         cardsVBoxChildren.remove(0, cardsVBoxChildren.size());
 
