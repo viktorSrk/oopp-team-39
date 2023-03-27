@@ -31,4 +31,8 @@ public class ListCtrl {
         this.server = server;
         this.mainCtrl = mainCtrl;
     }
+
+    public void showName(commons.List list) {
+        titleTextField.setText(list.getTitle());
+    }
 }
