@@ -5,7 +5,7 @@ import client.MyModule;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import javafx.collections.FXCollections;
+//import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 //import javafx.geometry.Pos;
@@ -43,11 +43,12 @@ public class BoardCtrl {
 
     public void refresh() {
         var lists = server.getLists();
-        data = FXCollections.observableList(lists);
+        // TODO: Is the observableList really necessary?
+//        data = FXCollections.observableList(lists);
         var listsHBoxChildren = listsHBox.getChildren();
         listsHBoxChildren.remove(0, listsHBoxChildren.size() - 1);
 
-        for (var list : data) {
+        for (var list : lists) {
 //            Pane pane = new Pane();
 //            pane.setPrefSize(200.0, 400.0);
 //            pane.setMinSize(200.0, 400.0);
@@ -70,6 +71,7 @@ public class BoardCtrl {
 
             var loadedPair = fxml.load(ListCtrl.class, "client", "scenes", "List.fxml");
             loadedPair.getKey().showName(list);
+            loadedPair.getKey().loadCards();
             listsHBoxChildren.add(listsHBoxChildren.size() - 1, loadedPair.getValue());
         }
     }

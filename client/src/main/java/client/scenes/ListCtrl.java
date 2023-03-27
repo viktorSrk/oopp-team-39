@@ -1,11 +1,16 @@
 package client.scenes;
 
+import client.MyFXML;
+import client.MyModule;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+
+import static com.google.inject.Guice.createInjector;
 
 public class ListCtrl {
 
@@ -34,5 +39,21 @@ public class ListCtrl {
 
     public void showName(commons.List list) {
         titleTextField.setText(list.getTitle());
+    }
+
+    public void loadCards() {
+        var cards = server.getCards();
+//        data = FXCollections.observableList(cards);
+        var cardsVBoxChildren = cardsVBox.getChildren();
+        cardsVBoxChildren.remove(0, cardsVBoxChildren.size());
+
+        for (var card : cards) {
+            Injector injector = createInjector(new MyModule());
+            MyFXML fxml = new MyFXML(injector);
+
+            var loadedPair = fxml.load(CardCtrl.class, "client", "scenes", "Card.fxml");
+            loadedPair.getKey().showName(card);
+            cardsVBoxChildren.add(loadedPair.getValue());
+        }
     }
 }
