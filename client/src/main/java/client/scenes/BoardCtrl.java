@@ -42,10 +42,10 @@ public class BoardCtrl {
         var listsHBoxChildren = listsHBox.getChildren();
         listsHBoxChildren.remove(0, listsHBoxChildren.size() - 1);
 
-        for (var list : lists) {
-            Injector injector = createInjector(new MyModule());
-            MyFXML fxml = new MyFXML(injector);
+        Injector injector = createInjector(new MyModule());
+        MyFXML fxml = new MyFXML(injector);
 
+        for (var list : lists) {
             var loadedPair = fxml.load(ListCtrl.class, "client", "scenes", "List.fxml");
             loadedPair.getKey().showName(list);
             loadedPair.getKey().loadCards();

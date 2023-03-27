@@ -46,10 +46,10 @@ public class ListCtrl {
         var cardsVBoxChildren = cardsVBox.getChildren();
         cardsVBoxChildren.remove(0, cardsVBoxChildren.size());
 
-        for (var card : cards) {
-            Injector injector = createInjector(new MyModule());
-            MyFXML fxml = new MyFXML(injector);
+        Injector injector = createInjector(new MyModule());
+        MyFXML fxml = new MyFXML(injector);
 
+        for (var card : cards) {
             var loadedPair = fxml.load(CardCtrl.class, "client", "scenes", "Card.fxml");
             loadedPair.getKey().showName(card);
             cardsVBoxChildren.add(loadedPair.getValue());
