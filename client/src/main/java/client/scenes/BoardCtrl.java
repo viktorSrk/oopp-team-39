@@ -50,6 +50,11 @@ public class BoardCtrl{
                 listsHBox.getChildren().remove(i);
             });
         });
+        server.registerForUpdates("/topic/list/update", Long.class , l -> {
+            Platform.runLater(() -> {
+                loadLists();
+            });
+        });
     }
     public HBox getListsHBox() {
         return listsHBox;

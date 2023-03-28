@@ -13,11 +13,12 @@ import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 public class List {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private java.util.List<Card> cards;
+
+    @OneToMany(mappedBy = "list")
+    private java.util.List<Card> cards = new ArrayList<>();
     private int numberOfCards;
 
     /**
@@ -26,7 +27,6 @@ public class List {
      */
     public List(String title) {
         this.title = title;
-        this.cards = new ArrayList<Card>();
         this.numberOfCards = 0;
     }
 

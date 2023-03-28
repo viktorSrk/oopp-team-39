@@ -53,7 +53,7 @@ public class ListCtrl {
     }
 
     public void loadCards() {
-        var cards = server.getCards();
+        var cards = cardList.getCards();
         var cardsVBoxChildren = cardsVBox.getChildren();
         cardsVBoxChildren.remove(0, cardsVBoxChildren.size());
 
@@ -72,6 +72,6 @@ public class ListCtrl {
     }
 
     public void addCard() {
-        mainCtrl.showAddCard();
+        mainCtrl.showAddCard(cardList);
     }
 }
