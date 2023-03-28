@@ -2,6 +2,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Card;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -31,5 +32,9 @@ public class CardCtrl {
 
     public void open(){
         //open the related card
+    }
+
+    public void showName(Card card) {
+        titleTextField.setText(card.getTitle());
     }
 }
