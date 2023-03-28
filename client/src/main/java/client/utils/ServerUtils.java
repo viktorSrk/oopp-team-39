@@ -182,4 +182,12 @@ public class ServerUtils {
     public void send(String dest, Object o) {
         session.send(dest, o);
     }
+
+    public commons.Card replaceCard(commons.Card card, long id) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(server).path("api/cards/" + id)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
+    }
 }
