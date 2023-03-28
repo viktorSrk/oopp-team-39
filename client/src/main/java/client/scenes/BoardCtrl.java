@@ -9,8 +9,10 @@ import javafx.collections.FXCollections;
 import com.google.inject.Injector;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.util.Pair;
 
 import static com.google.inject.Guice.createInjector;
 
@@ -40,7 +42,8 @@ public class BoardCtrl{
             Platform.runLater(() -> {
                 Injector injector = createInjector(new MyModule());
                 MyFXML fxml = new MyFXML(injector);
-                appendList(l, fxml);
+                listsHBox.getChildren().add( listsHBox.getChildren().size() - 1,
+                        createList(l, fxml).getValue());
             });
         });
         server.registerForUpdates("/topic/list/delete", commons.List.class, l -> {
@@ -50,18 +53,30 @@ public class BoardCtrl{
                 listsHBox.getChildren().remove(i);
             });
         });
+        server.registerForUpdates("/topic/list/replace", commons.List.class, l -> {
+            for (int i = 0; i < data.size(); i++) {
+                if (data.get(i).getId() == l.getId()) {
+                    Platform.runLater(() -> {
+                        Injector injector = createInjector(new MyModule());
+                        MyFXML fxml = new MyFXML(injector);
+                        listsHBox.getChildren().set(i, createList(l, fxml).getValue());
+                    });
+                }
+                break;
+            }
+        });
     }
     public HBox getListsHBox() {
         return listsHBox;
     }
 
-    public void appendList(commons.List list, MyFXML fxml) {
+    public Pair<ListCtrl, Parent> createList(commons.List list, MyFXML fxml) {
         var loadedPair = fxml.load(ListCtrl.class, "client", "scenes", "List.fxml");
         loadedPair.getKey().setMainCtrl(mainCtrl);
         loadedPair.getKey().setCardList(list);
         loadedPair.getKey().showName();
         loadedPair.getKey().loadCards();
-        listsHBox.getChildren().add( listsHBox.getChildren().size() - 1, loadedPair.getValue());
+        return loadedPair;
     }
 
     public void loadLists() {
@@ -74,7 +89,8 @@ public class BoardCtrl{
         MyFXML fxml = new MyFXML(injector);
 
         for (var list : lists) {
-            appendList(list, fxml);
+            listsHBox.getChildren().add( listsHBox.getChildren().size() - 1,
+                    createList(list, fxml).getValue());
         }
     }
 

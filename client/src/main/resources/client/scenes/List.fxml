@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="549.0" prefWidth="298.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ListCtrl">
    <children>
-      <TextField fx:id="titleTextField" alignment="CENTER" layoutX="37.0" layoutY="30.0" prefHeight="90.0" prefWidth="224.0" promptText="List Name">
+      <TextField fx:id="titleTextField" alignment="CENTER" layoutX="37.0" layoutY="30.0" onAction="#changeTitle" prefHeight="90.0" prefWidth="224.0" promptText="List Name">
          <font>
             <Font size="38.0" />
          </font>
@@ -19,7 +19,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="deleteCardButton" layoutX="14.0" layoutY="484.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="99.0" text="Delete" onAction="#delete">
+      <Button fx:id="deleteCardButton" layoutX="14.0" layoutY="484.0" mnemonicParsing="false" onAction="#delete" prefHeight="46.0" prefWidth="99.0" text="Delete">
          <font>
             <Font size="18.0" />
          </font>
