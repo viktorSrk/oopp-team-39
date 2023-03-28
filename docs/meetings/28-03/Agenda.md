@@ -51,6 +51,7 @@
 - Which Advanced Feature do we want introduced?
     - Multi Board
     - Card Subtasks/Description/Tags/...
+    - UI overhaul (stylesheets)
     - ...
 
 ### 8. Additions to the Agenda
