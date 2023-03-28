@@ -32,6 +32,8 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Text>
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadLists" text="Temp Refresh" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" text="Back" />
                </children>
             </VBox>
             <ScrollPane fitToWidth="true" hmax="2.0" pannable="true" prefHeight="621.0" prefWidth="1050.0" vbarPolicy="NEVER" vmax="2.0" HBox.hgrow="ALWAYS">

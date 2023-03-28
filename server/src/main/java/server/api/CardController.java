@@ -19,7 +19,7 @@ public class CardController {
         this.repo = repo;
     }
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public List<Card> getAllCards() {
         return repo.findAll();
     }
