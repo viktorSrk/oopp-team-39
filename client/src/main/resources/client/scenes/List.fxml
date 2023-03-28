@@ -14,7 +14,7 @@
          </font>
       </TextField>
       <VBox fx:id="cardsVBox" layoutX="38.0" layoutY="143.0" prefHeight="342.0" prefWidth="216.0" />
-      <Button fx:id="addCardButton" layoutX="184.0" layoutY="485.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="99.0" text="Add Card">
+      <Button fx:id="addCardButton" layoutX="184.0" layoutY="485.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="99.0" text="Add Card" onAction="#addCard">
          <font>
             <Font size="18.0" />
          </font>

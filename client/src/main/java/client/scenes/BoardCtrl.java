@@ -72,6 +72,7 @@ public class BoardCtrl{
 
     public Pair<ListCtrl, Parent> createList(commons.List list, MyFXML fxml) {
         var loadedPair = fxml.load(ListCtrl.class, "client", "scenes", "List.fxml");
+        loadedPair.getKey().setMainCtrl(mainCtrl);
         loadedPair.getKey().setCardList(list);
         loadedPair.getKey().showName();
         loadedPair.getKey().loadCards();
@@ -97,7 +98,8 @@ public class BoardCtrl{
         mainCtrl.showAddList();
     }
 
-    public void back(){
+    public void back() {
         mainCtrl.showBoardList();
     }
+
 }

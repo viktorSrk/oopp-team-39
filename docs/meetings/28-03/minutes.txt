@@ -1,0 +1,31 @@
+Dates:
+- 30-03: Meeting in the library
+- 31-03: Product pitch
+- 04-03: Product should be finished after merging everything after the meeting
+
+16:46 Start meeting
+16:47 Talked about the Teamwork Self-Reflection
+
+16:48 Divided tasks for the pitch:
+	- George: Introduction, User Perspective
+	- Marco: Features UI / Interaction Flow
+	- Gido and Leon: Review Product Grading Schema
+	- Senne: Non-visible Features (polling)
+	- Viktor: How to extend the Application next, Wrap up
+
+	- Gido: Combine the clips
+
+16:58 We will link the technology rubric to our code on Thursday (30-03)
+
+17:00 Issues that still need to be done: drag and drop, editing cards. Issues for next week:
+	- Marco: Drag and drop
+	- Leon: Editing cards, Show boards
+	- Senne: Everything related to websockets stuff
+	- George: Make the UI look nicely
+	- Gido: Fix that the correct cards inside lists are shown, Create/rename/delete boards
+	- Viktor: Add all the extra details to cards
+
+17:17 Showed prototype to Mike
+17:18 Closed meeting
+
+Leon is chair next week
