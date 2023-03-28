@@ -34,8 +34,9 @@ public class ServerConnectCtrl implements Initializable{
 
     public void connect() {
         try {
-            ServerUtils.setSERVER(serverip.getText());
-            ServerUtils.testURL();                         //test if given URL is actually working
+            ServerUtils.setServer(serverip.getText());
+            ServerUtils.testURL();//test if given URL is actually working
+            mainCtrl.setWebsocketSessions();
             mainCtrl.showBoardList();
         }
         catch (Exception e) {

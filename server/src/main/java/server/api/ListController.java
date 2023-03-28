@@ -1,14 +1,16 @@
 package server.api;
 
 import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.database.ListRepository;
 
 @RestController
 @RequestMapping("/api/lists")
 public class ListController {
-
     private final ListRepository repo;
 
     public ListController(ListRepository repo) {
@@ -28,6 +30,12 @@ public class ListController {
         return ResponseEntity.ok(res);
     }
 
+    @MessageMapping("/list/add")
+    @SendTo("/topic/list/add")
+    public commons.List addMessage(commons.List list) {
+        addList(list);
+        return list;
+    }
     @PostMapping({"", "/"})
     public ResponseEntity<commons.List> addList(@RequestBody commons.List list) {
         if (list == null || isNullOrEmpty(list.getTitle()))
@@ -37,6 +45,12 @@ public class ListController {
         return ResponseEntity.ok(saved);
     }
 
+    @MessageMapping("/list/delete")
+    @SendTo("/topic/list/delete")
+    public commons.List removeMessage(commons.List list) {
+        removeList(list);
+        return list;
+    }
     @DeleteMapping({"", "/"})
     public ResponseEntity<commons.List> removeList(@RequestBody commons.List list){
         if (list == null || isNullOrEmpty(list.getTitle()) || !repo.existsById(list.getId()))
