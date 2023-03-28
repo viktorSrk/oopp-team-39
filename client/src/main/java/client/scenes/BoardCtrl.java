@@ -56,13 +56,15 @@ public class BoardCtrl{
         server.registerForUpdates("/topic/list/replace", commons.List.class, l -> {
             for (int i = 0; i < data.size(); i++) {
                 if (data.get(i).getId() == l.getId()) {
+                    int j = i;
                     Platform.runLater(() -> {
                         Injector injector = createInjector(new MyModule());
                         MyFXML fxml = new MyFXML(injector);
-                        listsHBox.getChildren().set(i, createList(l, fxml).getValue());
+                        listsHBox.getChildren().set(j, createList(l, fxml).getValue());
                     });
+                    break;
                 }
-                break;
+
             }
         });
     }
