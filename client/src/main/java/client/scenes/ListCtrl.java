@@ -5,6 +5,7 @@ import client.MyModule;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import commons.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -30,6 +31,8 @@ public class ListCtrl {
     @FXML
     private VBox cardsVBox;
 
+    private commons.List cardList;
+
 
     @Inject
     public ListCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -37,8 +40,12 @@ public class ListCtrl {
         this.mainCtrl = mainCtrl;
     }
 
-    public void showName(commons.List list) {
-        titleTextField.setText(list.getTitle());
+    public void setCardList(List cardList) {
+        this.cardList = cardList;
+    }
+
+    public void showName() {
+        titleTextField.setText(cardList.getTitle());
     }
 
     public void loadCards() {
@@ -54,5 +61,9 @@ public class ListCtrl {
             loadedPair.getKey().showName(card);
             cardsVBoxChildren.add(loadedPair.getValue());
         }
+    }
+
+    public void delete() {
+        server.send("/app/list/delete", cardList);
     }
 }

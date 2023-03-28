@@ -4,6 +4,8 @@ import client.MyFXML;
 import client.MyModule;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import com.google.inject.Injector;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +14,7 @@ import javafx.scene.layout.HBox;
 
 import static com.google.inject.Guice.createInjector;
 
-public class BoardCtrl {
+public class BoardCtrl{
 
     private final ServerUtils server;
 
@@ -32,13 +34,38 @@ public class BoardCtrl {
         this.mainCtrl = mainCtrl;
     }
 
+    public void setWebsocketSessions() {
+        server.registerForUpdates("/topic/list/add", commons.List.class, l -> {
+            data.add(l);
+            Platform.runLater(() -> {
+                Injector injector = createInjector(new MyModule());
+                MyFXML fxml = new MyFXML(injector);
+                appendList(l, fxml);
+            });
+        });
+        server.registerForUpdates("/topic/list/delete", commons.List.class, l -> {
+            int i = data.indexOf(l);
+            data.remove(l);
+            Platform.runLater(() -> {
+                listsHBox.getChildren().remove(i);
+            });
+        });
+    }
     public HBox getListsHBox() {
         return listsHBox;
     }
 
+    public void appendList(commons.List list, MyFXML fxml) {
+        var loadedPair = fxml.load(ListCtrl.class, "client", "scenes", "List.fxml");
+        loadedPair.getKey().setCardList(list);
+        loadedPair.getKey().showName();
+        loadedPair.getKey().loadCards();
+        listsHBox.getChildren().add( listsHBox.getChildren().size() - 1, loadedPair.getValue());
+    }
 
     public void loadLists() {
         var lists = server.getLists();
+        data = FXCollections.observableList(lists);
         var listsHBoxChildren = listsHBox.getChildren();
         listsHBoxChildren.remove(0, listsHBoxChildren.size() - 1);
 
@@ -46,10 +73,7 @@ public class BoardCtrl {
         MyFXML fxml = new MyFXML(injector);
 
         for (var list : lists) {
-            var loadedPair = fxml.load(ListCtrl.class, "client", "scenes", "List.fxml");
-            loadedPair.getKey().showName(list);
-            loadedPair.getKey().loadCards();
-            listsHBoxChildren.add(listsHBoxChildren.size() - 1, loadedPair.getValue());
+            appendList(list, fxml);
         }
     }
 
