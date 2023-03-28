@@ -66,4 +66,11 @@ public class ListCtrl {
     public void delete() {
         server.send("/app/list/delete", cardList);
     }
+
+
+    public void changeTitle(){
+        var text = titleTextField.getText();
+        cardList.setTitle(text);
+        server.send("/app/list/replace",cardList);
+    }
 }
