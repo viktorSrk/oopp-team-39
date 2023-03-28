@@ -8,6 +8,8 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import com.google.inject.Injector;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -57,6 +59,7 @@ public class BoardCtrl{
 
     public void appendList(commons.List list, MyFXML fxml) {
         var loadedPair = fxml.load(ListCtrl.class, "client", "scenes", "List.fxml");
+        loadedPair.getKey().setMainCtrl(mainCtrl);
         loadedPair.getKey().setCardList(list);
         loadedPair.getKey().showName();
         loadedPair.getKey().loadCards();
@@ -81,7 +84,8 @@ public class BoardCtrl{
         mainCtrl.showAddList();
     }
 
-    public void back(){
+    public void back() {
         mainCtrl.showBoardList();
     }
+
 }

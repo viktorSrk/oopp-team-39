@@ -132,8 +132,14 @@ public class MainCtrl {
     }
 
     public void showAddCard() {
-        primaryStage.setTitle("Talio: addCard");
-        primaryStage.setScene(addCard);
+//        primaryStage.setTitle("Talio: addCard");
+//        primaryStage.setScene(addCard);
+        secondStage.setTitle("Talio: addCard");
+        secondStage.setScene(addCard);
+        secondStage.show();
+    }
+    public void closeAddCard() {
+        secondStage.close();
     }
 
     public void showCard() {
