@@ -19,12 +19,12 @@ import java.util.List;
 public class CardController {
 
     private final CardRepository repo;
-
     @Autowired
     ListRepository listRepo;
 
-    public CardController(CardRepository repo) {
+    public CardController(CardRepository repo, ListRepository listRepo) {
         this.repo = repo;
+        this.listRepo = listRepo;
     }
 
     @GetMapping({"", "/"})
@@ -54,12 +54,19 @@ public class CardController {
             return ResponseEntity.badRequest().build();
 
         commons.List assoc = listRepo.getById(listId);
+
         Card saved = repo.save(card);
         saved.setList(assoc);
         saved = repo.save(saved);
         return ResponseEntity.ok(saved);
     }
 
+    @MessageMapping("/card/delete")
+    @SendTo("/topic/list/update")
+    public Long removeMessage(Card card) {
+        removeCard(card);
+        return -1L; //value shouldn't matter right now, because it just updates all lists anyway
+    }
     @DeleteMapping("/")
     public ResponseEntity<Card> removeCard(@RequestBody Card card){
         if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(card.getId()))

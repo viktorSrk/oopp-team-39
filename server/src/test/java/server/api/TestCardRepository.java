@@ -81,7 +81,7 @@ public class TestCardRepository implements CardRepository {
     public <S extends Card> S save(S entity) {
         call("save");
         entity.setId((long) cards.size());
-        cards.add(entity);
+        if (!cards.contains(entity)) cards.add(entity);
         return entity;
     }
 

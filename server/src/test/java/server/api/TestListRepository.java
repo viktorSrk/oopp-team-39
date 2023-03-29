@@ -81,7 +81,7 @@ public class TestListRepository implements ListRepository {
     public <S extends List> S save(S entity) {
         call("save");
         entity.setId((long) lists.size());
-        lists.add(entity);
+        if (!lists.contains(entity)) lists.add(entity);
         return entity;
     }
 

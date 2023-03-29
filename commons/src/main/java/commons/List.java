@@ -17,7 +17,7 @@ public class List {
     private Long id;
     private String title;
 
-    @OneToMany(mappedBy = "list")
+    @OneToMany(mappedBy = "list", orphanRemoval = true)
     private java.util.List<Card> cards = new ArrayList<>();
     private int numberOfCards;
 

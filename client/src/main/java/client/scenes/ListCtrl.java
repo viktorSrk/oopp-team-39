@@ -62,6 +62,7 @@ public class ListCtrl {
 
         for (var card : cards) {
             var loadedPair = fxml.load(CardCtrl.class, "client", "scenes", "Card.fxml");
+            loadedPair.getKey().setCard(card);
             loadedPair.getKey().showName(card);
             cardsVBoxChildren.add(loadedPair.getValue());
         }

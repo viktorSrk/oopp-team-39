@@ -13,6 +13,6 @@
          </font>
       </TextField>
       <Button fx:id="openButton" layoutX="295.0" layoutY="39.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="67.0" text="Open" />
-      <Button fx:id="deleteButton" layoutX="295.0" layoutY="102.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="67.0" text="Delete" />
+      <Button fx:id="deleteButton" layoutX="295.0" layoutY="102.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="67.0" text="Delete" onAction="#delete"/>
    </children>
 </AnchorPane>
