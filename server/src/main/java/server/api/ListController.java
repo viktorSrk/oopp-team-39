@@ -60,6 +60,14 @@ public class ListController {
         return ResponseEntity.ok(list);
     }
 
+    @MessageMapping("/list/replace")
+    @SendTo("/topic/list/replace")
+    public commons.List replaceListMessage(commons.List list) {
+        return replaceList(list, list.getId()).getBody();
+    }
+
+
+
     @PutMapping("/{id}")
     public ResponseEntity<commons.List> replaceList(@RequestBody commons.List list,
                                                     @PathVariable("id") long id){
