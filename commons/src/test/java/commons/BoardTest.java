@@ -6,6 +6,20 @@ import org.junit.jupiter.api.Test;
 
 
 public class BoardTest {
+
+    @Test
+    public void getIdTest() {
+        Board b1 = new Board();
+        assertEquals(0, b1.getId());
+    }
+
+    @Test
+    public void setIdTest() {
+        Board b1 = new Board();
+        b1.setId(1862);
+        assertEquals(1862, b1.getId());
+    }
+
     @Test
     public void equalsTest() {
         Board b1 = new Board();
