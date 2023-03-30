@@ -75,7 +75,7 @@ class CardControllerTest {
         var card = new Card("a");
         sut.addCard(card, 1L);
         card.setTitle("b");
-        sut.replaceCard(card, card.getId());
+        sut.replaceCard(card);
 
         assertTrue(repo.getById(card.getId()).getTitle().equals("b"));
     }

@@ -77,8 +77,9 @@ public class CardController {
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Card> replaceCard(@RequestBody Card card, @PathVariable("id") long id){
+    @PutMapping("/")
+    public ResponseEntity<Card> replaceCard(@RequestBody Card card){
+        long id = card.getId();
         if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(id))
             return ResponseEntity.badRequest().build();
 

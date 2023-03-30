@@ -46,4 +46,10 @@ public class CardCtrl {
     public void showName(Card card) {
         titleTextField.setText(card.getTitle());
     }
+
+    public void changeTitle(){
+        var text = titleTextField.getText();
+        card.setTitle(text);
+        server.replaceCard(card, card.getId());
+    }
 }
