@@ -138,11 +138,12 @@ public class MainCtrl {
         boardCtrl.loadLists();
     }
 
-    public void showAddCard() {
+    public void showAddCard(commons.List list) {
 //        primaryStage.setTitle("Talio: addCard");
 //        primaryStage.setScene(addCard);
         secondStage.setTitle("Talio: addCard");
         secondStage.setScene(addCard);
+        addCardCtrl.setList(list);
         secondStage.show();
     }
     public void closeAddCard() {

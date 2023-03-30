@@ -14,6 +14,8 @@ public class CardCtrl {
 
     private final MainCtrl mainCtrl;
 
+    private Card card;
+
     @FXML
     private TextField titleTextField;
 
@@ -28,10 +30,17 @@ public class CardCtrl {
         this.server = server;
         this.mainCtrl = mainCtrl;
     }
+    public void setCard(Card card) {
+        this.card = card;
+    }
 //TODO: I need to initialise the title with onw form the database (probably in the contstructor)
 
     public void open(){
         //open the related card
+    }
+
+    public void delete() {
+        server.send("/app/card/delete", card);
     }
 
     public void showName(Card card) {

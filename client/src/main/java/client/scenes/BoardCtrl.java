@@ -46,6 +46,7 @@ public class BoardCtrl{
                         createList(l, fxml).getValue());
             });
         });
+        
         server.registerForUpdates("/topic/list/delete", commons.List.class, l -> {
             int i = data.indexOf(l);
             data.remove(l);
@@ -53,6 +54,13 @@ public class BoardCtrl{
                 listsHBox.getChildren().remove(i);
             });
         });
+
+        server.registerForUpdates("/topic/list/update", Long.class , l -> {
+            Platform.runLater(() -> {
+                loadLists();
+            });
+        });
+
         server.registerForUpdates("/topic/list/replace", commons.List.class, l -> {
             for (int i = 0; i < data.size(); i++) {
                 if (data.get(i).getId() == l.getId()) {

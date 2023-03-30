@@ -53,7 +53,7 @@ public class ListCtrl {
     }
 
     public void loadCards() {
-        var cards = server.getCards();
+        var cards = cardList.getCards();
         var cardsVBoxChildren = cardsVBox.getChildren();
         cardsVBoxChildren.remove(0, cardsVBoxChildren.size());
 
@@ -62,6 +62,7 @@ public class ListCtrl {
 
         for (var card : cards) {
             var loadedPair = fxml.load(CardCtrl.class, "client", "scenes", "Card.fxml");
+            loadedPair.getKey().setCard(card);
             loadedPair.getKey().showName(card);
             cardsVBoxChildren.add(loadedPair.getValue());
         }
@@ -77,6 +78,6 @@ public class ListCtrl {
         server.send("/app/list/replace",cardList);
     }
     public void addCard() {
-        mainCtrl.showAddCard();
+        mainCtrl.showAddCard(cardList);
     }
 }

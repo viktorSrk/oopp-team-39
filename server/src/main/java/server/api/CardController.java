@@ -2,9 +2,14 @@ package server.api;
 
 
 import commons.Card;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.database.CardRepository;
+import server.database.ListRepository;
 
 import java.util.List;
 
@@ -14,9 +19,12 @@ import java.util.List;
 public class CardController {
 
     private final CardRepository repo;
+    @Autowired
+    ListRepository listRepo;
 
-    public CardController(CardRepository repo) {
+    public CardController(CardRepository repo, ListRepository listRepo) {
         this.repo = repo;
+        this.listRepo = listRepo;
     }
 
     @GetMapping({"", "/"})
@@ -30,13 +38,34 @@ public class CardController {
         Card res = repo.findById(id).get();
         return ResponseEntity.ok(res);
     }
-    @PostMapping("/")
-    public ResponseEntity<Card> addCard(@RequestBody Card card) {
+    @MessageMapping("/cards/add/{listId}")
+    @SendTo("/topic/list/update")
+    public Long addMessage(@DestinationVariable long listId, Card card) {
+        addCard(card, listId);
+        return listId;
+    }
+
+    @PostMapping("add/{listId}")
+    public ResponseEntity<Card> addCard(
+            @RequestBody Card card,
+            @PathVariable Long listId
+    ) {
         if (card == null || isNullOrEmpty(card.getTitle()))
             return ResponseEntity.badRequest().build();
 
+        commons.List assoc = listRepo.getById(listId);
+
         Card saved = repo.save(card);
+        saved.setList(assoc);
+        saved = repo.save(saved);
         return ResponseEntity.ok(saved);
+    }
+
+    @MessageMapping("/card/delete")
+    @SendTo("/topic/list/update")
+    public Long removeMessage(Card card) {
+        removeCard(card);
+        return -1L; //value shouldn't matter right now, because it just updates all lists anyway
     }
     @DeleteMapping("/")
     public ResponseEntity<Card> removeCard(@RequestBody Card card){
