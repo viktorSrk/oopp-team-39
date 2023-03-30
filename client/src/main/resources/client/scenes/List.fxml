@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="549.0" prefWidth="298.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ListCtrl">
+<AnchorPane prefHeight="745.0" prefWidth="335.0" style="-fx-background-color: FFFFFF;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ListCtrl">
    <children>
-      <TextField fx:id="titleTextField" alignment="CENTER" layoutX="37.0" layoutY="30.0" onAction="#changeTitle" prefHeight="90.0" prefWidth="224.0" promptText="List Name">
+      <Rectangle fill="#d9d9d9" height="679.0" layoutX="16.0" layoutY="68.0" stroke="BLACK" strokeType="INSIDE" width="305.0">
+         <effect>
+            <InnerShadow blurType="GAUSSIAN" color="rgba(0,0,0,0.5)" offsetX="3.0" offsetY="3.0" radius="6.0" />
+         </effect>
+      </Rectangle>
+      <TextField fx:id="titleTextField" alignment="CENTER" layoutX="67.0" onAction="#changeTitle" prefHeight="40.0" prefWidth="203.0" promptText="List Name" style="-fx-background-color: FFFFFF;">
          <font>
-            <Font size="38.0" />
+            <Font name="Helvetica" size="36.0" />
          </font>
       </TextField>
-      <VBox fx:id="cardsVBox" layoutX="38.0" layoutY="143.0" prefHeight="342.0" prefWidth="216.0" />
-      <Button fx:id="addCardButton" layoutX="184.0" layoutY="485.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="99.0" text="Add Card" onAction="#addCard">
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="24.0" layoutY="75.0" prefHeight="580.0" prefWidth="290.0" style="-fx-background-color: transparent; -fx-vbar-policy: NEVER; -fx-border-color: transparent; -fx-background: transparent; -fx-padding: 0;" vbarPolicy="AS_NEEDED">
+      <content>
+            <VBox fx:id="cardsVBox" />
+         </content>
+      </ScrollPane>
+      <Circle fx:id="addCardCircle" centerX="241.0" centerY="480.0" fill="#ffa6a6" layoutX="-73.0" layoutY="218.0" onMouseClicked="#addCard" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+      <Text fx:id="addCardText" layoutX="233.0" layoutY="489.0" onMouseClicked="#addCard" strokeType="OUTSIDE" strokeWidth="0.0" text="+" x="-72.0" y="216.0">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font>
-      </Button>
-      <Button fx:id="deleteCardButton" layoutX="14.0" layoutY="484.0" mnemonicParsing="false" onAction="#delete" prefHeight="46.0" prefWidth="99.0" text="Delete">
+      </Text>
+      <Text fx:id="deleteCardText" fill="#cd1d1d" layoutX="288.0" layoutY="43.0" onMouseClicked="#delete" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
          <font>
-            <Font size="18.0" />
+            <Font name="Roboto Light" size="24.0" />
          </font>
-      </Button>
+      </Text>
    </children>
 </AnchorPane>
