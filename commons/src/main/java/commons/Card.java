@@ -28,7 +28,6 @@ public class Card {
         //for object mapper
     }
 
-
     public Card(String title, List list) {
         this.title = title;
         this.list = list;
