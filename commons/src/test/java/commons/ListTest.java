@@ -8,13 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ListTest {
 
-//    @Test
-//    void getId() {
-//        List test = new List();
-//        assertEquals(0, test.getId());
-//        List test2 = new List();
-//        assertEquals(1, test2.getId());
-//    }
+    @Test
+    void setId() {
+        List test = new List();
+        test.setId((long)1862);
+        assertEquals(1862, test.getId());
+    }
 
     @Test
     void getTitle() {
@@ -88,5 +87,37 @@ class ListTest {
         test.addCard(new Card(""));
         assertEquals(card, test.removeCard(2));
         assertEquals(3, test.getNumberOfCards());
+        assertThrows(IndexOutOfBoundsException.class, () -> test.removeCard(3));
+    }
+
+    @Test
+    void equalsTest() {
+        List l1 = new List();
+        List l2 = new List();
+        Card card = new Card("");
+        l1.addCard(card);
+        l1.setTitle("list");
+        l1.setId((long)1862);
+        l2.addCard(card);
+        l2.setTitle("list");
+        l2.setId((long)1862);
+        assertEquals(l1, l2);
+    }
+
+    @Test
+    void notEqualsTest() {
+        List l1 = new List();
+        List l2 = new List();
+        Card card = new Card("");
+        l1.addCard(card);
+        assertNotEquals(l1, l2);
+
+        l2.addCard(card);
+        l1.setTitle("list");
+        assertNotEquals(l1, l2);
+
+        l2.setTitle("list");
+        l1.setId((long)1862);
+        assertNotEquals(l1, l2);
     }
 }
