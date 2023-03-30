@@ -22,11 +22,13 @@ public class BoardControllerTest {
         assertTrue(repo.calledMethods.contains("save"));
     }
 
+    //because for non-multi-board application, it automatically adds 1 board,
+    //thus the size of boards being +1 then expected
     @Test
     public void getAllBoardsTest() {
         sut.add();
         sut.add();
-        assertEquals(2, sut.getAll().size());
+        assertEquals(3, sut.getAll().size());
     }
 
     @Test

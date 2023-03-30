@@ -29,7 +29,8 @@ public class AddListCtrl {
 
     public void ok() {
         try {
-            server.send("/app/list/add", getList());
+            //TODO for multi-boards, this needs to get board id instead of 1
+            server.send("/app/list/add/" + 1, getList());
         } catch (WebApplicationException e) {
 
             var alert = new Alert(Alert.AlertType.ERROR);
