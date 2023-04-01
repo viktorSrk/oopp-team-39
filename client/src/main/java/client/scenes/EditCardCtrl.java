@@ -53,16 +53,19 @@ public class EditCardCtrl {
 
     /**
      * Sets the values in the scene corresponding to the selected card, that is edited
+     * @param selectedCard is the card that is to be shown in the pop-up
      */
-    public void refresh() {
+    public void setCard(Card selectedCard) {
+        if (selectedCard == null)
+            throw new NullPointerException();
+        this.selectedCard = selectedCard;
         titleTextField.setText(selectedCard.getTitle());
-//        descriptionTextField.setText(selectedCard.getDescription());
-// TODO: implement description for cards, uncomment once implemented
+        descriptionTextField.setText(selectedCard.getDescription());
 //        for (String e : selectedCard.getTasks()) {
-// TODO: implement tasks for cards, uncomment once implemented
 //            tasks.add(e);
 //        }
 //        tasksListView.setItems(FXCollections.observableList(tasks));
+//TODO: implement tasks for cards, uncomment once implemented
     }
 
     /**
@@ -70,7 +73,7 @@ public class EditCardCtrl {
      */
     public void back() {
         clearFields();
-        mainCtrl.showBoard();
+        mainCtrl.closeEditCard();
     }
 
     /**
@@ -99,12 +102,15 @@ public class EditCardCtrl {
      */
     @FXML
     public void edit() {
-        Card editedCard = selectedCard;
-        editedCard.setTitle(titleTextField.getText());
-//        editedCard.setDescription(descriptionTextField.getText());
-// TODO: uncomment once description is implemented
-//        editedCard.setTasks(tasks); // TODO: uncomment once tasks are implemented
-        this.server.replaceCard(editedCard, selectedCard.getId());
+        String name = titleTextField.getText();
+        String description = descriptionTextField.getText();
+        selectedCard.setTitle(name);
+        selectedCard.setDescription(description);
+//        selectedCard.setTasks(tasks); // TODO: uncomment once tasks are implemented
+        // this.server.send("/app/cards/edit/" + selectedCard.getId(), selectedCard);
+        this.server.replaceCard(selectedCard);
+        clearFields();
+        mainCtrl.closeAddCard();
     }
 }
 

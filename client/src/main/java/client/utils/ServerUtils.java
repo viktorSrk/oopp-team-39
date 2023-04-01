@@ -185,9 +185,10 @@ public class ServerUtils {
         session.send(dest, o);
     }
 
-    public commons.Card replaceCard(commons.Card card, long id) {
+    public commons.Card replaceCard(commons.Card card) {
+        Long id = card.getId();
         return ClientBuilder.newClient(new ClientConfig())
-                .target(httpUrl).path("api/cards/")
+                .target(httpUrl).path("api/cards/" + id)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);

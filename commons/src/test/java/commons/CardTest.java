@@ -42,6 +42,14 @@ class CardTest {
     }
 
     @Test
+    void testDescription() {
+        var a = new Card("a");
+        assertEquals("", a.getDescription());
+        a.setDescription("HTB v. 1862");
+        assertEquals("HTB v. 1862", a.getDescription());
+    }
+
+    @Test
     void testEqualsHashCode() {
         var a = new Card("a");
         var b = new Card("a");
