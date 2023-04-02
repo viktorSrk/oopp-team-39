@@ -9,6 +9,7 @@ import commons.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import static com.google.inject.Guice.createInjector;
@@ -31,8 +32,14 @@ public class ListCtrl {
     @FXML
     private VBox cardsVBox;
 
+    @FXML
+    private AnchorPane frame;
+
     private commons.List cardList;
 
+    public AnchorPane getFrame() {
+        return frame;
+    }
 
     @Inject
     public ListCtrl(ServerUtils server, MainCtrl mainCtrl) {
