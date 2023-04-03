@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import commons.Card;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -142,8 +143,15 @@ public class TestBoardRepository implements BoardRepository {
 
     @Override
     public Optional<Board> findById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        call("findById");
+        Board res = null;
+        for(Board b : boards){
+            if(b.getId() == id){
+                res = b;
+                break;
+            }
+        }
+        return Optional.ofNullable(res);
     }
 
     @Override
