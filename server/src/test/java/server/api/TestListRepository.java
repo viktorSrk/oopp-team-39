@@ -1,5 +1,6 @@
 package server.api;
 
+import commons.Card;
 import commons.List;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.FluentQuery;
 import server.database.ListRepository;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -90,10 +92,15 @@ public class TestListRepository implements ListRepository {
         return null;
     }
 
-    @Override
     public Optional<List> findById(Long id) {
         call("findById");
-        var res = lists.get(0);
+        List res = null;
+        for(List l : lists){
+            if(Objects.equals(l.getId(), id)){
+                res = l;
+                break;
+            }
+        }
         return Optional.ofNullable(res);
     }
 
