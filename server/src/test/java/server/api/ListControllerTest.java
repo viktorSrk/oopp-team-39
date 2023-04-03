@@ -99,7 +99,7 @@ class ListControllerTest {
     void cannotRemoveNullList() {
         var actual = sut.removeList(null);
         assertEquals(BAD_REQUEST, actual.getStatusCode());
-        assertFalse(repo.calledMethods.contains("remove"));
+        assertFalse(repo.calledMethods.contains("delete"));
     }
 
     @Test
