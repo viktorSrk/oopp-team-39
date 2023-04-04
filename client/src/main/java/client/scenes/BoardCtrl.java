@@ -5,6 +5,7 @@ import client.MyModule;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import commons.Card;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,7 +56,7 @@ public class BoardCtrl{
             });
         });
 
-        server.registerForUpdates("/topic/list/update", Long.class , l -> {
+        server.registerForUpdates("/topic/list/update", Card.class , l -> {
             Platform.runLater(() -> {
                 loadLists();
             });
