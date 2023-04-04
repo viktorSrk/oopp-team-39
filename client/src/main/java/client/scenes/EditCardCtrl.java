@@ -11,6 +11,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class EditCardCtrl {
 
@@ -53,16 +56,19 @@ public class EditCardCtrl {
 
     /**
      * Sets the values in the scene corresponding to the selected card, that is edited
+     * @param selectedCard is the card that is to be shown in the pop-up
      */
-    public void refresh() {
+    public void setCard(Card selectedCard) {
+        if (selectedCard == null)
+            throw new NullPointerException();
+        this.selectedCard = selectedCard;
         titleTextField.setText(selectedCard.getTitle());
 //        descriptionTextField.setText(selectedCard.getDescription());
 // TODO: implement description for cards, uncomment once implemented
-//        for (String e : selectedCard.getTasks()) {
-// TODO: implement tasks for cards, uncomment once implemented
-//            tasks.add(e);
-//        }
-//        tasksListView.setItems(FXCollections.observableList(tasks));
+        for (String e : selectedCard.getTasks()) {
+            tasks.add(e);
+        }
+        tasksListView.setItems(FXCollections.observableList(tasks));
     }
 
     /**
@@ -70,7 +76,7 @@ public class EditCardCtrl {
      */
     public void back() {
         clearFields();
-        mainCtrl.showBoard();
+        mainCtrl.closeEditCard();
     }
 
     /**
@@ -79,6 +85,8 @@ public class EditCardCtrl {
     private void clearFields() {
         descriptionTextField.clear();
         titleTextField.clear();
+        this.tasks.clear();
+        tasksListView.setItems(tasks);
     }
 
     /**
@@ -99,12 +107,12 @@ public class EditCardCtrl {
      */
     @FXML
     public void edit() {
-        Card editedCard = selectedCard;
-        editedCard.setTitle(titleTextField.getText());
-//        editedCard.setDescription(descriptionTextField.getText());
-// TODO: uncomment once description is implemented
-//        editedCard.setTasks(tasks); // TODO: uncomment once tasks are implemented
-        this.server.replaceCard(editedCard, selectedCard.getId());
+        String name = titleTextField.getText();
+        selectedCard.setTitle(name);
+        selectedCard.setTasks(tasks);
+        this.server.replaceCard(selectedCard);
+        clearFields();
+        mainCtrl.closeAddCard();
     }
 }
 

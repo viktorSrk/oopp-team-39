@@ -63,6 +63,8 @@ public class AddCardCtrl {
     private void clearFields() {
         descriptionTextField.clear();
         titleTextField.clear();
+        this.tasks.clear();
+        tasksListView.setItems(tasks);
     }
 
     @FXML
@@ -81,7 +83,9 @@ public class AddCardCtrl {
         System.out.println("Button Add has been clicked!");
         String name = titleTextField.getText();
         Card card = new Card(name, list);
+        card.setTasks(tasks);
         this.server.send("/app/cards/add/" + list.getId(), card);
+        clearFields();
         mainCtrl.closeAddCard();
     }
 }

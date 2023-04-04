@@ -12,7 +12,7 @@ public class CardCtrl {
 
     private final ServerUtils server;
 
-    private final MainCtrl mainCtrl;
+    private MainCtrl mainCtrl;
 
     private Card card;
 
@@ -30,6 +30,11 @@ public class CardCtrl {
         this.server = server;
         this.mainCtrl = mainCtrl;
     }
+
+    public void setMainCtrl(MainCtrl mainCtrl) {
+        this.mainCtrl = mainCtrl;
+    }
+
     public void setCard(Card card) {
         this.card = card;
     }
@@ -37,6 +42,7 @@ public class CardCtrl {
 
     public void open(){
         //open the related card
+        mainCtrl.showEditCard(card);
     }
 
     public void delete() {
@@ -50,6 +56,6 @@ public class CardCtrl {
     public void changeTitle(){
         var text = titleTextField.getText();
         card.setTitle(text);
-        server.replaceCard(card, card.getId());
+        this.server.replaceCard(card);
     }
 }

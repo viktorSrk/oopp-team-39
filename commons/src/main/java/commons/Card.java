@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
@@ -18,6 +20,9 @@ public class Card {
     private long id;
 
     private String title;
+
+    @ElementCollection
+    private java.util.List<String> tasks = new ArrayList<>();
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
@@ -49,6 +54,10 @@ public class Card {
         return list;
     }
 
+    public java.util.List<String> getTasks() {
+        return tasks;
+    }
+
     public void setList(List list) {
         this.list = list;
     }
@@ -57,9 +66,15 @@ public class Card {
         this.id = id;
     }
 
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setTasks(java.util.List<String> tasks) {
+        this.tasks.clear();
+        for (String e : tasks) {
+            this.tasks.add(e);
+        }
     }
 
     @Override
