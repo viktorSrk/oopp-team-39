@@ -25,7 +25,7 @@ class ListControllerTest {
         boardRepo = new TestBoardRepository();
         boardSut = new BoardController(boardRepo);
 
-        Board testBoard = boardSut.add().getBody();
+        Board testBoard = boardSut.add(new Board("test")).getBody();
 
         repo = new TestListRepository();
         sut = new ListController(repo, boardRepo);

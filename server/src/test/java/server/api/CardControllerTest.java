@@ -29,7 +29,7 @@ class CardControllerTest {
         boardRepo = new TestBoardRepository();
         boardSut = new BoardController(boardRepo);
 
-        Board testBoard = boardSut.add().getBody();
+        Board testBoard = boardSut.add(new Board("test")).getBody();
 
         listRepo = new TestListRepository();
         listSut = new ListController(listRepo, boardRepo);

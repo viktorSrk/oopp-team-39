@@ -3,56 +3,51 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
-import commons.List;
 import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 
-public class AddListCtrl {
+public class AddBoardCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-    private Board board;
-
     @FXML
     private TextField title;
     @Inject
-    public AddListCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public AddBoardCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
     public void cancel() {
         title.clear();
-        mainCtrl.closeAddList();
+        mainCtrl.closeAddBoard();
     }
 
     public void ok() {
         try {
-            server.send("/app/list/add/" + board.getId(), getList());
+            Board newBoard = getBoard();
+            newBoard = server.addBoard(newBoard);
+            if (newBoard == null) {
+                throw new Exception("adding board failed");
+            }
+            title.clear();
+            mainCtrl.closeAddBoard();
+            mainCtrl.showBoard(newBoard);
         } catch (WebApplicationException e) {
-
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-            return;
+        } catch (Exception e) {
         }
-
-        title.clear();
-        mainCtrl.closeAddList();
     }
 
-    public List getList(){
-        var l = new List(title.getText());
-        return l;
+    private Board getBoard() {
+        return new Board(title.getText());
     }
 }
 

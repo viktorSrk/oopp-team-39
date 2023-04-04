@@ -6,7 +6,9 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardListCtrl">
    <children>
@@ -15,7 +17,7 @@
           <TableColumn fx:id="colBoard" prefWidth="582.0" text="Boards" />
         </columns>
       </TableView>
-      <Button layoutX="465.0" layoutY="353.0" mnemonicParsing="false" onAction="#open" prefHeight="26.0" prefWidth="124.0" text="Open Main Board" />
+      <Button layoutX="465.0" layoutY="353.0" mnemonicParsing="false" onAction="#open" prefHeight="26.0" prefWidth="124.0" text="Open" />
       <MenuBar fx:id="menu" prefHeight="26.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="Disconnect from Server">
@@ -36,5 +38,7 @@
           </Menu>
         </menus>
       </MenuBar>
+      <TextField fx:id="boardSearch" layoutX="327.0" layoutY="353.0" prefHeight="26.0" prefWidth="124.0" />
+      <Text layoutX="198.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose board by ID:" />
    </children>
 </AnchorPane>
