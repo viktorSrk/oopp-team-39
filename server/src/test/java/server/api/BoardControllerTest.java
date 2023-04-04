@@ -1,7 +1,9 @@
 package server.api;
 
+import commons.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,16 +35,16 @@ public class BoardControllerTest {
 
     @Test
     public void getByIdTest() {
-        sut.add();
-        sut.add();
-        assertTrue(repo.existsById((long)0));
-        assertTrue(repo.existsById((long)1));
+        Board saved1 = sut.add().getBody();
+        Board saved2 = sut.add().getBody();
+        assertEquals(sut.getById(1L).getBody(), saved1);
+        assertEquals(sut.getById(2L).getBody(), saved2);
     }
 
     @Test
     public void getByIdNotExistsTest() {
         sut.add();
         sut.add();
-        assertFalse(repo.existsById((long)30));
+        assertTrue(sut.getById((long)30).getStatusCode() == HttpStatus.BAD_REQUEST);
     }
 }
