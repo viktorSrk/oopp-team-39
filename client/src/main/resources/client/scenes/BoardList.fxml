@@ -8,32 +8,30 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.BoardListCtrl">
    <children>
       <TableView fx:id="boardTable" layoutX="9.0" layoutY="33.0" prefHeight="314.0" prefWidth="583.0">
         <columns>
-          <TableColumn fx:id = "colBoard" prefWidth="582.0" text="Boards" />
+          <TableColumn fx:id="colBoard" prefWidth="582.0" text="Boards" />
         </columns>
       </TableView>
-      <Button layoutX="487.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="101.0" onAction="#open" text="Open" />
-      <MenuBar fx:id = "menu" prefHeight="26.0" prefWidth="600.0">
+      <Button layoutX="465.0" layoutY="353.0" mnemonicParsing="false" onAction="#open" prefHeight="26.0" prefWidth="124.0" text="Open Main Board" />
+      <MenuBar fx:id="menu" prefHeight="26.0" prefWidth="600.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Disconnect from Server">
             <items>
-                  <MenuItem fx:id = "refresh" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
-                  <MenuItem fx:id = "backToServerConnect" mnemonicParsing="false" onAction="#cancel" text="Connect to a different server..." />
+                  <MenuItem fx:id="backToServerConnect" mnemonicParsing="false" onAction="#cancel" text="go back to server selection" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Boards..">
             <items>
-              <MenuItem fx:id = "add" mnemonicParsing="false" onAction="#addBoard" text="New Board" />
-              <MenuItem fx:id = "del" mnemonicParsing="false" onAction="#deleteBoard" text="Delete Board" />
+              <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addBoard" text="add Board" />
+              <MenuItem fx:id="del" mnemonicParsing="false" onAction="#deleteBoard" text="Delete Board" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id = "info" mnemonicParsing="false" onAction="#showInfo" text="About" />
+              <MenuItem fx:id="info" mnemonicParsing="false" onAction="#showInfo" text="About" />
             </items>
           </Menu>
         </menus>

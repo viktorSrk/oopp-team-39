@@ -87,6 +87,7 @@ public class BoardCtrl{
         loadedPair.getKey().setCardList(list);
         loadedPair.getKey().showName();
         loadedPair.getKey().loadCards();
+        loadedPair.getKey().getFrame().prefHeightProperty().bind(listsHBox.heightProperty());
         return loadedPair;
     }
 
