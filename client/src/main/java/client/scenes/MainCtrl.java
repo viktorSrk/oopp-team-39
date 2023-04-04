@@ -100,11 +100,6 @@ public class MainCtrl {
 
         this.secondStage = new Stage();
 
-//        showOverview();
-//        showBoard();
-//        showAddCard();
-//        showCard();
-//        showList();
         showServerConnect();
         primaryStage.show();
     }
