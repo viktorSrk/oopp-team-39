@@ -76,7 +76,7 @@ public class CardController {
 
     }
 
-    @PutMapping("/")
+    @PutMapping("/{id}")
     public ResponseEntity<Card> replaceCard(@RequestBody Card card){
         long id = card.getId();
         if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(id))
@@ -85,6 +85,7 @@ public class CardController {
         commons.Card cardToChange = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
 
         cardToChange.setTitle(card.getTitle());
+        cardToChange.setDescription(card.getDescription());
 
         repo.save(cardToChange);
 

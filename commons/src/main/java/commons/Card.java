@@ -18,6 +18,7 @@ public class Card {
     private long id;
 
     private String title;
+    private String description;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
@@ -31,10 +32,12 @@ public class Card {
     public Card(String title, List list) {
         this.title = title;
         this.list = list;
+        this.description = "";
     }
 
     public Card(String title){
         this.title = title;
+        this.description = "";
     }
 
     public long getId() {
@@ -49,6 +52,10 @@ public class Card {
         return list;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setList(List list) {
         this.list = list;
     }
@@ -57,9 +64,12 @@ public class Card {
         this.id = id;
     }
 
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
