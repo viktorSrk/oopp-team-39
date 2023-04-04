@@ -6,12 +6,39 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
 
+    @Test
+    void testGetId() {
+        var a = new Card("a");
+        assertEquals(0, a.getId());
+    }
 
     @Test
-    void setTitle() {
+    void testSetId() {
+        var a = new Card("a");
+        a.setId(123);
+        assertEquals(123, a.getId());
+    }
+
+    @Test
+    void testTitle() {
         var a = new Card("a");
         a.setTitle("b");
         assertEquals("b", a.getTitle());
+    }
+
+    @Test
+    void testGetList() {
+        var l = new List();
+        var a = new Card("a", l);
+        assertEquals(l, a.getList());
+    }
+
+    @Test
+    void testSetList() {
+        var a = new Card("a");
+        var l = new List();
+        a.setList(l);
+        assertEquals(l, a.getList());
     }
 
     @Test
@@ -36,5 +63,10 @@ class CardTest {
         assertTrue(actual.contains(Card.class.getSimpleName()));
         assertTrue(actual.contains("\n"));
         assertTrue(actual.contains("title"));
+    }
+
+    @Test
+    void testForObjectMapper() {
+        assertNotNull(new Card());
     }
 }

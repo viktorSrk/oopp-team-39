@@ -31,6 +31,13 @@ public class PersonTest {
 	}
 
 	@Test
+	public void testGetId() {
+		var instance = new Person();
+		long result = instance.getId();
+		assertEquals(0, result);
+	}
+
+	@Test
 	public void equalsHashCode() {
 		var a = new Person("a", "b");
 		var b = new Person("a", "b");

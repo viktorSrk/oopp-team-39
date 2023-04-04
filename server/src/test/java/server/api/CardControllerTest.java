@@ -1,5 +1,6 @@
 package server.api;
 
+import commons.Board;
 import commons.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,17 +15,25 @@ class CardControllerTest {
 
     private TestCardRepository repo;
 
-    private TestListRepository listRepo = new TestListRepository();;
+    private TestListRepository listRepo;
+
+    private TestBoardRepository boardRepo;
 
     private CardController sut;
     private ListController listSut;
+    private BoardController boardSut;
 
     @BeforeEach
     public void setup() {
-        listRepo = new TestListRepository();
-        listSut = new ListController(listRepo);
+        boardRepo = new TestBoardRepository();
+        boardSut = new BoardController(boardRepo);
 
-        listSut.addList(new commons.List("test"));
+        Board testBoard = boardSut.add().getBody();
+
+        listRepo = new TestListRepository();
+        listSut = new ListController(listRepo, boardRepo);
+
+        listSut.addList(new commons.List("test"), testBoard.getId());
 
         repo = new TestCardRepository();
         sut = new CardController(repo, listRepo);
@@ -75,7 +84,7 @@ class CardControllerTest {
         var card = new Card("a");
         sut.addCard(card, 1L);
         card.setTitle("b");
-        sut.replaceCard(card, card.getId());
+        sut.replaceCard(card);
 
         assertTrue(repo.getById(card.getId()).getTitle().equals("b"));
     }

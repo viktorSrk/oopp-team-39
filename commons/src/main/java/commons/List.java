@@ -1,5 +1,6 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -16,6 +17,11 @@ public class List {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "board_id", referencedColumnName = "id")
+    private Board board;
 
     @OneToMany(mappedBy = "list", orphanRemoval = true)
     private java.util.List<Card> cards = new ArrayList<>();
@@ -37,6 +43,14 @@ public class List {
         this.title = "New List";
         this.cards = new ArrayList<Card>();
         this.numberOfCards = 0;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     /**

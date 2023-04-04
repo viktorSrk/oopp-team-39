@@ -1,26 +1,23 @@
 package commons;
 
-import javax.persistence.*;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.ArrayList;
 
 //IMPORTANT! TaskList uses Integer class right now because the list backend is not visible/made yet
 
 @Entity
 public class Board {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private final Set<List> taskLists;
+    @OneToMany(mappedBy = "board", orphanRemoval = true)
+    private final java.util.List<List> taskLists = new ArrayList<>();
 
     public Board() {
-        taskLists = new HashSet<>();
     }
 
     public long getId() {
@@ -31,7 +28,7 @@ public class Board {
         this.id = id;
     }
 
-    public Set<List> getTaskLists() {
+    public java.util.List<List> getTaskLists() {
         return taskLists;
     }
 

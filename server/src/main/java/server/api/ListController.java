@@ -1,20 +1,28 @@
 package server.api;
 
-import java.util.List;
-
+import commons.Board;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
+import server.database.BoardRepository;
 import server.database.ListRepository;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/lists")
 public class ListController {
     private final ListRepository repo;
 
-    public ListController(ListRepository repo) {
+    @Autowired
+    BoardRepository boardRepo;
+
+    public ListController(ListRepository repo, BoardRepository boardRepo) {
         this.repo = repo;
+        this.boardRepo = boardRepo;
     }
 
     @GetMapping({"", "/"})
@@ -30,18 +38,24 @@ public class ListController {
         return ResponseEntity.ok(res);
     }
 
-    @MessageMapping("/list/add")
+    @MessageMapping("/list/add/{boardId}")
     @SendTo("/topic/list/add")
-    public commons.List addMessage(commons.List list) {
-        addList(list);
+    public commons.List addMessage(@DestinationVariable long boardId, commons.List list) {
+        addList(list, boardId);
         return list;
     }
-    @PostMapping({"", "/"})
-    public ResponseEntity<commons.List> addList(@RequestBody commons.List list) {
+    @PostMapping({"add/{boardId}"})
+    public ResponseEntity<commons.List> addList(
+            @RequestBody commons.List list,
+            @PathVariable Long boardId
+    ) {
         if (list == null || isNullOrEmpty(list.getTitle()))
             return ResponseEntity.badRequest().build();
 
+        Board assoc = boardRepo.getById(boardId);
         commons.List saved = repo.save(list);
+        saved.setBoard(assoc);
+        saved = repo.save(saved);
         return ResponseEntity.ok(saved);
     }
 

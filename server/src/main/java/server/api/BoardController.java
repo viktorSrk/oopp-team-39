@@ -1,11 +1,11 @@
 package server.api;
 
 import commons.Board;
-import java.util.*;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/boards")
@@ -14,6 +14,7 @@ public class BoardController {
 
     public BoardController(BoardRepository repo) {
         this.repo = repo;
+        add();
     }
 
     @GetMapping(path = { "", "/" })
