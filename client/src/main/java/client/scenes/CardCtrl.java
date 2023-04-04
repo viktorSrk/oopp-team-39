@@ -32,6 +32,7 @@ public class CardCtrl {
     }
     public void setCard(Card card) {
         this.card = card;
+        showName(card);
     }
 //TODO: I need to initialise the title with onw form the database (probably in the contstructor)
 
@@ -51,5 +52,12 @@ public class CardCtrl {
         var text = titleTextField.getText();
         card.setTitle(text);
         server.replaceCard(card, card.getId());
+    }
+    public void register(){
+        if(card != null){
+            server.registerForUpdates( (Card c) -> {
+                if(c.getId() == card.getId()) setCard(c);
+            });
+        }
     }
 }

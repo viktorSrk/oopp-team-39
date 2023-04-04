@@ -112,4 +112,7 @@ public class BoardCtrl{
         mainCtrl.showBoardList();
     }
 
+    public void stop(){
+        server.stop();
+    }
 }
