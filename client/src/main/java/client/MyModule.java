@@ -29,5 +29,6 @@ public class MyModule implements Module {
         binder.bind(ServerConnectCtrl.class).in(Scopes.SINGLETON);
         binder.bind(BoardCtrl.class).in(Scopes.SINGLETON);
         binder.bind(AddListCtrl.class).in(Scopes.SINGLETON);
+        binder.bind(AdminPasswordCtrl.class).in(Scopes.SINGLETON);
     }
 }

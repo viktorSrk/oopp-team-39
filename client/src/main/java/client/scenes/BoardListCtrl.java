@@ -71,4 +71,8 @@ public class BoardListCtrl {
     public void showInfo() {
         //TO DO
     }
+
+    public void adminButton() {
+        mainCtrl.showAdminPassword();
+    }
 }

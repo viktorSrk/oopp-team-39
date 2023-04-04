@@ -56,6 +56,9 @@ public class MainCtrl {
     private ListCtrl listCtrl;
     private Scene list;
 
+    private AdminPasswordCtrl adminPasswordCtrl;
+    private Scene adminPassword;
+
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add,
                            Pair<ServerConnectCtrl, Parent> serverConnect,
@@ -65,7 +68,8 @@ public class MainCtrl {
                            Pair<EditCardCtrl, Parent> editCard,
                            Pair<AddListCtrl, Parent> addList,
                            Pair<CardCtrl, Parent> card,
-                           Pair<ListCtrl, Parent> list
+                           Pair<ListCtrl, Parent> list,
+                           Pair<AdminPasswordCtrl, Parent> adminPassword
     ) {
         this.primaryStage = primaryStage;
         this.serverConnectCtrl = serverConnect.getKey();
@@ -98,6 +102,9 @@ public class MainCtrl {
         this.listCtrl = list.getKey();
         this.list = new Scene(list.getValue());
 
+        this.adminPasswordCtrl = adminPassword.getKey();
+        this.adminPassword = new Scene(adminPassword.getValue());
+
         this.secondStage = new Stage();
 
         showServerConnect();
@@ -124,6 +131,16 @@ public class MainCtrl {
     public void showBoardList() {
         primaryStage.setTitle("Talio: Boards");
         primaryStage.setScene(boardList);
+    }
+
+    public void showAdminPassword() {
+        secondStage.setTitle("Talio: Admin Password");
+        secondStage.setScene(adminPassword);
+        secondStage.show();
+    }
+
+    public void closeAdminPassword() {
+        secondStage.close();
     }
 
     public void showBoard() {

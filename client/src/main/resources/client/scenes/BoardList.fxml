@@ -23,6 +23,11 @@
                   <MenuItem fx:id="backToServerConnect" mnemonicParsing="false" onAction="#cancel" text="go back to server selection" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" onAction="#adminButton" text="Admin">
+               <items>
+                  <MenuItem fx:id="info1" mnemonicParsing="false" onAction="#showInfo" text="About" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Boards..">
             <items>
               <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addBoard" text="add Board" />
