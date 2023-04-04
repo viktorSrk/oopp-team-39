@@ -4,6 +4,7 @@ import commons.Board;
 import commons.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
 import java.util.Collections;
 import java.util.List;
@@ -179,5 +180,46 @@ class CardControllerTest {
         assertEquals(card, actual.getBody());
         assertTrue(repo.cards.contains(card));
         assertTrue(repo.calledMethods.contains("save"));
+    }
+
+    @Test
+    void replaceCardWrong() {
+        var card = new Card("a");
+        sut.addCard(card, 1L);
+        var card2 = new Card("b");
+
+
+        assertTrue(sut.replaceCard(card2).getStatusCode() == BAD_REQUEST);
+    }
+
+    @Test
+    void wsAddMessageTest() {
+        Card testCard = new Card("test");
+        Card saved = sut.addMessage(testCard, 0L);
+        assertEquals(repo.cards.get(0), saved);
+    }
+    @Test
+    void wsAddMessageWrongTest() {
+        assertNull(sut.addMessage(null, 0L));
+    }
+
+    @Test
+    void wsDeleteMessageTest() {
+        Card testList = new Card("test");
+        Card Saved = sut.addMessage(testList, 0L);
+
+        sut.removeMessage(Saved);
+        assertTrue(repo.cards.size() == 0);
+    }
+
+    @Test
+    void wsDeleteMessageNonExistentTest() {
+        Card testList = new Card("test");
+        Card Saved = sut.addMessage(testList, 0L);
+        sut.addMessage(testList, 0L);
+
+        sut.removeMessage(Saved);
+        Card saved = sut.removeMessage(Saved);
+        assertNull(saved);
     }
 }

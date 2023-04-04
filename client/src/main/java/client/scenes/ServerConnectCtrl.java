@@ -2,14 +2,14 @@ package client.scenes;
 
 import client.utils.FrontEndUtils;
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.google.inject.Inject;
 
 public class ServerConnectCtrl implements Initializable{
 
@@ -34,8 +34,8 @@ public class ServerConnectCtrl implements Initializable{
 
     public void connect() {
         try {
-            ServerUtils.setServer(serverip.getText());
-            ServerUtils.testURL();//test if given URL is actually working
+            server.setServer(serverip.getText());
+            server.testURL();//test if given URL is actually working
             mainCtrl.setWebsocketSessions();
             mainCtrl.showBoardList();
         }

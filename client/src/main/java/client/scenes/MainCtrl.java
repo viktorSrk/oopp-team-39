@@ -100,11 +100,6 @@ public class MainCtrl {
 
         this.secondStage = new Stage();
 
-//        showOverview();
-//        showBoard();
-//        showAddCard();
-//        showCard();
-//        showList();
         showServerConnect();
         primaryStage.show();
     }
@@ -134,7 +129,6 @@ public class MainCtrl {
     public void showBoard() {
         primaryStage.setTitle("Talio: Board");
         primaryStage.setScene(board);
-        primaryStage.centerOnScreen();
         boardCtrl.loadLists();
     }
 

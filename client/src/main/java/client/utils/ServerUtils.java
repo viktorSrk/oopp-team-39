@@ -44,24 +44,37 @@ public class ServerUtils {
 
     private static String server;
     private static String httpUrl;
-    private static StompSession session;
+
+    public static StompSession session;
+    private StandardWebSocketClient client = new StandardWebSocketClient();
+    private WebSocketStompClient stomp = new WebSocketStompClient(client);
+
+    public ServerUtils() {
+    }
+    public ServerUtils(WebSocketStompClient stomp) {
+        this.stomp = stomp;
+    }
 
     public static String getServer() {
         return server;
     }
 
-    public static void setServer(String server) {
-        ServerUtils.server = server;
-        ServerUtils.httpUrl = "http://" + server;
+    public String getHttpUrl() {
+        return httpUrl;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+        httpUrl = "http://" + server;
         try {
-            ServerUtils.session = connect("ws://" + server + "/websocket");
+            session = connect("ws://"+server+"/websocket");
         }
         catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public static void testURL() {
+    public void testURL() {
         ClientBuilder.newClient(new ClientConfig()) //
             .target(httpUrl).path("api/test") //
             .request(APPLICATION_JSON) //
@@ -144,13 +157,19 @@ public class ServerUtils {
                 .get(new GenericType<>() {});
     }
 
+    public commons.Card replaceCard(commons.Card card, long id) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(httpUrl).path("api/cards/")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
+    }
+
     //establishes a STOMP message format websocket session
-    private static StompSession connect(String url) {
-        var client = new StandardWebSocketClient();
-        var stomp = new WebSocketStompClient(client);
+    public StompSession connect(String url) {
         stomp.setMessageConverter(new MappingJackson2MessageConverter());
         try {
-            return stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
+            session = stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
         }
         catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -183,13 +202,5 @@ public class ServerUtils {
 
     public void send(String dest, Object o) {
         session.send(dest, o);
-    }
-
-    public commons.Card replaceCard(commons.Card card, long id) {
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(httpUrl).path("api/cards/")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
     }
 }

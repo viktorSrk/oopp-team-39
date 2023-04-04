@@ -16,9 +16,15 @@ public class TestServerUtils extends ServerUtils {
     }
 
     @Override
+    public void testURL() {
+        return;
+    }
+
+    @Override
     public List<commons.List> getLists() {
         calledMethods.add("getLists");
         return lists;
     }
+
 
 }
