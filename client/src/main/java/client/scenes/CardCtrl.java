@@ -60,7 +60,7 @@ public class CardCtrl {
         ClipboardContent content = new ClipboardContent();
         content.put(cardDataFormat, getCard().getId());
         db.setContent(content);
-        anchorPane.setStyle("-fx-border: thin dashed #ff6969");
+        anchorPane.setStyle("-fx-border-color: #ff6969");
 
         event.consume();
     }

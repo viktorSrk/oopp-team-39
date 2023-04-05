@@ -114,13 +114,12 @@ public class ListCtrl {
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasContent(cardDataFormat)) {
-            //193.0 is the size of the card's anchorpane, supposedly
-            int index = (int) (((event.getSceneY() - 274.0)/190.0));
+            //113.0 is the size of the card's anchorpane, supposedly
+            int index = (int) (((event.getSceneY() - 125.0)/110.0));
             var board = (Board) server.getBoards().stream()
                     .filter(x -> x.getId() == 1)
                     .toArray()[0];
-//            var arr = ((String) db.getContent(cardDataFormat)).split(" ");
-//            long id = Long.parseLong(arr[0]);
+
             long id = (long) db.getContent(cardDataFormat);
             Card c = board.findCardInListById(id);
             commons.List list2 = board.findListWithCard(c);
@@ -128,15 +127,8 @@ public class ListCtrl {
             var listIdTarget = this.getCardList().getId();
             MoveCardMessage message = new MoveCardMessage(listIdSource, listIdTarget, index, c);
 
-//            board.moveCard(id,
-//                    this.getCardList().getId(),
-//                    index);
             server.send("/app/cards/move", message);
-//                    + listIdSource
-//                    + "/"
-//                    + listIdTarget
-//                    + "/"
-//                    + index, c);
+
             success = true;
         }
         event.setDropCompleted(success);
