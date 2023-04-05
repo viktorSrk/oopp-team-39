@@ -154,6 +154,28 @@ public class List {
         }
     }
 
+    public Card getCardById(long idCard) {
+        var card = cards.stream()
+                .filter(x -> x.getId() == idCard)
+                .toArray()[0];
+        return (Card) card;
+    }
+
+    public void move(long idCard, int index) throws NullPointerException{
+        Card temp = getCardById(idCard);
+        if (temp == null) {
+            throw new NullPointerException();
+        }
+        removeCard(temp);
+        addCard(temp, index);
+
+    }
+
+    public void insert(int index) {
+        Card c = cards.get(cards.size()-1);
+        cards.add(index, c);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

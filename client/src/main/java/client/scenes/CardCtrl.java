@@ -6,6 +6,8 @@ import commons.Card;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
 
 public class CardCtrl {
 
@@ -14,7 +16,17 @@ public class CardCtrl {
 
     private final MainCtrl mainCtrl;
 
+    private Card getCard() {
+        return card;
+    }
+
     private Card card;
+
+    public static DataFormat getCardDataFormat() {
+        return cardDataFormat;
+    }
+
+    private static final DataFormat cardDataFormat = new DataFormat("Card");
 
     @FXML
     private TextField titleTextField;
@@ -24,6 +36,9 @@ public class CardCtrl {
 
     @FXML
     private Button deleteButton;
+
+    @FXML
+    private AnchorPane anchorPane;
 
     @Inject
     public CardCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -37,6 +52,42 @@ public class CardCtrl {
 
     public void open(){
         //open the related card
+    }
+
+    public void setOnDragDetected(MouseEvent event) {
+        System.out.println("drag detected");
+        Dragboard db = anchorPane.startDragAndDrop(TransferMode.ANY);
+        ClipboardContent content = new ClipboardContent();
+        content.put(cardDataFormat, getCard().getId());
+        db.setContent(content);
+        anchorPane.setStyle("-fx-border: thin dashed #ff6969");
+
+        event.consume();
+    }
+
+    public void setOnDragDone(DragEvent event) {
+        System.out.println("drag done");
+        if (event.getTransferMode() == TransferMode.MOVE) {
+//          String cardData = (String) event.getDragboard().getContent(getCardDataFormat());
+//          var arr = cardData.split(" ");
+//          int oldIndex = Integer.parseInt(arr[1]);
+//            int oldIndex = this.cardList.getCardIndex(card.getId());
+//            int newIndex = (int) ((event.getY()/193.0) - 1);
+//            if (newIndex < 0) newIndex = 0;
+//            if (newIndex >= cardList.getCards().size()) {
+//                newIndex = card.getList().getCards().size() - 1;
+//            }
+//            cardList.move(card.getId(), newIndex);
+//            mainCtrl.moveCard(card, oldIndex, newIndex);
+
+
+//            mainCtrl.refresh();
+
+        }
+        anchorPane.setStyle("-fx-border-color: transparent");
+        anchorPane.setStyle("-fx-border-style: solid");
+        event.consume();
+
     }
 
     public void delete() {
