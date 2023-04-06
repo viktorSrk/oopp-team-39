@@ -1,5 +1,6 @@
 package client.scenes;
 
+import client.utils.FrontEndUtils;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
@@ -20,6 +21,19 @@ public class AdminPasswordCtrl {
     }
 
     public void cancel() {
+        password.clear();
+        mainCtrl.closeAdminPassword();
+    }
+
+    public void login() {
+        // TODO: Better way to store/generate password
+        if (!password.getText().equals("test")) {
+            // TODO
+        }
+        else {
+            FrontEndUtils.errorPopUp("Wrong password", "The password you filled in was not correct!");
+        }
+
         password.clear();
         mainCtrl.closeAdminPassword();
     }
