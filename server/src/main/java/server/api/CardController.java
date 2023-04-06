@@ -48,7 +48,7 @@ public class CardController {
     @PostMapping("add/{listId}")
     public ResponseEntity<Card> addCard(
             @RequestBody Card card,
-            @PathVariable Long listId
+            @PathVariable long listId
     ) {
         if (card == null || isNullOrEmpty(card.getTitle()))
             return ResponseEntity.badRequest().build();
