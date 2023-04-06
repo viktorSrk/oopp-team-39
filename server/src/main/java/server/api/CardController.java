@@ -78,10 +78,10 @@ public class CardController {
 
     @PutMapping("/")
     public ResponseEntity<Card> replaceCard(@RequestBody Card card){
-        long id = card.getId();
-        if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(id))
+        if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(card.getId()))
             return ResponseEntity.badRequest().build();
 
+        long id = card.getId();
         commons.Card cardToChange = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
 
         cardToChange.setTitle(card.getTitle());
