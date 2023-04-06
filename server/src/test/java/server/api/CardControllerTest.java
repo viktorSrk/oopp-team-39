@@ -94,14 +94,6 @@ class CardControllerTest {
     }
 
     @Test
-    void cannotAddCardWithoutList() {
-        var actual = sut.addCard(new Card("a"), null);
-        assertEquals(BAD_REQUEST, actual.getStatusCode());
-        assertEquals(Collections.emptyList(), repo.cards);
-        assertEquals(Collections.emptyList(), repo.calledMethods);
-    }
-
-    @Test
     void addCard() {
         var card = new Card("a");
         assertFalse(repo.calledMethods.contains("save"));

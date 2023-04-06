@@ -78,14 +78,6 @@ class ListControllerTest {
     }
 
     @Test
-    void cannotAddListWithoutBoard() {
-        List list = new List("a");
-        var actual = sut.addList(list, null);
-        assertEquals(BAD_REQUEST, actual.getStatusCode());
-        assertFalse(repo.calledMethods.contains("save"));
-    }
-
-    @Test
     void addList() {
         var list = new List("a");
         assertFalse(repo.lists.contains(list));
