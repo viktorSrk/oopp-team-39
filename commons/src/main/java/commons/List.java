@@ -24,6 +24,7 @@ public class List {
     private Board board;
 
     @OneToMany(mappedBy = "list", orphanRemoval = true)
+    @OrderBy(value = "position")
     private java.util.List<Card> cards = new ArrayList<>();
     private int numberOfCards;
 
@@ -126,6 +127,19 @@ public class List {
      * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size())
      */
     public void addCard(Card card, int index) throws IndexOutOfBoundsException {
+        if (index < 0) {
+            card.setPosition(0);
+            this.cards.add(0, card);
+            this.numberOfCards++;
+            return;
+        }
+        if (index > cards.size() - 1) {
+            card.setPosition(cards.size()-1);
+            this.cards.add(cards.size() - 1, card);
+            this.numberOfCards++;
+            return;
+        }
+        card.setPosition(index);
         this.cards.add(index, card);
         this.numberOfCards++;
     }
@@ -166,6 +180,11 @@ public class List {
         if (temp == null) {
             throw new NullPointerException();
         }
+        if (index >= cards.size() - 1) {
+            removeCard(temp);
+            addCard(temp);
+            return;
+        }
         removeCard(temp);
         addCard(temp, index);
 
@@ -173,7 +192,15 @@ public class List {
 
     public void insert(int index) {
         Card c = cards.get(cards.size()-1);
+        if (index > cards.size() - 1) {
+            c.setPosition(cards.size() - 1);
+            return;
+        }
+        cards.remove(cards.size()-1);
         cards.add(index, c);
+        c.setPosition(index);
+//        cards.remove(cards.size());
+
     }
 
     @Override
@@ -209,5 +236,13 @@ public class List {
                 .append("cards", cards)
                 .append("number_of_cards", numberOfCards)
                 .toString();
+    }
+
+    public void reOrder() {
+        if (getCards().size() == 0) return;
+        for (Card c : getCards()) {
+            c.setPosition(getCards().indexOf(c));
+        }
+        numberOfCards = cards.size();
     }
 }

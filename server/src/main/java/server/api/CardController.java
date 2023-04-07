@@ -51,32 +51,53 @@ public class CardController {
         int index = message.getIndex();
         Card card = message.getCard();
 
+        commons.List listSource = listRepo.getById(listIdSource);
+        listSource.reOrder();
+
+        if (listIdSource == listIdTarget && index == card.getPosition()) {
+            return ResponseEntity.ok(listRepo.save(listRepo.getById(listIdSource)));
+        }
+
+        if (listIdSource == listIdTarget && index != card.getPosition()) {
+            listSource.reOrder();
+            listSource.move(card.getId(), index);
+            listSource.reOrder();
+            return ResponseEntity.ok(listRepo.save(listSource));
+        }
+
         commons.List listTarget = listRepo.getById(listIdTarget);
+
+        listSource.reOrder();
+
+        listSource.removeCard(card);
+        listSource.reOrder();
+        commons.List savedSource = listRepo.save(listSource);
+
+        listTarget.reOrder();
 
         Card savedCard = repo.save(card);
         savedCard.setList(listTarget);
         savedCard = repo.save(savedCard);
         listTarget.addCard(savedCard);
         listTarget.insert(index);
-        commons.List saved = listRepo.save(listTarget);
+        listTarget.reOrder();
 
-        commons.List listSource = listRepo.getById(listIdSource);
-        listSource.removeCard(card);
-        listRepo.save(listSource);
+        commons.List savedTarget = listRepo.save(listTarget);
+        ResponseEntity.ok(savedTarget);
 
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(savedSource);
     }
 
 
 //    @MessageMapping("/cards/reorder")
 //    @SendTo("/topic/list/update")
-//    public ResponseEntity<commons.List> reOrder(@Payload  commons.List list) {
+//    public commons.List reOrder(@Payload  commons.List list) {
+//        if (list.getCards().size() == 0) return listRepo.save(list);
 //        for (Card c : list.getCards()) {
 //            c.setPosition(list.getCards().indexOf(c));
 //            repo.save(c);
 //        }
-//        commons.List saved = listRepo.save(list);
-//        return ResponseEntity.ok(saved);
+//        return listRepo.save(list);
 //    }
 
     @MessageMapping("/cards/add/{listId}")

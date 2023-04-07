@@ -119,7 +119,7 @@ public class ListCtrl {
             var board = (Board) server.getBoards().stream()
                     .filter(x -> x.getId() == 1)
                     .toArray()[0];
-
+                    //hard-coded board instance.
             long id = (long) db.getContent(cardDataFormat);
             Card c = board.findCardInListById(id);
             commons.List list2 = board.findListWithCard(c);
