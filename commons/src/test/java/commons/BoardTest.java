@@ -101,7 +101,7 @@ public class BoardTest {
         Board b1 = new Board();
         List l1 = new List();
         List l2 = new List();
-        Card card1 = new Card("0", l1);
+        Card card1 = new Card("0", l1, 0);
         card1.setId(0);
         l2.setId((long) 5);
         l1.setId((long) 3);

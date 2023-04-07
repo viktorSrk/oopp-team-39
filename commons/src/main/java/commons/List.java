@@ -127,7 +127,7 @@ public class List {
      * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size())
      */
     public void addCard(Card card, int index) throws IndexOutOfBoundsException {
-        if (index < 0) {
+        if (index <= 0) {
             card.setPosition(0);
             this.cards.add(0, card);
             this.numberOfCards++;
