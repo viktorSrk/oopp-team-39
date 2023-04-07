@@ -27,15 +27,16 @@ public class AdminPasswordCtrl {
 
     public void login() {
         // TODO: Better way to store/generate password
-        if (!password.getText().equals("test")) {
-            // TODO
+        if (password.getText().equals("test")) {
+            mainCtrl.setAdmin(true);
+            mainCtrl.closeAdminPassword();
         }
         else {
-            FrontEndUtils.errorPopUp("Wrong password", "The password you filled in was not correct!");
+            FrontEndUtils.errorPopUp("Wrong password",
+                    "The password you filled in was not correct!");
         }
 
         password.clear();
-        mainCtrl.closeAdminPassword();
     }
 }
 

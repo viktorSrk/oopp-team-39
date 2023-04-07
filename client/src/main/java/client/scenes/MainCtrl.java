@@ -140,6 +140,7 @@ public class MainCtrl {
     public void showBoardList() {
         primaryStage.setTitle("Talio: Boards");
         primaryStage.setScene(boardList);
+        boardListCtrl.refresh();
     }
 
     public void showAddBoard() {
@@ -213,5 +214,9 @@ public class MainCtrl {
 
     public void setWebsocketSessions() {
         boardCtrl.setWebsocketSessions();
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        boardListCtrl.setAdmin(isAdmin);
     }
 }
