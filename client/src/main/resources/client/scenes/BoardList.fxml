@@ -31,7 +31,7 @@
           </Menu>
             <Menu mnemonicParsing="false" onAction="#adminButton" text="Admin">
                <items>
-                  <MenuItem fx:id="info1" mnemonicParsing="false" onAction="#showInfo" text="About" />
+                  <MenuItem fx:id="adminLogIn" mnemonicParsing="false" onAction="#showInfo" text="Log In" />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Boards..">

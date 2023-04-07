@@ -154,7 +154,7 @@ public class MainCtrl {
     }
 
     public void showAdminPassword() {
-        secondStage.setTitle("Talio: Admin Password");
+        secondStage.setTitle("Talio: Admin Log In");
         secondStage.setScene(adminPassword);
         secondStage.show();
     }

@@ -5,6 +5,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -21,6 +23,7 @@ public class BoardListCtrl implements Initializable {
     private boolean isAdmin = false;
 
     private ObservableList<Board> listOfBoards;
+    private List<Board> joinedBoards = new ArrayList<>();
 
     @FXML
     private TableView<Board> boardTable;
@@ -40,6 +43,8 @@ public class BoardListCtrl implements Initializable {
     private MenuItem refresh;
     @FXML
     private MenuItem info;
+    @FXML
+    private MenuItem adminLogIn;
     @FXML
     private TextField boardSearch;
 
@@ -65,7 +70,11 @@ public class BoardListCtrl implements Initializable {
                 String.valueOf(b.getValue().getId())));
         boardTable.setRowFactory(r -> {
             TableRow<Board> row = new TableRow<>();
-            row.setContextMenu(contextMenu);
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(contextMenu)
+            );
             return row;
         });
     }
@@ -76,6 +85,7 @@ public class BoardListCtrl implements Initializable {
         });
 
         server.registerForUpdates("/topic/boards/delete", Board.class, b -> {
+            joinedBoards.remove(b);
             Platform.runLater(this::loadBoards);
         });
     }
@@ -90,10 +100,15 @@ public class BoardListCtrl implements Initializable {
     }
 
     public void loadBoards() {
+        boardTable.getItems().clear();
         if (isAdmin) {
-            boardTable.getItems().clear();
             List<Board> boards = server.getBoards();
             for (Board board : boards) {
+                boardTable.getItems().add(board);
+            }
+        }
+        else {
+            for (Board board : joinedBoards) {
                 boardTable.getItems().add(board);
             }
         }
@@ -105,6 +120,7 @@ public class BoardListCtrl implements Initializable {
             int i = Integer.parseInt(boardSearch.getText());
             Board board = server.getBoardById(i);
             mainCtrl.showBoard(board);
+            joinedBoards.add(board);
         }
         catch (Exception e) {
             FrontEndUtils.errorPopUp("not found", e.getMessage());
@@ -131,11 +147,26 @@ public class BoardListCtrl implements Initializable {
     }
 
     public void adminButton() {
-        mainCtrl.showAdminPassword();
+        if (!isAdmin) {
+            mainCtrl.showAdminPassword();
+        }
+        else {
+            setAdmin(false);
+        }
     }
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+        changeMenu();
         loadBoards();
+    }
+
+    public void changeMenu() {
+        if (isAdmin) {
+            adminLogIn.setText("Log Out");
+        }
+        else {
+            adminLogIn.setText("Log In");
+        }
     }
 }
