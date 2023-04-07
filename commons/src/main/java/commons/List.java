@@ -124,9 +124,8 @@ public class List {
      * Adds one card to the list at a specific position
      * @param card the card that is to be added to the list
      * @param index the index where the card is to be inserted in
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size())
      */
-    public void addCard(Card card, int index) throws IndexOutOfBoundsException {
+    public void addCard(Card card, int index) {
         if (index <= 0) {
             card.setPosition(0);
             this.cards.add(0, card);

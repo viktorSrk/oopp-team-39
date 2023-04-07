@@ -4,8 +4,10 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Card;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 
@@ -56,7 +58,11 @@ public class CardCtrl {
 
     public void setOnDragDetected(MouseEvent event) {
         System.out.println("drag detected");
+
+        WritableImage snapshot = anchorPane.snapshot(new SnapshotParameters(), null);
+
         Dragboard db = anchorPane.startDragAndDrop(TransferMode.ANY);
+        db.setDragView(snapshot);
         ClipboardContent content = new ClipboardContent();
         content.put(cardDataFormat, getCard().getId());
         db.setContent(content);
@@ -65,25 +71,16 @@ public class CardCtrl {
         event.consume();
     }
 
+    public void setOnDragOver(DragEvent event) {
+        event.acceptTransferModes(TransferMode.MOVE);
+        Dragboard db = event.getDragboard();
+        db.setDragViewOffsetX(event.getX());
+        db.setDragViewOffsetY(event.getY());
+        event.consume();
+    }
+
     public void setOnDragDone(DragEvent event) {
         System.out.println("drag done");
-        if (event.getTransferMode() == TransferMode.MOVE) {
-//          String cardData = (String) event.getDragboard().getContent(getCardDataFormat());
-//          var arr = cardData.split(" ");
-//          int oldIndex = Integer.parseInt(arr[1]);
-//            int oldIndex = this.cardList.getCardIndex(card.getId());
-//            int newIndex = (int) ((event.getY()/193.0) - 1);
-//            if (newIndex < 0) newIndex = 0;
-//            if (newIndex >= cardList.getCards().size()) {
-//                newIndex = card.getList().getCards().size() - 1;
-//            }
-//            cardList.move(card.getId(), newIndex);
-//            mainCtrl.moveCard(card, oldIndex, newIndex);
-
-
-//            mainCtrl.refresh();
-
-        }
         anchorPane.setStyle("-fx-border-color: transparent");
         anchorPane.setStyle("-fx-border-style: solid");
         event.consume();
