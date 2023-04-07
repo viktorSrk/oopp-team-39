@@ -2,9 +2,11 @@ package client.scenes;
 
 import client.MyFXML;
 import client.MyModule;
+import client.utils.FrontEndUtils;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import commons.Board;
 import commons.Card;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -12,7 +14,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 
 import static com.google.inject.Guice.createInjector;
@@ -31,29 +35,34 @@ public class BoardCtrl{
     @FXML
     private HBox listsHBox;
 
+    @FXML
+    private Text boardName;
+
+    @FXML
+    private Text boardId;
+
+    private Board board;
+
     @Inject
     public BoardCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
     }
 
+    public void setBoard(Board board) {
+        this.board = board;
+        boardName.setText(board.getName());
+        boardId.setText("#"+board.getId());
+    }
+
     public void setWebsocketSessions() {
-        server.registerForUpdates("/topic/list/add", commons.List.class, l -> {
-            data.add(l);
-            Platform.runLater(() -> {
-                Injector injector = createInjector(new MyModule());
-                MyFXML fxml = new MyFXML(injector);
-                listsHBox.getChildren().add( listsHBox.getChildren().size() - 1,
-                        createList(l, fxml).getValue());
-            });
-        });
-        
-        server.registerForUpdates("/topic/list/delete", commons.List.class, l -> {
-            int i = data.indexOf(l);
-            data.remove(l);
-            Platform.runLater(() -> {
-                listsHBox.getChildren().remove(i);
-            });
+        server.registerForUpdates("/topic/boards/delete", Board.class , b-> {
+            if (board.getId() == b.getId()) {
+                Platform.runLater(() -> {
+                    FrontEndUtils.errorPopUp("board deleted", "");
+                    mainCtrl.showBoardList();
+                });
+            }
         });
 
         server.registerForUpdates("/topic/list/update", Card.class , l -> {
@@ -92,7 +101,8 @@ public class BoardCtrl{
     }
 
     public void loadLists() {
-        var lists = server.getLists();
+        board = server.getBoardById(board.getId());
+        var lists = board.getTaskLists();
         data = FXCollections.observableList(lists);
         var listsHBoxChildren = listsHBox.getChildren();
         listsHBoxChildren.remove(0, listsHBoxChildren.size() - 1);
@@ -107,11 +117,19 @@ public class BoardCtrl{
     }
 
     public void addListButton(){
-        mainCtrl.showAddList();
+        mainCtrl.showAddList(board);
     }
 
     public void back() {
         mainCtrl.showBoardList();
+    }
+
+    public void delete() {
+        ButtonType answer = FrontEndUtils.confirmation();
+        if (answer == ButtonType.OK) {
+            server.send("/app/boards/delete", board);
+            mainCtrl.showBoardList();
+        }
     }
 
 }

@@ -70,7 +70,7 @@ public class EditCardCtrl {
      */
     public void back() {
         clearFields();
-        mainCtrl.showBoard();
+//        mainCtrl.showBoard();
     }
 
     /**

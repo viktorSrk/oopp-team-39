@@ -124,6 +124,22 @@ public class ServerUtils {
                 .get(new GenericType<>() {
                 });
     }
+    public Board getBoardById(long id) {
+        return ClientBuilder.newClient(new ClientConfig()) //
+                .target(httpUrl).path("api/boards/"+id) //
+                .request(APPLICATION_JSON) //
+                .accept(APPLICATION_JSON) //
+                .get(new GenericType<>() {
+                });
+    }
+
+    public Board addBoard(Board board) {
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(httpUrl).path("api/boards/")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .post(Entity.entity(board, APPLICATION_JSON), Board.class);
+    }
 
     public commons.List addList(commons.List list) {
         return ClientBuilder.newClient(new ClientConfig()) //

@@ -39,7 +39,7 @@ public class ListController {
     }
 
     @MessageMapping("/list/add/{boardId}")
-    @SendTo("/topic/list/add")
+    @SendTo("/topic/list/update")
     public commons.List addMessage(commons.List list, @DestinationVariable long boardId) {
         return addList(list, boardId).getBody();
     }
@@ -59,7 +59,7 @@ public class ListController {
     }
 
     @MessageMapping("/list/delete")
-    @SendTo("/topic/list/delete")
+    @SendTo("/topic/list/update")
     public commons.List removeMessage(commons.List list) {
         return removeList(list).getBody();
     }

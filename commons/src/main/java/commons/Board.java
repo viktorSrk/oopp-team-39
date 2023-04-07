@@ -17,7 +17,14 @@ public class Board {
     @OneToMany(mappedBy = "board", orphanRemoval = true)
     private final java.util.List<List> taskLists = new ArrayList<>();
 
+    private String name;
+
     public Board() {
+        this.name="empty";
+    }
+
+    public Board(String name) {
+        this.name = name;
     }
 
     public long getId() {
@@ -28,6 +35,14 @@ public class Board {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public java.util.List<List> getTaskLists() {
         return taskLists;
     }
@@ -35,13 +50,12 @@ public class Board {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-
         if (o == null || getClass() != o.getClass()) return false;
-
         Board board = (Board) o;
 
         return new EqualsBuilder().append(id, board.id)
                 .append(taskLists, board.taskLists)
+                .append(name, board.name)
                 .isEquals();
     }
 
@@ -49,6 +63,7 @@ public class Board {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(id)
+                .append(name)
                 .append(taskLists)
                 .toHashCode();
     }
@@ -57,6 +72,7 @@ public class Board {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("Id", id)
+                .append("Name", name)
                 .append("TaskLists", taskLists)
                 .toString();
     }

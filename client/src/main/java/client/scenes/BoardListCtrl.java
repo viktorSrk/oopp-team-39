@@ -1,14 +1,12 @@
 package client.scenes;
 
+import client.utils.FrontEndUtils;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 public class BoardListCtrl {
     private final ServerUtils server;
@@ -32,6 +30,8 @@ public class BoardListCtrl {
     private MenuItem refresh;
     @FXML
     private MenuItem info;
+    @FXML
+    private TextField boardSearch;
 
     @Inject
     public BoardListCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -51,7 +51,14 @@ public class BoardListCtrl {
 
     // since we first do the single-board approach this will do for now
     public void open() {
-        mainCtrl.showBoard();
+        try {
+            int i = Integer.parseInt(boardSearch.getText());
+            Board board = server.getBoardById(i);
+            mainCtrl.showBoard(board);
+        }
+        catch (Exception e) {
+            FrontEndUtils.errorPopUp("not found", e.getMessage());
+        }
     }
 
     //goes back to the Server Connect menu
@@ -61,6 +68,7 @@ public class BoardListCtrl {
     }
 
     public void addBoard() {
+        mainCtrl.showAddBoard();
         //TO DO
     }
 
