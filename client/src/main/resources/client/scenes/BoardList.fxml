@@ -28,7 +28,6 @@
           <Menu mnemonicParsing="false" text="Boards..">
             <items>
               <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addBoard" text="add Board" />
-              <MenuItem fx:id="del" mnemonicParsing="false" onAction="#deleteBoard" text="Delete Board" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
