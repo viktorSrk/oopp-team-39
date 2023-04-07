@@ -4,6 +4,7 @@ import client.utils.FrontEndUtils;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -42,10 +43,19 @@ public class BoardListCtrl implements Initializable {
     @FXML
     private TextField boardSearch;
 
+    private final ContextMenu contextMenu;
+
     @Inject
     public BoardListCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        contextMenu = new ContextMenu();
+        MenuItem delete = new MenuItem("Delete");
+        delete.setOnAction(event -> {
+            Board board = boardTable.getSelectionModel().getSelectedItem();
+            server.send("/app/boards/delete", board);
+        });
+        contextMenu.getItems().add(delete);
     }
 
     @Override
@@ -53,23 +63,39 @@ public class BoardListCtrl implements Initializable {
         colBoardName.setCellValueFactory(b -> new SimpleStringProperty(b.getValue().getName()));
         colBoardId.setCellValueFactory(b -> new SimpleStringProperty(
                 String.valueOf(b.getValue().getId())));
+        boardTable.setRowFactory(r -> {
+            TableRow<Board> row = new TableRow<>();
+            row.setContextMenu(contextMenu);
+            return row;
+        });
+    }
+
+    public void setWebSocketSessions() {
+        server.registerForUpdates("/topic/boards/update", Board.class, b -> {
+            Platform.runLater(this::loadBoards);
+        });
+
+        server.registerForUpdates("/topic/boards/delete", Board.class, b -> {
+            Platform.runLater(this::loadBoards);
+        });
     }
 
     //small start for when we implement multiBoards
     public void refresh() {
-        if (isAdmin) {
-            List<Board> boards = server.getBoards();
-            for (Board board : boards) {
-                boardTable.getItems().add(board);
-            }
-
-            return;
-        }
-
         try {
             var boards = server.getBoards();
         }
         catch (Exception e) {
+        }
+    }
+
+    public void loadBoards() {
+        if (isAdmin) {
+            boardTable.getItems().clear();
+            List<Board> boards = server.getBoards();
+            for (Board board : boards) {
+                boardTable.getItems().add(board);
+            }
         }
     }
 
@@ -110,5 +136,6 @@ public class BoardListCtrl implements Initializable {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+        loadBoards();
     }
 }

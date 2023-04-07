@@ -30,13 +30,15 @@ public class AddBoardCtrl {
     public void ok() {
         try {
             Board newBoard = getBoard();
-            newBoard = server.addBoard(newBoard);
-            if (newBoard == null) {
-                throw new Exception("adding board failed");
-            }
+//            newBoard = server.addBoard(newBoard);
+//            if (newBoard == null) {
+//                throw new Exception("adding board failed");
+//            }
+            server.send("/app/boards/add", newBoard);
             title.clear();
             mainCtrl.closeAddBoard();
-            mainCtrl.showBoard(newBoard);
+//          TODO: Show created board
+//            mainCtrl.showBoard(newBoard);
         } catch (WebApplicationException e) {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
