@@ -120,4 +120,22 @@ class ListTest {
         l1.setId((long)1862);
         assertNotEquals(l1, l2);
     }
+
+    @Test
+    void testSwap() {
+        List test = new List();
+        List control = new List();
+        Card card1 = new Card("1");
+        card1.setId(0);
+        test.addCard(card1);
+        test.addCard(new Card("2"));
+        test.addCard(new Card("3"));
+        test.addCard(new Card("4"));
+        test.move(0, 3);
+        control.addCard(new Card("2"));
+        control.addCard(new Card("3"));
+        control.addCard(new Card("4"));
+        control.addCard(card1);
+        assertEquals(test, control);
+    }
 }
