@@ -19,6 +19,9 @@ public class Card {
 
     private String title;
 
+    @OrderColumn
+    private int position;
+
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "list_id", referencedColumnName = "id")
@@ -28,13 +31,22 @@ public class Card {
         //for object mapper
     }
 
-    public Card(String title, List list) {
+    public Card(String title, List list, int pos) {
         this.title = title;
         this.list = list;
+        this.position = pos;
     }
 
     public Card(String title){
         this.title = title;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public long getId() {

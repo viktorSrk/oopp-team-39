@@ -29,7 +29,7 @@ class CardTest {
     @Test
     void testGetList() {
         var l = new List();
-        var a = new Card("a", l);
+        var a = new Card("a", l, 0);
         assertEquals(l, a.getList());
     }
 

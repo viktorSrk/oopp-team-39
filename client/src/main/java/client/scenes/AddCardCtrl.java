@@ -80,8 +80,9 @@ public class AddCardCtrl {
     public void add() {
         System.out.println("Button Add has been clicked!");
         String name = titleTextField.getText();
-        Card card = new Card(name, list);
+        Card card = new Card(name, list, list.getCards().size());
         this.server.send("/app/cards/add/" + list.getId(), card);
+        clearFields();
         mainCtrl.closeAddCard();
     }
 }

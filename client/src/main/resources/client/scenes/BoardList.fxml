@@ -22,7 +22,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Disconnect from Server">
             <items>
-                  <MenuItem fx:id="backToServerConnect" mnemonicParsing="false" onAction="#cancel" text="go back to server selection" />
+                  <MenuItem fx:id="backToServerConnect" mnemonicParsing="false" onAction="#cancel" text="Are you sure?" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Boards..">
