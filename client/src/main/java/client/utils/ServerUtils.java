@@ -163,7 +163,7 @@ public class ServerUtils {
 
     public commons.Card replaceCard(commons.Card card, long id) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(httpUrl).path("api/cards/")
+                .target(httpUrl).path("api/cards/replace")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
@@ -210,25 +210,38 @@ public class ServerUtils {
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
-    public void registerForUpdates(Consumer<Card> consumer){
+    public void registerForUpdates(Consumer<Card> consumer) {
         EXEC.submit(() -> {
-            while(!Thread.interrupted()) {
-                var res = ClientBuilder.newClient(new ClientConfig())
-                        .target(httpUrl).path("api/cards/updates")
-                        .request(APPLICATION_JSON)
-                        .accept(APPLICATION_JSON)
-                        .get(Response.class);
-                if (res.getStatus() == 204) {
-                    System.out.println("TimeOut");
-                    continue;
+            while (!Thread.interrupted()) {
+                try {
+                    var res = ClientBuilder.newClient(new ClientConfig())
+                            .target(httpUrl).path("api/cards/updates")
+                            .request(APPLICATION_JSON)
+                            .accept(APPLICATION_JSON)
+                            .get(Response.class);
+
+                    if (res == null) {
+                        System.out.println("Response is null");
+                        continue;
+                    }
+
+                    if (res.getStatus() == 204) {
+                        System.out.println("TimeOut");
+                    } else if (res.getStatus() == 200) {
+                        System.out.println("change registered");
+                        var c = res.readEntity(Card.class);
+                        consumer.accept(c);
+                    } else {
+                        System.out.println("Other error");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Exception occurred: " + e.getMessage());
                 }
-                System.out.println("change registered");
-                var c = res.readEntity(Card.class);
-                consumer.accept(c);
             }
         });
-
     }
+
+
 
     public void stop(){
         EXEC.shutdownNow();

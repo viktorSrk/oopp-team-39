@@ -179,6 +179,10 @@ public class MainCtrl {
         boardCtrl.setWebsocketSessions();
     }
 
+    public void registerBoard(){
+        boardCtrl.register();
+    }
+
     public void  stop(){
         boardCtrl.stop();
     }
