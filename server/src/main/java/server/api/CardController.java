@@ -116,7 +116,7 @@ public class CardController {
     @PostMapping("add/{listId}")
     public ResponseEntity<Card> addCard(
             @RequestBody Card card,
-            @PathVariable Long listId
+            @PathVariable long listId
     ) {
         if (card == null || isNullOrEmpty(card.getTitle()))
             return ResponseEntity.badRequest().build();
@@ -146,10 +146,10 @@ public class CardController {
 
     @PutMapping("/")
     public ResponseEntity<Card> replaceCard(@RequestBody Card card){
-        long id = card.getId();
-        if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(id))
+        if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(card.getId()))
             return ResponseEntity.badRequest().build();
 
+        long id = card.getId();
         commons.Card cardToChange = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
 
         cardToChange.setTitle(card.getTitle());
