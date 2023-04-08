@@ -32,6 +32,61 @@ public class Board {
         return taskLists;
     }
 
+    public List getListById(long idList) {
+        for (List list : taskLists) {
+            if (list.getId() == idList) {
+                return list;
+            }
+        }
+        return null;
+    }
+
+    public Card findCardInListById(long idCard) {
+        for (List list : taskLists) {
+            if (list.getCards().size() == 0) {
+                continue;
+            }
+            try {
+                return list.getCardById(idCard);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                continue;
+            }
+        }
+        return null;
+    }
+
+    public void moveCard(long idCard, long idList, int index) throws NullPointerException {
+        Card temp = findCardInListById(idCard);
+        if ( temp == null) {
+            throw new NullPointerException();
+        }
+        List l = findListWithCard(temp);
+        l.removeCard(temp);
+        getListById(idList).addCard(temp, index);
+        temp.setList(getListById(idList));
+    }
+
+    public List findListWithCard(Card card) {
+        for ( List list : taskLists) {
+            if (list.getCards().size() == 0) {
+                continue;
+            }
+            try {
+                list.getCardById(card.getId()).equals(card);
+                return list;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                continue;
+            }
+        }
+        return null;
+    }
+
+    public void reOrderLists() {
+        for (List l : getTaskLists()) {
+            l.reOrder();
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
