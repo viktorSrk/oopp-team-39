@@ -67,23 +67,10 @@ public class ServerUtils {
         return httpUrl;
     }
 
-    public void setServer(String server) {
+    public void setServer(String server) throws Exception {
         this.server = server;
         httpUrl = "http://" + server;
-        try {
-            session = connect("ws://"+server+"/websocket");
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public void testURL() {
-        ClientBuilder.newClient(new ClientConfig()) //
-            .target(httpUrl).path("api/test") //
-            .request(APPLICATION_JSON) //
-            .accept(APPLICATION_JSON) //
-            .get(String.class);
+        session = connect("ws://"+server+"/websocket");
     }
 
     public void getQuotesTheHardWay() throws IOException {
@@ -186,16 +173,16 @@ public class ServerUtils {
     }
 
     //establishes a STOMP message format websocket session
-    public StompSession connect(String url) {
+    public StompSession connect(String url) throws Exception {
         stomp.setMessageConverter(new MappingJackson2MessageConverter());
         try {
-            session = stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
+            return session = stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
         }
         catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         catch (ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new Exception(e);
         }
         throw new IllegalStateException();
     }
