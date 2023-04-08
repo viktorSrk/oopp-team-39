@@ -4,6 +4,7 @@ import commons.Board;
 import commons.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,21 @@ class CardControllerTest {
 
         repo = new TestCardRepository();
         sut = new CardController(repo, listRepo);
+    }
+
+    @Test
+    void getListById() {
+        sut.addCard(new Card("0"), 0L);
+        sut.addCard(new Card("1"), 0L);
+        assertTrue(sut.getCardById((long)1).getStatusCode() == HttpStatus.OK);
+        assertTrue(sut.getCardById((long)2).getStatusCode() == HttpStatus.OK);
+    }
+
+    @Test
+    void getListByIdNonExistent() {
+        sut.addCard(new Card("0"), 0L);
+        sut.addCard(new Card("1"), 0L);
+        assertTrue(sut.getCardById((long)3).getStatusCode() == HttpStatus.BAD_REQUEST);
     }
 
     @Test
@@ -87,5 +103,46 @@ class CardControllerTest {
         sut.replaceCard(card);
 
         assertTrue(repo.getById(card.getId()).getTitle().equals("b"));
+    }
+
+    @Test
+    void replaceCardWrong() {
+        var card = new Card("a");
+        sut.addCard(card, 1L);
+        var card2 = new Card("b");
+
+
+        assertTrue(sut.replaceCard(card2).getStatusCode() == BAD_REQUEST);
+    }
+
+    @Test
+    void wsAddMessageTest() {
+        Card testCard = new Card("test");
+        Card saved = sut.addMessage(testCard, 0L);
+        assertEquals(repo.cards.get(0), saved);
+    }
+    @Test
+    void wsAddMessageWrongTest() {
+        assertNull(sut.addMessage(null, 0L));
+    }
+
+    @Test
+    void wsDeleteMessageTest() {
+        Card testList = new Card("test");
+        Card Saved = sut.addMessage(testList, 0L);
+
+        sut.removeMessage(Saved);
+        assertTrue(repo.cards.size() == 0);
+    }
+
+    @Test
+    void wsDeleteMessageNonExistentTest() {
+        Card testList = new Card("test");
+        Card Saved = sut.addMessage(testList, 0L);
+        sut.addMessage(testList, 0L);
+
+        sut.removeMessage(Saved);
+        Card saved = sut.removeMessage(Saved);
+        assertNull(saved);
     }
 }

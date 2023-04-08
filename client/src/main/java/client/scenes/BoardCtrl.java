@@ -4,9 +4,10 @@ import client.MyFXML;
 import client.MyModule;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
+import commons.Card;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import com.google.inject.Injector;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -55,7 +56,7 @@ public class BoardCtrl{
             });
         });
 
-        server.registerForUpdates("/topic/list/update", Long.class , l -> {
+        server.registerForUpdates("/topic/list/update", Card.class , l -> {
             Platform.runLater(() -> {
                 loadLists();
             });
@@ -86,6 +87,7 @@ public class BoardCtrl{
         loadedPair.getKey().setCardList(list);
         loadedPair.getKey().showName();
         loadedPair.getKey().loadCards();
+        loadedPair.getKey().getFrame().prefHeightProperty().bind(listsHBox.heightProperty());
         return loadedPair;
     }
 

@@ -40,9 +40,8 @@ public class ListController {
 
     @MessageMapping("/list/add/{boardId}")
     @SendTo("/topic/list/add")
-    public commons.List addMessage(@DestinationVariable long boardId, commons.List list) {
-        addList(list, boardId);
-        return list;
+    public commons.List addMessage(commons.List list, @DestinationVariable long boardId) {
+        return addList(list, boardId).getBody();
     }
     @PostMapping({"add/{boardId}"})
     public ResponseEntity<commons.List> addList(
@@ -62,8 +61,7 @@ public class ListController {
     @MessageMapping("/list/delete")
     @SendTo("/topic/list/delete")
     public commons.List removeMessage(commons.List list) {
-        removeList(list);
-        return list;
+        return removeList(list).getBody();
     }
     @DeleteMapping({"", "/"})
     public ResponseEntity<commons.List> removeList(@RequestBody commons.List list){
@@ -76,7 +74,7 @@ public class ListController {
 
     @MessageMapping("/list/replace")
     @SendTo("/topic/list/replace")
-    public commons.List replaceListMessage(commons.List list) {
+    public commons.List replaceMessage(commons.List list) {
         return replaceList(list, list.getId()).getBody();
     }
 

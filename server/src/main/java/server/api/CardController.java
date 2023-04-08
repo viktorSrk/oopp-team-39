@@ -45,11 +45,11 @@ public class CardController {
         Card res = repo.findById(id).get();
         return ResponseEntity.ok(res);
     }
+
     @MessageMapping("/cards/add/{listId}")
     @SendTo("/topic/list/update")
-    public Long addMessage(@DestinationVariable long listId, Card card) {
-        addCard(card, listId);
-        return listId;
+    public Card addMessage(Card card, @DestinationVariable long listId) {
+        return addCard(card, listId).getBody();
     }
 
     @PostMapping("add/{listId}")
@@ -70,9 +70,8 @@ public class CardController {
 
     @MessageMapping("/card/delete")
     @SendTo("/topic/list/update")
-    public Long removeMessage(Card card) {
-        removeCard(card);
-        return -1L; //value shouldn't matter right now, because it just updates all lists anyway
+    public Card removeMessage(Card card) {
+        return removeCard(card).getBody();
     }
     @DeleteMapping("/")
     public ResponseEntity<Card> removeCard(@RequestBody Card card){

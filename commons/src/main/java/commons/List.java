@@ -166,6 +166,7 @@ public class List {
                 .append(id, list.id)
                 .append(title, list.title)
                 .append(cards, list.cards)
+                .append(board, list.board)
                 .isEquals();
     }
 
