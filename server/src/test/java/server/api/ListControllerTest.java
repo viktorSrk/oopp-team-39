@@ -9,23 +9,22 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 class ListControllerTest {
 
     private TestListRepository repo;
 
-    private TestBoardRepository boardRepo;
+    private Board testBoard;
 
     private ListController sut;
 
-    private BoardController boardSut;
-
     @BeforeEach
     public void setup() {
-        boardRepo = new TestBoardRepository();
-        boardSut = new BoardController(boardRepo);
+        TestBoardRepository boardRepo = new TestBoardRepository();
+        BoardController boardSut = new BoardController(boardRepo);
 
-        Board testBoard = boardSut.add().getBody();
+        testBoard = boardSut.add().getBody();
 
         repo = new TestListRepository();
         sut = new ListController(repo, boardRepo);
@@ -39,46 +38,126 @@ class ListControllerTest {
     }
 
     @Test
-    void getListById() {
-        sut.addList(new List("0"), 0L);
-        sut.addList(new List("1"), 0L);
-        assertTrue(sut.getListById((long)1).getStatusCode() == HttpStatus.OK);
-        assertTrue(sut.getListById((long)2).getStatusCode() == HttpStatus.OK);
+    void cannotGetListByNegativeId() {
+        var actual = sut.getListById(-1L);
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertFalse(repo.calledMethods.contains("findById"));
     }
 
     @Test
-    void getListByIdNonExistent() {
-        sut.addList(new List("0"), 0L);
-        sut.addList(new List("1"), 0L);
-        assertTrue(sut.getListById((long)3).getStatusCode() == HttpStatus.BAD_REQUEST);
+    void cannotGetListByNonExistingId() {
+        var actual = sut.getListById(10L);
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertFalse(repo.calledMethods.contains("findById"));
+    }
+
+    @Test
+    void getListById() {
+        List list0 = new List("0");
+        List list1 = new List("1");
+        sut.addList(list0, testBoard.getId());
+        sut.addList(list1, testBoard.getId());
+        assertEquals(list0, sut.getListById(list0.getId()).getBody());
+        assertEquals(list1, sut.getListById(list1.getId()).getBody());
+        assertTrue(repo.calledMethods.contains("findById"));
+    }
+
+    @Test
+    void cannotAddNullList() {
+        var actual = sut.addList(null, testBoard.getId());
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertFalse(repo.calledMethods.contains("save"));
+    }
+
+    @Test
+    void cannotAddListWithoutTitle() {
+        List list = new List("");
+        var actual = sut.addList(list, testBoard.getId());
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertFalse(repo.calledMethods.contains("save"));
     }
 
     @Test
     void addList() {
         var list = new List("a");
-        list.setId((long) 1);
-        sut.addList(list, 0L);
+        assertFalse(repo.lists.contains(list));
+
+        var actual = sut.addList(list, testBoard.getId());
         assertTrue(repo.lists.contains(list));
+        assertEquals(list, actual.getBody());
+        assertTrue(repo.calledMethods.contains("save"));
+    }
+
+    @Test
+    void cannotRemoveNullList() {
+        var actual = sut.removeList(null);
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertFalse(repo.calledMethods.contains("delete"));
+    }
+
+    @Test
+    void cannotRemoveListWithoutTitle() {
+        var actual = sut.removeList(new List(""));
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertFalse(repo.calledMethods.contains("delete"));
+    }
+
+    @Test
+    void cannotRemoveNonExistingList() {
+        var actual = sut.removeList(new List("a"));
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertFalse(repo.calledMethods.contains("delete"));
     }
 
     @Test
     void removeList() {
         var list = new List("a");
-        list.setId((long)1);
-        sut.addList(list, 0L);
-        sut.removeList(list);
+        sut.addList(list, testBoard.getId());
+        assertTrue(repo.lists.contains(list));
+
+        var actual = sut.removeList(list);
         assertTrue(repo.calledMethods.contains("delete"));
         assertFalse(repo.lists.contains(list));
+        assertEquals(list, actual.getBody());
+    }
+
+    @Test
+    void cannotReplaceWithNullList() {
+        List list = new List("a");
+        sut.addList(list, testBoard.getId());
+
+        var actual = sut.replaceList(null, list.getId());
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+    }
+
+    @Test
+    void cannotReplaceWithListWithoutTitle() {
+        List list = new List("a");
+        sut.addList(list, testBoard.getId());
+
+        var actual = sut.replaceList(new List(""), list.getId());
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+    }
+
+    @Test
+    void cannotReplaceNonExistingList() {
+        var actual = sut.replaceList(new List("b"), 0L);
+        assertEquals(BAD_REQUEST, actual.getStatusCode());
+        assertFalse(repo.calledMethods.contains("save"));
     }
 
     @Test
     void replaceList() {
         var list = new List("a");
-        sut.addList(list, 0L);
-        list.setTitle("b");
-        sut.replaceList(list, list.getId());
+        sut.addList(list, testBoard.getId());
+        var newList = new List("b");
+        assertFalse(repo.lists.contains(newList));
 
-        assertTrue(repo.getById(list.getId()).getTitle().equals("b"));
+        var actual = sut.replaceList(newList, list.getId());
+        assertNotNull(actual.getBody());
+        assertEquals(newList.getTitle(), actual.getBody().getTitle());
+        assertEquals(list.getId(), actual.getBody().getId());
+        assertTrue(repo.calledMethods.contains("save"));
     }
 
     @Test
