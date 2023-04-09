@@ -55,6 +55,7 @@ public class BoardListCtrl {
             int i = Integer.parseInt(boardSearch.getText());
             Board board = server.getBoardById(i);
             mainCtrl.showBoard(board);
+            boardSearch.clear();
         }
         catch (Exception e) {
             FrontEndUtils.errorPopUp("not found", e.getMessage());
