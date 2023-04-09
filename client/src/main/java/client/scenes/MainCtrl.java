@@ -197,4 +197,8 @@ public class MainCtrl {
     public void setWebsocketSessions() {
         boardCtrl.setWebsocketSessions();
     }
+
+    public void  stop(){
+        boardCtrl.stop();
+    }
 }

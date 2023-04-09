@@ -4,17 +4,22 @@ package server.api;
 import commons.Card;
 import commons.MoveCardMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 import server.database.CardRepository;
 import server.database.ListRepository;
 
+import java.util.HashMap;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 
 @RestController
@@ -22,6 +27,8 @@ import java.util.List;
 public class CardController {
 
     private final CardRepository repo;
+
+    private final Map<Object, Consumer<Card>> listeners = new HashMap();
     @Autowired
     ListRepository listRepo;
 
@@ -109,7 +116,7 @@ public class CardController {
     @PostMapping("add/{listId}")
     public ResponseEntity<Card> addCard(
             @RequestBody Card card,
-            @PathVariable Long listId
+            @PathVariable long listId
     ) {
         if (card == null || isNullOrEmpty(card.getTitle()))
             return ResponseEntity.badRequest().build();
@@ -139,15 +146,17 @@ public class CardController {
 
     @PutMapping("/")
     public ResponseEntity<Card> replaceCard(@RequestBody Card card){
-        long id = card.getId();
-        if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(id))
+        if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(card.getId()))
             return ResponseEntity.badRequest().build();
 
+        long id = card.getId();
         commons.Card cardToChange = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
 
         cardToChange.setTitle(card.getTitle());
 
         repo.save(cardToChange);
+
+        listeners.forEach((k,l) -> l.accept(cardToChange));
 
         return ResponseEntity.ok(card);
     }
@@ -155,5 +164,22 @@ public class CardController {
 
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
+    }
+
+    @GetMapping("/updates")
+    public DeferredResult<ResponseEntity<Card>> cardUpdates(){
+        var noContent = new ResponseEntity(HttpStatus.NO_CONTENT);
+        var res = new DeferredResult<ResponseEntity<Card>>(5000L, noContent);
+
+        var key = new Object();
+        listeners.put(key, c -> {
+            res.setResult(ResponseEntity.ok(c));
+        });
+        res.onCompletion(() -> listeners.remove(key));
+
+        return res;
+
+
+
     }
 }

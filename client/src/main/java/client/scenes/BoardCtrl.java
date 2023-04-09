@@ -132,4 +132,7 @@ public class BoardCtrl{
         }
     }
 
+    public void stop(){
+        server.stop();
+    }
 }
