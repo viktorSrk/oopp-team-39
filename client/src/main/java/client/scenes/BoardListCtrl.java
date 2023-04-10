@@ -120,8 +120,10 @@ public class BoardListCtrl implements Initializable {
             int i = Integer.parseInt(boardSearch.getText());
             Board board = server.getBoardById(i);
             mainCtrl.showBoard(board);
-            joinedBoards.add(board);
             boardSearch.clear();
+            if (!joinedBoards.contains(board)) {
+                joinedBoards.add(board);
+            }
         }
         catch (Exception e) {
             FrontEndUtils.errorPopUp("not found", e.getMessage());
