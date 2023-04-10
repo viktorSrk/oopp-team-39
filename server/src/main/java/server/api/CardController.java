@@ -144,7 +144,7 @@ public class CardController {
 
     }
 
-    @PutMapping("/")
+    @PutMapping("/replace")
     public ResponseEntity<Card> replaceCard(@RequestBody Card card){
         if (card == null || isNullOrEmpty(card.getTitle()) || !repo.existsById(card.getId()))
             return ResponseEntity.badRequest().build();
@@ -155,6 +155,8 @@ public class CardController {
         cardToChange.setTitle(card.getTitle());
 
         repo.save(cardToChange);
+
+        System.out.println("Number of listeners " + listeners.size());
 
         listeners.forEach((k,l) -> l.accept(cardToChange));
 

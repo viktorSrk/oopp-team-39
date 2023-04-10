@@ -101,11 +101,4 @@ public class CardCtrl {
         card.setTitle(text);
         server.replaceCard(card, card.getId());
     }
-    public void register(){
-        if(card != null){
-            server.registerForUpdates( (Card c) -> {
-                if(c.getId() == card.getId()) setCard(c);
-            });
-        }
-    }
 }

@@ -37,6 +37,14 @@ public class BoardCtrl{
         this.mainCtrl = mainCtrl;
     }
 
+    public void register(){
+        server.registerForUpdates( (Card c) -> {
+            Platform.runLater(() -> {
+                loadLists();
+            });
+        });
+    }
+
     public void setWebsocketSessions() {
         server.registerForUpdates("/topic/list/add", commons.List.class, l -> {
             data.add(l);
