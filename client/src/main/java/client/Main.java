@@ -54,6 +54,7 @@ public class Main extends Application { //
                 "client", "scenes", "AdminPassword.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
+        primaryStage.setOnCloseRequest(e -> mainCtrl.stop());
         mainCtrl.initialize(primaryStage, overview, add, serverConnect,
                 boardList, addBoard, board, addCard, editCard, addList, card, list, adminPassword);
     }

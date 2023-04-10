@@ -13,7 +13,11 @@ public class ServerUtilsTest {
 
     @BeforeAll
     static void setup() {
-        sut.setServer("localhost:8080");
+        try {
+            sut.setServer("localhost:8080");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     @Test
     void setServerTest() {

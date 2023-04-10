@@ -3,9 +3,11 @@ package server.api;
 import commons.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 public class BoardControllerTest {
     private TestBoardRepository repo;
@@ -17,6 +19,27 @@ public class BoardControllerTest {
         repo = new TestBoardRepository();
         sut = new BoardController(repo);
     }
+    //because for non-multi-board application, it automatically adds 1 board,
+    //thus the size of boards being +1 then expected
+    @Test
+    public void getAllBoardsTest() {
+        Board board1 = sut.add(new Board("test")).getBody();
+        Board board2 = sut.add(new Board("test2")).getBody();
+        var actual = sut.getAll();
+        assertNotNull(board1);
+        assertNotNull(board2);
+        assertEquals(List.of(board1, board2), actual);
+        assertTrue(repo.calledMethods.contains("findAll"));
+    }
+
+    @Test
+    public void getDefaultBoardByIdTest() {
+        Board board1 = sut.add(new Board("test")).getBody();
+        var actual = sut.getById(0L);
+        assertNotNull(actual.getBody());
+        assertEquals(0L, actual.getBody().getId());
+        assertTrue(repo.calledMethods.contains("findById"));
+    }
 
     @Test
     public void databaseIsUsed() {
@@ -25,24 +48,35 @@ public class BoardControllerTest {
     }
 
     @Test
-    public void getAllBoardsTest() {
-        sut.add(new Board("test"));
-        sut.add(new Board("test2"));
-        assertEquals(2, sut.getAll().size());
-    }
-
-    @Test
     public void getByIdTest() {
-        Board saved1 = sut.add(new Board("test")).getBody();
-        Board saved2 = sut.add(new Board("test2")).getBody();
-        assertEquals(sut.getById(0L).getBody(), saved1);
-        assertEquals(sut.getById(1L).getBody(), saved2);
+        Board board = sut.add(new Board("test")).getBody();
+        Board board2 = sut.add(new Board("test2")).getBody();
+        var actual = sut.getById(0L);
+        var actual2 = sut.getById(1L);
+        assertEquals(board, actual.getBody());
+        assertEquals(board2, actual2.getBody());
+        assertTrue(repo.calledMethods.contains("findById"));
     }
 
     @Test
     public void getByIdNotExistsTest() {
-        sut.add(new Board("test"));
-        sut.add(new Board("test2"));
-        assertTrue(sut.getById((long)30).getStatusCode() == HttpStatus.BAD_REQUEST);
+        assertEquals(BAD_REQUEST, sut.getById(1L).getStatusCode());
+        assertFalse(repo.calledMethods.contains("findById"));
+    }
+
+    @Test
+    public void getByNegativeId() {
+        assertEquals(BAD_REQUEST, sut.getById(-1L).getStatusCode());
+        assertFalse(repo.calledMethods.contains("findById"));
+    }
+
+    @Test
+    public void add() {
+        var actual = sut.add(new Board("test"));
+        var actual2 = sut.add(new Board("test2"));
+        assertNotNull(actual.getBody());
+        assertNotNull(actual2.getBody());
+        assertEquals(List.of(actual.getBody(), actual2.getBody()), repo.boards);
+        assertTrue(repo.calledMethods.contains("save"));
     }
 }

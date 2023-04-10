@@ -15,6 +15,11 @@
  */
 package server.api;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
 import commons.Board;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -22,11 +27,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import server.database.BoardRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 public class TestBoardRepository implements BoardRepository {
 
@@ -141,8 +141,15 @@ public class TestBoardRepository implements BoardRepository {
 
     @Override
     public Optional<Board> findById(Long id) {
-        // TODO Auto-generated method stub
-        return Optional.ofNullable(boards.get(id.intValue()));
+        call("findById");
+        Board res = null;
+        for(Board b : boards){
+            if(b.getId() == id){
+                res = b;
+                break;
+            }
+        }
+        return Optional.ofNullable(res);
     }
 
     @Override

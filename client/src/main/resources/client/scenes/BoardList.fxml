@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
@@ -26,7 +27,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Disconnect from Server">
             <items>
-                  <MenuItem fx:id="backToServerConnect" mnemonicParsing="false" onAction="#cancel" text="go back to server selection" />
+                  <MenuItem fx:id="backToServerConnect" mnemonicParsing="false" onAction="#cancel" text="Are you sure?" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" onAction="#adminButton" text="Admin">
@@ -36,8 +37,7 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Boards..">
             <items>
-              <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addBoard" text="add Board" />
-              <MenuItem fx:id="del" mnemonicParsing="false" onAction="#deleteBoard" text="Delete Board" />
+              <MenuItem fx:id="add" mnemonicParsing="false" onAction="#addBoard" text="Add Board" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

@@ -220,4 +220,12 @@ public class MainCtrl {
     public void setAdmin(boolean isAdmin) {
         boardListCtrl.setAdmin(isAdmin);
     }
+
+    public void registerBoard(){
+        boardCtrl.register();
+    }
+
+    public void  stop(){
+        boardCtrl.stop();
+    }
 }

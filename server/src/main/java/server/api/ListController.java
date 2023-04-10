@@ -46,7 +46,7 @@ public class ListController {
     @PostMapping({"add/{boardId}"})
     public ResponseEntity<commons.List> addList(
             @RequestBody commons.List list,
-            @PathVariable Long boardId
+            @PathVariable long boardId
     ) {
         if (list == null || isNullOrEmpty(list.getTitle()))
             return ResponseEntity.badRequest().build();

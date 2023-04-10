@@ -16,10 +16,12 @@
 package client.utils;
 
 import commons.Board;
+import commons.Card;
 import commons.Quote;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -36,6 +38,8 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -63,23 +67,10 @@ public class ServerUtils {
         return httpUrl;
     }
 
-    public void setServer(String server) {
+    public void setServer(String server) throws Exception {
         this.server = server;
         httpUrl = "http://" + server;
-        try {
-            session = connect("ws://"+server+"/websocket");
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public void testURL() {
-        ClientBuilder.newClient(new ClientConfig()) //
-            .target(httpUrl).path("api/test") //
-            .request(APPLICATION_JSON) //
-            .accept(APPLICATION_JSON) //
-            .get(String.class);
+        session = connect("ws://"+server+"/websocket");
     }
 
     public void getQuotesTheHardWay() throws IOException {
@@ -175,23 +166,23 @@ public class ServerUtils {
 
     public commons.Card replaceCard(commons.Card card, long id) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(httpUrl).path("api/cards/")
+                .target(httpUrl).path("api/cards/replace")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
     }
 
     //establishes a STOMP message format websocket session
-    public StompSession connect(String url) {
+    public StompSession connect(String url) throws Exception {
         stomp.setMessageConverter(new MappingJackson2MessageConverter());
         try {
-            session = stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
+            return session = stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
         }
         catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         catch (ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new Exception(e);
         }
         throw new IllegalStateException();
     }
@@ -218,5 +209,44 @@ public class ServerUtils {
 
     public void send(String dest, Object o) {
         session.send(dest, o);
+    }
+
+    private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
+
+    public void registerForUpdates(Consumer<Card> consumer) {
+        EXEC.submit(() -> {
+            while (!Thread.interrupted()) {
+                try {
+                    var res = ClientBuilder.newClient(new ClientConfig())
+                            .target(httpUrl).path("api/cards/updates")
+                            .request(APPLICATION_JSON)
+                            .accept(APPLICATION_JSON)
+                            .get(Response.class);
+
+                    if (res == null) {
+                        System.out.println("Response is null");
+                        continue;
+                    }
+
+                    if (res.getStatus() == 204) {
+                        System.out.println("TimeOut");
+                    } else if (res.getStatus() == 200) {
+                        System.out.println("change registered");
+                        var c = res.readEntity(Card.class);
+                        consumer.accept(c);
+                    } else {
+                        System.out.println("Other error");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Exception occurred: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+
+
+    public void stop(){
+        EXEC.shutdownNow();
     }
 }

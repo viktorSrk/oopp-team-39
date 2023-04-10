@@ -49,6 +49,14 @@ public class BoardCtrl{
         this.mainCtrl = mainCtrl;
     }
 
+    public void register() {
+        server.registerForUpdates((Card c) -> {
+            Platform.runLater(() -> {
+                loadLists();
+            });
+        });
+    }
+
     public void setBoard(Board board) {
         this.board = board;
         boardName.setText(board.getName());
@@ -132,4 +140,7 @@ public class BoardCtrl{
         }
     }
 
+    public void stop(){
+        server.stop();
+    }
 }
