@@ -26,7 +26,7 @@ class CardControllerTest {
         TestBoardRepository boardRepo = new TestBoardRepository();
         BoardController boardSut = new BoardController(boardRepo);
 
-        Board testBoard = boardSut.add().getBody();
+        Board testBoard = boardSut.add(new Board("test")).getBody();
         assertNotNull(testBoard);
 
         TestListRepository listRepo = new TestListRepository();

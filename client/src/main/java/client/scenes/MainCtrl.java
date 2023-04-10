@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import commons.Board;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -38,6 +39,10 @@ public class MainCtrl {
     private BoardListCtrl boardListCtrl;
     private Scene boardList;
 
+    private AddBoardCtrl addBoardCtrl;
+
+    private Scene addBoard;
+
     private BoardCtrl boardCtrl;
     private Scene board;
 
@@ -60,6 +65,7 @@ public class MainCtrl {
                            Pair<AddQuoteCtrl, Parent> add,
                            Pair<ServerConnectCtrl, Parent> serverConnect,
                            Pair<BoardListCtrl, Parent> boardList,
+                           Pair<AddBoardCtrl, Parent> addBoard,
                            Pair<BoardCtrl, Parent> board,
                            Pair<AddCardCtrl, Parent> addCard,
                            Pair<EditCardCtrl, Parent> editCard,
@@ -73,6 +79,9 @@ public class MainCtrl {
 
         this.boardListCtrl = boardList.getKey();
         this.boardList = new Scene(boardList.getValue());
+
+        this.addBoardCtrl = addBoard.getKey();
+        this.addBoard = new Scene(addBoard.getValue());
 
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -126,15 +135,24 @@ public class MainCtrl {
         primaryStage.setScene(boardList);
     }
 
-    public void showBoard() {
+    public void showAddBoard() {
+        secondStage.setTitle("Talio: Add a Board");
+        secondStage.setScene(addBoard);
+        secondStage.show();
+    }
+
+    public void closeAddBoard() {
+        secondStage.close();
+    }
+
+    public void showBoard(Board boardObject) {
         primaryStage.setTitle("Talio: Board");
         primaryStage.setScene(board);
+        boardCtrl.setBoard(boardObject);
         boardCtrl.loadLists();
     }
 
     public void showAddCard(commons.List list) {
-//        primaryStage.setTitle("Talio: addCard");
-//        primaryStage.setScene(addCard);
         secondStage.setTitle("Talio: addCard");
         secondStage.setScene(addCard);
         addCardCtrl.setList(list);
@@ -160,10 +178,11 @@ public class MainCtrl {
         secondStage.close();
     }
 
-    public void showAddList() {
+    public void showAddList(Board board) {
         secondStage.setTitle("Talio: AddList");
         secondStage.setScene(addList);
         secondStage.show();
+        addListCtrl.setBoard(board);
     }
 
     public void closeAddList(){

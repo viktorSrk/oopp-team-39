@@ -44,6 +44,7 @@ public class Main extends Application { //
         var serverConnect = FXML.load(ServerConnectCtrl.class,
                 "client", "scenes", "ServerConnect.fxml");
         var boardList = FXML.load(BoardListCtrl.class, "client", "scenes", "BoardList.fxml");
+        var addBoard = FXML.load(AddBoardCtrl.class,"client", "scenes", "AddBoard.fxml" );
         var addCard = FXML.load(AddCardCtrl.class,"client", "scenes", "AddCard.fxml" );
         var editCard = FXML.load(EditCardCtrl.class, "client", "scenes", "EditCard.fxml");
         var addList = FXML.load(AddListCtrl.class,"client", "scenes", "AddList.fxml" );
@@ -53,6 +54,6 @@ public class Main extends Application { //
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         primaryStage.setOnCloseRequest(e -> mainCtrl.stop());
         mainCtrl.initialize(primaryStage, overview, add, serverConnect,
-                boardList, board, addCard, editCard, addList, card, list);
+                boardList, addBoard, board, addCard, editCard, addList, card, list);
     }
 }
