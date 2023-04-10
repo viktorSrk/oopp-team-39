@@ -2,6 +2,8 @@ package server.api;
 
 import commons.Board;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.database.BoardRepository;
 
@@ -14,7 +16,6 @@ public class BoardController {
 
     public BoardController(BoardRepository repo) {
         this.repo = repo;
-        add();
     }
 
     @GetMapping(path = { "", "/" })
@@ -30,12 +31,27 @@ public class BoardController {
         return ResponseEntity.ok(repo.findById(id).get());
     }
 
-    //right now only for adding the main Board
-    //adds an empty board to the repo
+    @MessageMapping({"/boards/add"})
+    @SendTo("/topic/boards/update")
+    public Board addMessage(Board board) {
+        return add(board).getBody();
+    }
     @PostMapping(path = { "", "/" })
-    public ResponseEntity<Board> add() {
-        Board newBoard = new Board();
-        Board saved = repo.save(newBoard);
+    public ResponseEntity<Board> add(@RequestBody Board board) {
+        Board saved = repo.save(board);
         return ResponseEntity.ok(saved);
+    }
+
+    @MessageMapping("/boards/delete")
+    @SendTo("/topic/boards/delete")
+    public Board deleteMessage(Board board) {
+        delete(board);
+        return board;
+    }
+
+    @DeleteMapping(path = { "", "/" })
+    public ResponseEntity<Board> delete(@RequestBody Board board) {
+        repo.delete(board);
+        return ResponseEntity.ok(board);
     }
 }

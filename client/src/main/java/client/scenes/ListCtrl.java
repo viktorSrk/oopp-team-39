@@ -5,7 +5,6 @@ import client.MyModule;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import commons.Board;
 import commons.Card;
 import commons.List;
 import commons.MoveCardMessage;
@@ -27,7 +26,7 @@ public class ListCtrl {
 
     private MainCtrl mainCtrl;
 
-    private static DataFormat cardDataFormat = CardCtrl.getCardDataFormat();
+    private static final DataFormat cardDataFormat = CardCtrl.getCardDataFormat();
 
     @FXML
     private TextField titleTextField;
@@ -99,7 +98,6 @@ public class ListCtrl {
                 event.getDragboard().hasContent(cardDataFormat)) {
             cardsVBox.setStyle("-fx-border-color: #33c5ff");
         }
-
         event.consume();
     }
 
@@ -116,15 +114,13 @@ public class ListCtrl {
         if (db.hasContent(cardDataFormat)) {
             //113.0 is the size of the card's anchorpane, supposedly
             int index = (int) (((event.getSceneY() - 125.0)/110.0));
-            var board = (Board) server.getBoards().stream()
-                    .filter(x -> x.getId() == 1)
-                    .toArray()[0];
-                    //hard-coded board instance.
             long id = (long) db.getContent(cardDataFormat);
-            Card c = board.findCardInListById(id);
-            commons.List list2 = board.findListWithCard(c);
-            var listIdSource = list2.getId();
-            var listIdTarget = this.getCardList().getId();
+            var list2 = (commons.List) server.getLists().stream()
+                    .filter(x -> ListCtrl.findListWithCardHelper(x, id) != null)
+                    .toArray()[0];
+            Card c = list2.getCardById(id);
+            long listIdSource = list2.getId();
+            long listIdTarget = this.getCardList().getId();
             MoveCardMessage message = new MoveCardMessage(listIdSource, listIdTarget, index, c);
 
             server.send("/app/cards/move", message);
@@ -133,6 +129,14 @@ public class ListCtrl {
         }
         event.setDropCompleted(success);
         event.consume();
+    }
+
+    public static commons.Card findListWithCardHelper(List list, long idCard) {
+        try {
+            return list.getCardById(idCard);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     private commons.List getCardList() {

@@ -4,7 +4,6 @@ import commons.Board;
 import commons.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,8 @@ class ListControllerTest {
         TestBoardRepository boardRepo = new TestBoardRepository();
         BoardController boardSut = new BoardController(boardRepo);
 
-        testBoard = boardSut.add().getBody();
+        testBoard = boardSut.add(new Board("test")).getBody();
+        assertNotNull(testBoard);
 
         repo = new TestListRepository();
         sut = new ListController(repo, boardRepo);
