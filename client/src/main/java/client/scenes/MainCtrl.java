@@ -153,6 +153,11 @@ public class MainCtrl {
         secondStage.close();
     }
 
+    public void closeAddBoardSuccess(Board board) {
+        secondStage.close();
+        boardListCtrl.addToJoinedBoards(board);
+    }
+
     public void showAdminPassword() {
         secondStage.setTitle("Talio: Admin Log In");
         secondStage.setScene(adminPassword);
@@ -228,4 +233,6 @@ public class MainCtrl {
     public void  stop(){
         boardCtrl.stop();
     }
+
+
 }

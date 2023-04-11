@@ -179,4 +179,13 @@ public class BoardListCtrl implements Initializable {
             adminLogIn.setText("Log In");
         }
     }
+
+    public void addToJoinedBoards(Board board) {
+        if (!joinedBoards.containsKey(server.getHttpUrl())) {
+            joinedBoards.put(server.getHttpUrl(), new ArrayList<>());
+        }
+        ArrayList<Board> joinedOnServer = joinedBoards.get(server.getHttpUrl());
+        joinedOnServer.add(board);
+        joinedBoards.put(server.getHttpUrl(), joinedOnServer);
+    }
 }
