@@ -61,11 +61,10 @@ public class EditCardCtrl {
         this.selectedCard = selectedCard;
         titleTextField.setText(selectedCard.getTitle());
         descriptionTextField.setText(selectedCard.getDescription());
-//        for (String e : selectedCard.getTasks()) {
-//            tasks.add(e);
-//        }
-//        tasksListView.setItems(FXCollections.observableList(tasks));
-//TODO: implement tasks for cards, uncomment once implemented
+        for (String e : selectedCard.getTasks()) {
+            tasks.add(e);
+        }
+        tasksListView.setItems(FXCollections.observableList(tasks));
     }
 
     /**
@@ -82,6 +81,8 @@ public class EditCardCtrl {
     private void clearFields() {
         descriptionTextField.clear();
         titleTextField.clear();
+        this.tasks.clear();
+        tasksListView.setItems(tasks);
     }
 
     /**
@@ -106,8 +107,7 @@ public class EditCardCtrl {
         String description = descriptionTextField.getText();
         selectedCard.setTitle(name);
         selectedCard.setDescription(description);
-//        selectedCard.setTasks(tasks); // TODO: uncomment once tasks are implemented
-        // this.server.send("/app/cards/edit/" + selectedCard.getId(), selectedCard);
+        selectedCard.setTasks(tasks);
         this.server.replaceCard(selectedCard);
         clearFields();
         mainCtrl.closeAddCard();
