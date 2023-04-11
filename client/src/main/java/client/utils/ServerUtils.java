@@ -186,7 +186,9 @@ public class ServerUtils {
         }
         throw new IllegalStateException();
     }
-    public <T> StompSession.Subscription registerForUpdates(String dest, Class<T> type, Consumer<T> consumer) {
+    public <T> StompSession.Subscription registerForUpdates(String dest,
+                                                            Class<T> type,
+                                                            Consumer<T> consumer) {
         try {
             return session.subscribe(dest, new StompFrameHandler() {
                 @Override
