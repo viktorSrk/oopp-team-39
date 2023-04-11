@@ -186,9 +186,11 @@ public class ServerUtils {
         }
         throw new IllegalStateException();
     }
-    public <T> void registerForUpdates(String dest, Class<T> type, Consumer<T> consumer) {
+    public <T> StompSession.Subscription registerForUpdates(String dest,
+                                                            Class<T> type,
+                                                            Consumer<T> consumer) {
         try {
-            session.subscribe(dest, new StompFrameHandler() {
+            return session.subscribe(dest, new StompFrameHandler() {
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
                     return type;
@@ -204,6 +206,7 @@ public class ServerUtils {
         catch (Exception e) {
 
         }
+        return null;
     }
 
 
