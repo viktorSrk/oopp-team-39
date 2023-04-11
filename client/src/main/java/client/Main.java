@@ -37,25 +37,23 @@ public class Main extends Application { //
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
-        var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
         var board = FXML.load(BoardCtrl.class, "client", "scenes", "Board.fxml");
 
         var serverConnect = FXML.load(ServerConnectCtrl.class,
                 "client", "scenes", "ServerConnect.fxml");
         var boardList = FXML.load(BoardListCtrl.class, "client", "scenes", "BoardList.fxml");
-        var addBoard = FXML.load(AddBoardCtrl.class,"client", "scenes", "AddBoard.fxml" );
-        var addCard = FXML.load(AddCardCtrl.class,"client", "scenes", "AddCard.fxml" );
+        var addBoard = FXML.load(AddBoardCtrl.class, "client", "scenes", "AddBoard.fxml");
+        var addCard = FXML.load(AddCardCtrl.class, "client", "scenes", "AddCard.fxml");
         var editCard = FXML.load(EditCardCtrl.class, "client", "scenes", "EditCard.fxml");
-        var addList = FXML.load(AddListCtrl.class,"client", "scenes", "AddList.fxml" );
-        var card = FXML.load(CardCtrl.class,"client", "scenes", "Card.fxml" );
-        var list = FXML.load(ListCtrl.class,"client", "scenes", "List.fxml" );
+        var addList = FXML.load(AddListCtrl.class, "client", "scenes", "AddList.fxml");
+        var card = FXML.load(CardCtrl.class, "client", "scenes", "Card.fxml");
+        var list = FXML.load(ListCtrl.class, "client", "scenes", "List.fxml");
         var adminPassword = FXML.load(AdminPasswordCtrl.class,
                 "client", "scenes", "AdminPassword.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         primaryStage.setOnCloseRequest(e -> mainCtrl.stop());
-        mainCtrl.initialize(primaryStage, overview, add, serverConnect,
+        mainCtrl.initialize(primaryStage, serverConnect,
                 boardList, addBoard, board, addCard, editCard, addList, card, list, adminPassword);
     }
 }

@@ -146,11 +146,12 @@ public class ListCtrl {
         server.send("/app/list/delete", cardList);
     }
 
-    public void changeTitle(){
+    public void changeTitle() {
         var text = titleTextField.getText();
         cardList.setTitle(text);
-        server.send("/app/list/replace",cardList);
+        server.send("/app/list/replace", cardList);
     }
+
     public void addCard() {
         mainCtrl.showAddCard(cardList);
     }

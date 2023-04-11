@@ -96,12 +96,6 @@ public class Board {
         return null;
     }
 
-    public void reOrderLists() {
-        for (List l : getTaskLists()) {
-            l.reOrder();
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

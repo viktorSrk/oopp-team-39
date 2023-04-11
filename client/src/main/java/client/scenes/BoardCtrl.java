@@ -50,7 +50,7 @@ public class BoardCtrl{
     }
 
     public void register() {
-        server.registerForUpdates((Card c) -> {
+        server.registerForUpdatesPolling((Card c) -> {
             Platform.runLater(() -> {
                 loadLists();
             });
@@ -64,7 +64,7 @@ public class BoardCtrl{
     }
 
     public void setWebsocketSessions() {
-        server.registerForUpdates("/topic/boards/delete", Board.class , b-> {
+        server.registerForUpdatesSockets("/topic/boards/delete", Board.class , b-> {
             if (board.getId() == b.getId()) {
                 Platform.runLater(() -> {
                     FrontEndUtils.errorPopUp("board deleted", "");
@@ -73,13 +73,13 @@ public class BoardCtrl{
             }
         });
 
-        server.registerForUpdates("/topic/list/update", Card.class , l -> {
+        server.registerForUpdatesSockets("/topic/list/update", Card.class , l -> {
             Platform.runLater(() -> {
                 loadLists();
             });
         });
 
-        server.registerForUpdates("/topic/list/replace", commons.List.class, l -> {
+        server.registerForUpdatesSockets("/topic/list/replace", commons.List.class, l -> {
             for (int i = 0; i < data.size(); i++) {
                 if (data.get(i).getId() == l.getId()) {
                     int j = i;
