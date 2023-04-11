@@ -185,7 +185,9 @@ public class BoardListCtrl implements Initializable {
             joinedBoards.put(server.getHttpUrl(), new ArrayList<>());
         }
         ArrayList<Board> joinedOnServer = joinedBoards.get(server.getHttpUrl());
-        joinedOnServer.add(board);
-        joinedBoards.put(server.getHttpUrl(), joinedOnServer);
+        if (!joinedOnServer.contains(board)) {
+            joinedOnServer.add(board);
+            joinedBoards.put(server.getHttpUrl(), joinedOnServer);
+        }
     }
 }

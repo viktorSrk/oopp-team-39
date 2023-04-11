@@ -15,10 +15,10 @@ public class AddBoardCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-    private boolean isNotUpdated = true;
+    private volatile boolean isNotUpdated = true;
     private boolean tryingToAdd = false;
 
-    Board newBoard;
+    private volatile Board newBoard;
 
     @FXML
     private TextField title;
@@ -34,38 +34,20 @@ public class AddBoardCtrl {
     }
 
     public void ok() {
+        if (tryingToAdd) return;
         try {
             tryingToAdd = true;
-            server.send("/app/boards/add",  getBoard());
             server.registerForUpdates("/topic/boards/update", Board.class, b -> {
-                newBoard = b;
-                isNotUpdated = false;
-            });
-            Thread waitForBoardThread = new Thread(() -> {
-                long startTime = System.currentTimeMillis(); //set Timeout
-                while (isNotUpdated && (System.currentTimeMillis()-startTime)<5000L) {
-                }
-                isNotUpdated = true;
-                if ((System.currentTimeMillis()-startTime)>5000L) {
-                    Platform.runLater(() -> {
-                        var alert = new Alert(Alert.AlertType.ERROR);
-                        alert.initModality(Modality.APPLICATION_MODAL);
-                        alert.setContentText("time out while adding Board");
-                        alert.showAndWait();
-                    });
-                }
-                else {
+                if (tryingToAdd == true) {
                     Platform.runLater(() -> {
                         title.clear();
-                        mainCtrl.closeAddBoardSuccess(newBoard);
-                        mainCtrl.showBoard(newBoard);
+                        mainCtrl.closeAddBoardSuccess(b);
+                        mainCtrl.showBoard(b);
+                        tryingToAdd = false;
                     });
                 }
-                tryingToAdd = false;
             });
-
-            waitForBoardThread.start();
-
+            server.send("/app/boards/add",  getBoard());
         } catch (WebApplicationException e) {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
