@@ -13,9 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class BoardListCtrl implements Initializable {
     private final ServerUtils server;
@@ -23,7 +21,7 @@ public class BoardListCtrl implements Initializable {
     private boolean isAdmin = false;
 
     private ObservableList<Board> listOfBoards;
-    private List<Board> joinedBoards = new ArrayList<>();
+    private Map<String ,ArrayList<Board>> joinedBoards = new HashMap<>();
 
     @FXML
     private TableView<Board> boardTable;
@@ -100,6 +98,10 @@ public class BoardListCtrl implements Initializable {
     }
 
     public void loadBoards() {
+        if (!joinedBoards.containsKey(server.getHttpUrl())) {
+            joinedBoards.put(server.getHttpUrl(), new ArrayList<>());
+        }
+        ArrayList<Board> joinedOnServer = joinedBoards.get(server.getHttpUrl());
         boardTable.getItems().clear();
         if (isAdmin) {
             List<Board> boards = server.getBoards();
@@ -108,7 +110,7 @@ public class BoardListCtrl implements Initializable {
             }
         }
         else {
-            for (Board board : joinedBoards) {
+            for (Board board : joinedOnServer) {
                 boardTable.getItems().add(board);
             }
         }
@@ -121,8 +123,13 @@ public class BoardListCtrl implements Initializable {
             Board board = server.getBoardById(i);
             mainCtrl.showBoard(board);
             boardSearch.clear();
-            if (!joinedBoards.contains(board)) {
-                joinedBoards.add(board);
+            if (!joinedBoards.containsKey(server.getHttpUrl())) {
+                joinedBoards.put(server.getHttpUrl(), new ArrayList<>());
+            }
+            ArrayList<Board> joinedOnServer = joinedBoards.get(server.getHttpUrl());
+            if (!joinedOnServer.contains(board)) {
+                joinedOnServer.add(board);
+                joinedBoards.put(server.getHttpUrl(), joinedOnServer);
             }
         }
         catch (Exception e) {
