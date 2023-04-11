@@ -24,7 +24,6 @@ public class ListController {
         this.repo = repo;
         this.boardRepo = boardRepo;
     }
-
     @GetMapping({"", "/"})
     public List<commons.List> getAll() {
         return repo.findAll();
@@ -37,7 +36,6 @@ public class ListController {
         commons.List res = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
         return ResponseEntity.ok(res);
     }
-
     @MessageMapping("/list/add/{boardId}")
     @SendTo("/topic/list/update")
     public commons.List addMessage(commons.List list, @DestinationVariable long boardId) {
@@ -57,7 +55,6 @@ public class ListController {
         saved = repo.save(saved);
         return ResponseEntity.ok(saved);
     }
-
     @MessageMapping("/list/delete")
     @SendTo("/topic/list/update")
     public commons.List removeMessage(commons.List list) {
@@ -71,30 +68,29 @@ public class ListController {
         repo.delete(list);
         return ResponseEntity.ok(list);
     }
-
     @MessageMapping("/list/replace")
     @SendTo("/topic/list/replace")
     public commons.List replaceMessage(commons.List list) {
         return replaceList(list, list.getId()).getBody();
     }
-
-
-
     @PutMapping("/{id}")
-    public ResponseEntity<commons.List> replaceList(@RequestBody commons.List list,
-                                                    @PathVariable("id") long id){
+    public ResponseEntity<commons.List> replaceList(
+            @RequestBody commons.List list,
+            @PathVariable("id") long id
+    ){
         if (list == null || isNullOrEmpty(list.getTitle()) || !repo.existsById(id))
             return ResponseEntity.badRequest().build();
 
         commons.List listToChange = repo.findById(id).isPresent() ? repo.findById(id).get() : null;
 
-        listToChange.setTitle(list.getTitle());
-        listToChange.setCards(list.getCards());
-        repo.save(listToChange);
+        if (listToChange != null) {
+            listToChange.setTitle(list.getTitle());
+            listToChange.setCards(list.getCards());
+            repo.save(listToChange);
+        }
 
         return ResponseEntity.ok(listToChange);
     }
-
     private static boolean isNullOrEmpty(String s) {
         return s == null || s.isEmpty();
     }

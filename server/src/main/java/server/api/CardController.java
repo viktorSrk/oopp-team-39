@@ -15,8 +15,8 @@ import org.springframework.web.context.request.async.DeferredResult;
 import server.database.CardRepository;
 import server.database.ListRepository;
 
-import java.util.HashMap;
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -28,9 +28,11 @@ public class CardController {
 
     private final CardRepository repo;
 
-    private final Map<Object, Consumer<Card>> listeners = new HashMap();
     @Autowired
     ListRepository listRepo;
+
+    private final Map<Object, Consumer<Card>> listeners = new HashMap();
+
 
     public CardController(CardRepository repo, ListRepository listRepo) {
         this.repo = repo;
@@ -55,23 +57,21 @@ public class CardController {
     public ResponseEntity<commons.List> moveCards(@Payload MoveCardMessage message) {
         long listIdSource = message.getListIdSource();
         long listIdTarget = message.getListIdTarget();
-        int index = message.getIndex();
+        int indexTarget = message.getIndex();
         Card card = message.getCard();
 
         commons.List listSource = listRepo.getById(listIdSource);
         listSource.reOrder();
 
-        if (listIdSource == listIdTarget && index == card.getPosition()) {
+        if (listIdSource == listIdTarget && indexTarget == card.getPosition()) {
             return ResponseEntity.ok(listRepo.save(listRepo.getById(listIdSource)));
         }
-
-        if (listIdSource == listIdTarget && index != card.getPosition()) {
+        if (listIdSource == listIdTarget && indexTarget != card.getPosition()) {
             listSource.reOrder();
-            listSource.move(card.getId(), index);
+            listSource.move(card.getId(), indexTarget);
             listSource.reOrder();
             return ResponseEntity.ok(listRepo.save(listSource));
         }
-
         commons.List listTarget = listRepo.getById(listIdTarget);
 
         listSource.reOrder();
@@ -86,7 +86,7 @@ public class CardController {
         savedCard.setList(listTarget);
         savedCard = repo.save(savedCard);
         listTarget.addCard(savedCard);
-        listTarget.insert(index);
+        listTarget.insert(indexTarget);
         listTarget.reOrder();
 
         commons.List savedTarget = listRepo.save(listTarget);
@@ -94,18 +94,6 @@ public class CardController {
 
         return ResponseEntity.ok(savedSource);
     }
-
-
-//    @MessageMapping("/cards/reorder")
-//    @SendTo("/topic/list/update")
-//    public commons.List reOrder(@Payload  commons.List list) {
-//        if (list.getCards().size() == 0) return listRepo.save(list);
-//        for (Card c : list.getCards()) {
-//            c.setPosition(list.getCards().indexOf(c));
-//            repo.save(c);
-//        }
-//        return listRepo.save(list);
-//    }
 
     @MessageMapping("/cards/add/{listId}")
     @SendTo("/topic/list/update")
@@ -173,17 +161,14 @@ public class CardController {
     @GetMapping("/updates")
     public DeferredResult<ResponseEntity<Card>> cardUpdates(){
         var noContent = new ResponseEntity(HttpStatus.NO_CONTENT);
-        var res = new DeferredResult<ResponseEntity<Card>>(5000L, noContent);
+        var result = new DeferredResult<ResponseEntity<Card>>(5000L, noContent);
 
         var key = new Object();
         listeners.put(key, c -> {
-            res.setResult(ResponseEntity.ok(c));
+            result.setResult(ResponseEntity.ok(c));
         });
-        res.onCompletion(() -> listeners.remove(key));
+        result.onCompletion(() -> listeners.remove(key));
 
-        return res;
-
-
-
+        return result;
     }
 }

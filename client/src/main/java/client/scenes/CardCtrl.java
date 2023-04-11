@@ -56,10 +56,8 @@ public class CardCtrl {
         this.card = card;
         showName(card);
     }
-//TODO: I need to initialise the title with onw form the database (probably in the contstructor)
 
     public void open(){
-        //open the related card
         mainCtrl.showEditCard(card);
     }
 
@@ -93,7 +91,6 @@ public class CardCtrl {
         event.consume();
 
     }
-
     public void delete() {
         server.send("/app/card/delete", card);
     }

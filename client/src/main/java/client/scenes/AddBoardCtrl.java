@@ -37,7 +37,7 @@ public class AddBoardCtrl {
         if (tryingToAdd) return;
         try {
             tryingToAdd = true;
-            server.registerForUpdates("/topic/boards/update", Board.class, b -> {
+            server.registerForUpdatesSockets("/topic/boards/update", Board.class, b -> {
                 if (tryingToAdd == true) {
                     Platform.runLater(() -> {
                         title.clear();

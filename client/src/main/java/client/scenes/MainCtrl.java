@@ -27,12 +27,6 @@ public class MainCtrl {
 
     private Stage secondStage;
 
-    private QuoteOverviewCtrl overviewCtrl;
-    private Scene overview;
-
-    private AddQuoteCtrl addCtrl;
-    private Scene add;
-
     private ServerConnectCtrl serverConnectCtrl;
     private Scene serverConnect;
 
@@ -40,7 +34,6 @@ public class MainCtrl {
     private Scene boardList;
 
     private AddBoardCtrl addBoardCtrl;
-
     private Scene addBoard;
 
     private BoardCtrl boardCtrl;
@@ -64,8 +57,7 @@ public class MainCtrl {
     private AdminPasswordCtrl adminPasswordCtrl;
     private Scene adminPassword;
 
-    public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-                           Pair<AddQuoteCtrl, Parent> add,
+    public void initialize(Stage primaryStage,
                            Pair<ServerConnectCtrl, Parent> serverConnect,
                            Pair<BoardListCtrl, Parent> boardList,
                            Pair<AddBoardCtrl, Parent> addBoard,
@@ -86,12 +78,6 @@ public class MainCtrl {
 
         this.addBoardCtrl = addBoard.getKey();
         this.addBoard = new Scene(addBoard.getValue());
-
-        this.overviewCtrl = overview.getKey();
-        this.overview = new Scene(overview.getValue());
-
-        this.addCtrl = add.getKey();
-        this.add = new Scene(add.getValue());
 
         this.boardCtrl = board.getKey();
         this.board = new Scene(board.getValue());
@@ -120,17 +106,6 @@ public class MainCtrl {
         primaryStage.show();
     }
 
-    public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
-        primaryStage.setScene(overview);
-        overviewCtrl.refresh();
-    }
-
-    public void showAdd() {
-        primaryStage.setTitle("Quotes: Adding Quote");
-        primaryStage.setScene(add);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
-    }
 
     public void showServerConnect() {
         primaryStage.setTitle("Talio: Connect to a Server");
@@ -181,14 +156,11 @@ public class MainCtrl {
         addCardCtrl.setList(list);
         secondStage.show();
     }
+
     public void closeAddCard() {
         secondStage.close();
     }
 
-    public void showCard() {
-        primaryStage.setTitle("Talio: Card");
-        primaryStage.setScene(card);
-    }
 
     public void showEditCard(commons.Card card) {
         secondStage.setTitle("Talio: Edit Card");
@@ -208,14 +180,10 @@ public class MainCtrl {
         addListCtrl.setBoard(board);
     }
 
-    public void closeAddList(){
+    public void closeAddList() {
         secondStage.close();
     }
 
-    public void showList() {
-        primaryStage.setTitle("Talio: List");
-        primaryStage.setScene(list);
-    }
 
     public void setWebsocketSessions() {
         boardListCtrl.setWebSocketSessions();
@@ -226,11 +194,11 @@ public class MainCtrl {
         boardListCtrl.setAdmin(isAdmin);
     }
 
-    public void registerBoard(){
+    public void registerBoard() {
         boardCtrl.register();
     }
 
-    public void  stop(){
+    public void stop() {
         boardCtrl.stop();
     }
 
