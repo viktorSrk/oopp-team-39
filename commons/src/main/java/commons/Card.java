@@ -18,6 +18,7 @@ public class Card {
     private long id;
 
     private String title;
+    private String description;
 
     @OrderColumn
     private int position;
@@ -35,10 +36,12 @@ public class Card {
         this.title = title;
         this.list = list;
         this.position = pos;
+        this.description = "";
     }
 
     public Card(String title){
         this.title = title;
+        this.description = "";
     }
 
     public int getPosition() {
@@ -61,6 +64,10 @@ public class Card {
         return list;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setList(List list) {
         this.list = list;
     }
@@ -69,9 +76,12 @@ public class Card {
         this.id = id;
     }
 
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

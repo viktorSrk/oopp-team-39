@@ -166,7 +166,7 @@ public class ServerUtils {
 
     public commons.Card replaceCard(commons.Card card, long id) {
         return ClientBuilder.newClient(new ClientConfig())
-                .target(httpUrl).path("api/cards/replace")
+                .target(httpUrl).path("api/cards/")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
@@ -212,6 +212,15 @@ public class ServerUtils {
 
     public void send(String dest, Object o) {
         session.send(dest, o);
+    }
+
+    public commons.Card replaceCard(commons.Card card) {
+        Long id = card.getId();
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(httpUrl).path("api/cards/" + id)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
     }
 
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();

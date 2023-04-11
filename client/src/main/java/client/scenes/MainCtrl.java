@@ -190,10 +190,10 @@ public class MainCtrl {
         primaryStage.setScene(card);
     }
 
-    public void showEditCard() {
+    public void showEditCard(commons.Card card) {
         secondStage.setTitle("Talio: Edit Card");
         secondStage.setScene(editCard);
-        editCardCtrl.refresh();
+        editCardCtrl.setCard(card);
         secondStage.show();
     }
 
