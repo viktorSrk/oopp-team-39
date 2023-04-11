@@ -83,7 +83,11 @@ public class BoardListCtrl implements Initializable {
         });
 
         server.registerForUpdates("/topic/boards/delete", Board.class, b -> {
-            joinedBoards.remove(b);
+            if (joinedBoards.containsKey(server.getHttpUrl())) {
+                ArrayList<Board> joinedOnServer = joinedBoards.get(server.getHttpUrl());
+                joinedOnServer.remove(b);
+                joinedBoards.put(server.getHttpUrl(), joinedOnServer);
+            }
             Platform.runLater(this::loadBoards);
         });
     }
