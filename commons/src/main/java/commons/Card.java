@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+
 import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
@@ -22,6 +24,9 @@ public class Card {
 
     @OrderColumn
     private int position;
+
+    @ElementCollection(fetch=FetchType.EAGER)
+    private java.util.List<String> tasks = new ArrayList<>();
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
@@ -68,6 +73,10 @@ public class Card {
         return description;
     }
 
+    public java.util.List<String> getTasks() {
+        return tasks;
+    }
+
     public void setList(List list) {
         this.list = list;
     }
@@ -82,6 +91,13 @@ public class Card {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setTasks(java.util.List<String> tasks) {
+        this.tasks.clear();
+        for (String e : tasks) {
+            this.tasks.add(e);
+        }
     }
 
     @Override

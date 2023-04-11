@@ -2,6 +2,8 @@ package commons;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
@@ -47,6 +49,17 @@ class CardTest {
         assertEquals("", a.getDescription());
         a.setDescription("HTB v. 1862");
         assertEquals("HTB v. 1862", a.getDescription());
+    }
+
+    @Test
+    void testList() {
+        var a = new Card("a");
+        java.util.List<String> tasks = new ArrayList<>();
+        tasks.add("0");
+        tasks.add("1");
+        tasks.add("2");
+        a.setTasks(tasks);
+        assertEquals(tasks, a.getTasks());
     }
 
     @Test

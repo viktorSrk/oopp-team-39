@@ -154,6 +154,7 @@ public class CardController {
 
         cardToChange.setTitle(card.getTitle());
         cardToChange.setDescription(card.getDescription());
+        cardToChange.setTasks(card.getTasks());
 
         repo.save(cardToChange);
 
