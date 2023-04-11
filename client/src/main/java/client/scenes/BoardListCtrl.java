@@ -56,7 +56,7 @@ public class BoardListCtrl implements Initializable {
         MenuItem delete = new MenuItem("Delete");
         delete.setOnAction(event -> {
             Board board = boardTable.getSelectionModel().getSelectedItem();
-            server.send("/app/boards/delete", board);
+            deleteBoard(board);
         });
         contextMenu.getItems().add(delete);
     }
@@ -148,8 +148,9 @@ public class BoardListCtrl implements Initializable {
         //TO DO
     }
 
-    public void deleteBoard() {
-        //TO DO
+    public void deleteBoard(Board board) {
+        server.send("/app/boards/delete", board);
+        joinedBoards.get(server.getHttpUrl()).remove(board);
     }
 
     public void showInfo() {
