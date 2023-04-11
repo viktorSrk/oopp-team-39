@@ -78,11 +78,11 @@ public class BoardListCtrl implements Initializable {
     }
 
     public void setWebSocketSessions() {
-        server.registerForUpdates("/topic/boards/update", Board.class, b -> {
+        server.registerForUpdatesSockets("/topic/boards/update", Board.class, b -> {
             Platform.runLater(this::loadBoards);
         });
 
-        server.registerForUpdates("/topic/boards/delete", Board.class, b -> {
+        server.registerForUpdatesSockets("/topic/boards/delete", Board.class, b -> {
             if (joinedBoards.containsKey(server.getHttpUrl())) {
                 ArrayList<Board> joinedOnServer = joinedBoards.get(server.getHttpUrl());
                 joinedOnServer.remove(b);

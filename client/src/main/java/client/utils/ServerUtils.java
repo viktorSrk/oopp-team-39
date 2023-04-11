@@ -17,7 +17,6 @@ package client.utils;
 
 import commons.Board;
 import commons.Card;
-import commons.Quote;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
@@ -31,11 +30,7 @@ import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -55,6 +50,7 @@ public class ServerUtils {
 
     public ServerUtils() {
     }
+
     public ServerUtils(WebSocketStompClient stomp) {
         this.stomp = stomp;
     }
@@ -70,41 +66,17 @@ public class ServerUtils {
     public void setServer(String server) throws Exception {
         this.server = server;
         httpUrl = "http://" + server;
-        session = connect("ws://"+server+"/websocket");
+        session = connect("ws://" + server + "/websocket");
     }
 
-    public void getQuotesTheHardWay() throws IOException {
-        var url = new URL("http://localhost:8080/api/quotes");
-        var is = url.openConnection().getInputStream();
-        var br = new BufferedReader(new InputStreamReader(is));
-        String line;
-        while ((line = br.readLine()) != null) {
-            System.out.println(line);
-        }
-    }
-
-    public List<Quote> getQuotes() {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(httpUrl).path("api/quotes") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .get(new GenericType<List<Quote>>() {});
-    }
-
-    public Quote addQuote(Quote quote) {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(httpUrl).path("api/quotes") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
-    }
 
     public List<commons.List> getLists() {
         return ClientBuilder.newClient(new ClientConfig()) //
                 .target(httpUrl).path("api/lists") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {});
+                .get(new GenericType<>() {
+                });
     }
 
     public List<Board> getBoards() {
@@ -115,58 +87,21 @@ public class ServerUtils {
                 .get(new GenericType<>() {
                 });
     }
+
     public Board getBoardById(long id) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(httpUrl).path("api/boards/"+id) //
+                .target(httpUrl).path("api/boards/" + id) //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<>() {
                 });
     }
 
-    public Board addBoard(Board board) {
+
+    public commons.Card replaceCard(commons.Card card) {
+        Long id = card.getId();
         return ClientBuilder.newClient(new ClientConfig())
-                .target(httpUrl).path("api/boards/")
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .post(Entity.entity(board, APPLICATION_JSON), Board.class);
-    }
-
-    public commons.List addList(commons.List list) {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(httpUrl).path("api/lists/") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .post(Entity.entity(list, APPLICATION_JSON), commons.List.class);
-    }
-
-    public commons.List changeList(commons.List list) {
-        var id = list.getId();
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(server).path("api/lists/" + id) //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .put(Entity.entity(list, APPLICATION_JSON), commons.List.class);
-    }
-    public commons.Card addCard(commons.Card card, Long listId) {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(httpUrl).path("api/cards/add/" + listId) //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .post(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
-    }
-
-    public List<commons.Card> getCards() {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(httpUrl).path("api/cards") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .get(new GenericType<>() {});
-    }
-
-    public commons.Card replaceCard(commons.Card card, long id) {
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(httpUrl).path("api/cards/")
+                .target(httpUrl).path("api/cards/" + id)
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
@@ -176,21 +111,22 @@ public class ServerUtils {
     public StompSession connect(String url) throws Exception {
         stomp.setMessageConverter(new MappingJackson2MessageConverter());
         try {
-            return session = stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
-        }
-        catch (InterruptedException e) {
+            return session = stomp.connect(url, new StompSessionHandlerAdapter() {
+            }).get();
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-        }
-        catch (ExecutionException e) {
+        } catch (ExecutionException e) {
             throw new Exception(e);
         }
         throw new IllegalStateException();
     }
-    public <T> StompSession.Subscription registerForUpdates(String dest,
-                                                            Class<T> type,
-                                                            Consumer<T> consumer) {
+
+    public <T> void registerForUpdatesSockets(
+            String dest,
+            Class<T> type,
+            Consumer<T> consumer) {
         try {
-            return session.subscribe(dest, new StompFrameHandler() {
+            session.subscribe(dest, new StompFrameHandler() {
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
                     return type;
@@ -202,30 +138,18 @@ public class ServerUtils {
                 }
 
             });
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
-        return null;
     }
-
 
     public void send(String dest, Object o) {
         session.send(dest, o);
     }
 
-    public commons.Card replaceCard(commons.Card card) {
-        Long id = card.getId();
-        return ClientBuilder.newClient(new ClientConfig())
-                .target(httpUrl).path("api/cards/" + id)
-                .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .put(Entity.entity(card, APPLICATION_JSON), commons.Card.class);
-    }
-
     private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
 
-    public void registerForUpdates(Consumer<Card> consumer) {
+    public void registerForUpdatesPolling(Consumer<Card> consumer) {
         EXEC.submit(() -> {
             while (!Thread.interrupted()) {
                 try {
@@ -239,7 +163,6 @@ public class ServerUtils {
                         System.out.println("Response is null");
                         continue;
                     }
-
                     if (res.getStatus() == 204) {
                         System.out.println("TimeOut");
                     } else if (res.getStatus() == 200) {
@@ -256,9 +179,7 @@ public class ServerUtils {
         });
     }
 
-
-
-    public void stop(){
+    public void stop() {
         EXEC.shutdownNow();
     }
 }

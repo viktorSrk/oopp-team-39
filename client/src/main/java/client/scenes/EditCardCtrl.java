@@ -41,8 +41,7 @@ public class EditCardCtrl {
 
     private final ObservableList<String> tasks = FXCollections.observableArrayList();
 
-    private Card selectedCard; //TODO: parse the card that is clicked to selectedCard
-
+    private Card selectedCard;
 
     @Inject
     public EditCardCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -58,6 +57,7 @@ public class EditCardCtrl {
     public void setCard(Card selectedCard) {
         if (selectedCard == null)
             throw new NullPointerException();
+
         this.selectedCard = selectedCard;
         titleTextField.setText(selectedCard.getTitle());
         descriptionTextField.setText(selectedCard.getDescription());

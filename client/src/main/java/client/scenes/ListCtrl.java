@@ -113,8 +113,8 @@ public class ListCtrl {
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasContent(cardDataFormat)) {
-            //113.0 is the size of the card's anchorpane, supposedly
-            int index = (int) (((event.getSceneY() - 125.0)/110.0));
+            //113.0 is the size of the card's anchorpane
+            int index = (int) (((event.getSceneY() - 125.0) / 110.0));
             long id = (long) db.getContent(cardDataFormat);
             var list2 = (commons.List) server.getLists().stream()
                     .filter(x -> ListCtrl.findListWithCardHelper(x, id) != null)
@@ -148,11 +148,12 @@ public class ListCtrl {
         server.send("/app/list/delete", cardList);
     }
 
-    public void changeTitle(){
+    public void changeTitle() {
         var text = titleTextField.getText();
         cardList.setTitle(text);
-        server.send("/app/list/replace",cardList);
+        server.send("/app/list/replace", cardList);
     }
+
     public void addCard() {
         mainCtrl.showAddCard(cardList);
     }
