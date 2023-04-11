@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Board;
 import jakarta.ws.rs.WebApplicationException;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -13,6 +14,11 @@ public class AddBoardCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
+    private volatile boolean isNotUpdated = true;
+    private boolean tryingToAdd = false;
+
+    private volatile Board newBoard;
 
     @FXML
     private TextField title;
@@ -28,21 +34,27 @@ public class AddBoardCtrl {
     }
 
     public void ok() {
+        if (tryingToAdd) return;
         try {
-            Board newBoard = getBoard();
-            newBoard = server.addBoard(newBoard);
-            if (newBoard == null) {
-                throw new Exception("adding board failed");
-            }
-            title.clear();
-            mainCtrl.closeAddBoard();
-            mainCtrl.showBoard(newBoard);
+            tryingToAdd = true;
+            server.registerForUpdates("/topic/boards/update", Board.class, b -> {
+                if (tryingToAdd == true) {
+                    Platform.runLater(() -> {
+                        title.clear();
+                        mainCtrl.closeAddBoardSuccess(b);
+                        mainCtrl.showBoard(b);
+                        tryingToAdd = false;
+                    });
+                }
+            });
+            server.send("/app/boards/add",  getBoard());
         } catch (WebApplicationException e) {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
