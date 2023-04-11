@@ -25,7 +25,7 @@ public class Card {
     @OrderColumn
     private int position;
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     private java.util.List<String> tasks = new ArrayList<>();
 
     @JsonIgnore
