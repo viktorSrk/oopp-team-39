@@ -85,7 +85,6 @@ public class ListCtrl {
     }
 
     public void setOnDragOver(DragEvent event) {
-        System.out.println("drag over");
         if (event.getGestureSource() != cardsVBox.getChildren()
                 && event.getDragboard().hasContent(cardDataFormat)) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -94,7 +93,6 @@ public class ListCtrl {
     }
 
     public void setOnDragEntered(DragEvent event) {
-        System.out.println("drag entered");
         if (event.getGestureSource() != cardsVBox.getChildren() &&
                 event.getDragboard().hasContent(cardDataFormat)) {
             cardsVBox.setStyle("-fx-border-color: #33c5ff");
@@ -103,25 +101,25 @@ public class ListCtrl {
     }
 
     public void setOnDragExited(DragEvent event) {
-        System.out.println("drag exited");
         cardsVBox.setStyle("-fx-border-color: transparent");
         event.consume();
     }
 
     public void setOnDragDropped(DragEvent event) {
-        System.out.println("drag dropped: " + event.getSceneY() + ", " + event.getSceneX());
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasContent(cardDataFormat)) {
-            //113.0 is the size of the card's anchorpane
-            int index = (int) (((event.getSceneY() - 125.0) / 110.0));
+
+            int index = (int) (((event.getSceneY() - 125.0)/110.0));
             long id = (long) db.getContent(cardDataFormat);
             var list2 = (commons.List) server.getLists().stream()
-                    .filter(x -> ListCtrl.findListWithCardHelper(x, id) != null)
+                    .filter(x ->
+                            ListCtrl.findListWithCardHelper(x, id) != null)
                     .toArray()[0];
             Card c = list2.getCardById(id);
             long listIdSource = list2.getId();
             long listIdTarget = this.getCardList().getId();
+
             MoveCardMessage message = new MoveCardMessage(listIdSource, listIdTarget, index, c);
 
             server.send("/app/cards/move", message);

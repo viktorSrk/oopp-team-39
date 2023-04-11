@@ -62,8 +62,6 @@ public class CardCtrl {
     }
 
     public void setOnDragDetected(MouseEvent event) {
-        System.out.println("drag detected");
-
         WritableImage snapshot = anchorPane.snapshot(new SnapshotParameters(), null);
 
         Dragboard db = anchorPane.startDragAndDrop(TransferMode.ANY);
@@ -85,7 +83,6 @@ public class CardCtrl {
     }
 
     public void setOnDragDone(DragEvent event) {
-        System.out.println("drag done");
         anchorPane.setStyle("-fx-border-color: transparent");
         anchorPane.setStyle("-fx-border-style: solid");
         event.consume();

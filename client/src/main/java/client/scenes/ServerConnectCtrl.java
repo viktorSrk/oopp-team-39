@@ -29,13 +29,11 @@ public class ServerConnectCtrl implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*TO DO*/
     }
 
     public void connect() {
         try {
             server.setServer(serverip.getText());
-//            server.testURL();//test if given URL is actually working
             mainCtrl.setWebsocketSessions();
             mainCtrl.registerBoard();
             mainCtrl.showBoardList();
