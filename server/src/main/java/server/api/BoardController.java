@@ -32,12 +32,11 @@ public class BoardController {
     }
 
     @MessageMapping({"/boards/add"})
-
+    @SendTo("/topic/boards/update")
     public Board addMessage(Board board) {
         return add(board).getBody();
     }
     @PostMapping(path = { "", "/" })
-    @SendTo("/topic/boards/update")
     public ResponseEntity<Board> add(@RequestBody Board board) {
         Board saved = repo.save(board);
         return ResponseEntity.ok(saved);
